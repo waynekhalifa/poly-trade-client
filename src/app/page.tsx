@@ -1,12 +1,9 @@
-import { cookies } from "next/headers";
-
 import Header from "./components/header";
 import Section from "./components/section";
 import MainSnackbar from "./components/main-snackbar";
 import { getStrapiURL } from "./utils/api-helpers";
 import { FALLBACK_SEO } from "./utils/constants";
-import { ISessionUser } from "./types/session";
-import { IListingItem, IListingParams } from "./types/api";
+import { IListingParams } from "./types/api";
 import { list } from "./services/list";
 import { SortOrders } from "./enums/sort-orders";
 import { pagesPopulates, sectionsPopulates } from "./constants/populates";
@@ -30,20 +27,6 @@ const homeSectionsParams: IListingParams = {
   sort: { precedence: SortOrders.ASC },
   filters: { slug: "home" },
   populate: sectionsPopulates,
-  pagination: { start: 0, limit: 100 },
-};
-const propertyTypesParams: IListingParams = {
-  path: "/property-types",
-  sort: { createdAt: "asc" },
-  filters: {},
-  populate: [],
-  pagination: { start: 0, limit: 100 },
-};
-const propertyLocationsParams: IListingParams = {
-  path: "/property-locations",
-  sort: { createdAt: "asc" },
-  filters: {},
-  populate: [],
   pagination: { start: 0, limit: 100 },
 };
 
@@ -89,28 +72,11 @@ export async function generateMetadata(): Promise<any> {
 }
 
 export default async function Home() {
-  const session: ISessionUser | null = cookies().get("session")?.value
-    ? JSON.parse(cookies().get("session")?.value!)
-    : null;
-
-  const [
-    headerSections,
-    footerSections,
-    sections,
-    propertyTypes,
-    propertyLocations,
-  ] = await Promise.all([
+  const [headerSections, footerSections, sections] = await Promise.all([
     list(headerSectionsParams),
     list(footerSectionsParams),
     list(homeSectionsParams),
-    list(propertyTypesParams),
-    list(propertyLocationsParams),
   ]);
-
-  const listings: IListingItem[] = [
-    { name: "propertyTypes", result: propertyTypes },
-    { name: "propertyLocations", result: propertyLocations },
-  ];
 
   const renderFooterSections = () => (
     <>
@@ -130,21 +96,17 @@ export default async function Home() {
   return (
     <>
       {headerSections.data.length > 0 && (
-        <Header
-          data={headerSections.data}
-          activePage="home"
-          session={session}
-        />
+        <Header data={headerSections.data} activePage="home" />
       )}
       <main>
         {sections.data.map((item: any) => (
           <Section
             key={item.id}
             data={item.attributes}
-            listings={listings}
+            listings={[]}
             activePage={"home"}
             searchParams={null}
-            session={session}
+            session={null}
           />
         ))}
       </main>

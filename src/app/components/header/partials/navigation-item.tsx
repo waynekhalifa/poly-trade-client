@@ -26,7 +26,7 @@ const NavigationItem: React.FC<Props> = ({ item, subItems, activePage }) => {
       component={"li"}
       id={`menu-item-${item.id}`}
       position={"relative"}
-      ml={3}
+      ml={4}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -40,7 +40,7 @@ const NavigationItem: React.FC<Props> = ({ item, subItems, activePage }) => {
           <Typography
             component={"span"}
             color={isActive() ? "primary.main" : "text.primary"}
-            fontWeight={isActive() ? 500 : 400}
+            fontWeight={isActive() ? 500 : 300}
             textTransform={"capitalize"}
             sx={{ "&:hover": { color: "primary.main" } }}
           >
