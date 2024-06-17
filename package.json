@@ -1,0 +1,53 @@
+{
+  "name": "mahmoud-client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.11.0",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@hookform/resolvers": "^3.3.4",
+    "@mui/icons-material": "^5.15.4",
+    "@mui/material": "^5.15.4",
+    "@mui/material-nextjs": "^5.15.3",
+    "@types/qs": "^6.9.11",
+    "@types/react-phone-number-input": "^3.0.17",
+    "cheerio": "^1.0.0-rc.12",
+    "classnames": "^2.5.1",
+    "cookies-next": "^4.1.1",
+    "next": "14.0.4",
+    "next-auth": "^4.24.7",
+    "next-images": "^1.8.5",
+    "next-pwa": "^5.6.0",
+    "qs": "^6.11.2",
+    "react": "^18",
+    "react-awesome-reveal": "^4.2.8",
+    "react-dom": "^18",
+    "react-dropzone": "^14.2.3",
+    "react-hook-form": "^7.49.3",
+    "react-image-crop": "^11.0.5",
+    "react-lottie-player": "^1.5.6",
+    "react-phone-number-input": "^3.3.9",
+    "react-slideshow-image": "^4.3.0",
+    "swiper": "^11.0.5",
+    "yup": "^1.3.3",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
+}
