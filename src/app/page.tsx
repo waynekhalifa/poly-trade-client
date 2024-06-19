@@ -2,10 +2,14 @@ import Section from "./components/section";
 import MainSnackbar from "./components/main-snackbar";
 import { getStrapiURL } from "./utils/api-helpers";
 import { FALLBACK_SEO } from "./utils/constants";
-import { IListingParams } from "./types/api";
+import { IListingItem, IListingParams } from "./types/api";
 import { list } from "./services/list";
 import { SortOrders } from "./enums/sort-orders";
-import { pagesPopulates, sectionsPopulates } from "./constants/populates";
+import {
+  pagesPopulates,
+  postsPopulates,
+  sectionsPopulates,
+} from "./constants/populates";
 import Header from "./components/header";
 
 const headerSectionsParams: IListingParams = {
@@ -28,6 +32,13 @@ const homeSectionsParams: IListingParams = {
   filters: { slug: "home" },
   populate: sectionsPopulates,
   pagination: { start: 0, limit: 100 },
+};
+const recentPostsParams: IListingParams = {
+  path: "/posts",
+  sort: { createdAt: SortOrders.DESC },
+  filters: {},
+  populate: postsPopulates,
+  pagination: { start: 0, limit: 3 },
 };
 
 export async function generateMetadata(): Promise<any> {
@@ -72,11 +83,14 @@ export async function generateMetadata(): Promise<any> {
 }
 
 export default async function Home() {
-  const [headerSections, footerSections, sections] = await Promise.all([
+  const [headerSections, footerSections, sections, posts] = await Promise.all([
     list(headerSectionsParams),
     list(footerSectionsParams),
     list(homeSectionsParams),
+    list(recentPostsParams),
   ]);
+
+  const listings: IListingItem[] = [{ name: "posts", result: posts }];
 
   const renderFooterSections = () => (
     <>
@@ -84,7 +98,7 @@ export default async function Home() {
         <Section
           key={item.id}
           data={item.attributes}
-          listings={[]}
+          listings={listings}
           activePage={"home"}
           searchParams={null}
           session={null}

@@ -3,6 +3,12 @@ export const pagesPopulates: any = {
   seo: { populate: "*" },
 };
 
+export const postsPopulates: any = {
+  thumbnail: { populate: "*" },
+  categories: { populate: "*" },
+  author: { populate: "*" },
+};
+
 export const sectionsPopulates: string[] = [
   "container",
   "container.background",
