@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { Box, Button, Typography } from "@mui/material";
-import RichTextBlocks from "../rich-text-blocks";
-import { getStrapiURL } from "@/app/utils/api-helpers";
+import { Box, Grid, Typography } from "@mui/material";
+import { formatDate, getStrapiURL } from "@/app/utils/api-helpers";
+import { excerptString } from "@/app/utils/excerpt-string";
+import { AccessTime } from "@mui/icons-material";
 import calculateNewWidth from "@/app/utils/calculateNewWidth";
 import LinkWrap from "../link-wrap";
 
@@ -10,59 +11,50 @@ interface Props {
 }
 
 const PostItem: React.FC<Props> = ({ data }) => {
-  const { name, slug, thumbnail, description } = data;
+  const { name, slug, thumbnail, publishedAt } = data;
 
   return (
-    <Box overflow={"hidden"} border={"1px solid"} borderColor={"divider"}>
-      <LinkWrap href={`/products/${slug}`}>
-        <Box>
-          <Image
-            src={getStrapiURL(thumbnail.data.attributes.url)}
-            alt={name}
-            width={Math.floor(
-              calculateNewWidth(
-                thumbnail.data.attributes.width,
-                thumbnail.data.attributes.height,
-                300
-              )
-            )}
-            height={240}
-          />
+    <Grid container mb={3} columnSpacing={3}>
+      <Grid item xs={4}>
+        <Box overflow={"hidden"}>
+          <LinkWrap href={"/blog/" + slug}>
+            <Image
+              src={getStrapiURL(thumbnail.data.attributes.url)}
+              alt={name}
+              width={Math.floor(
+                calculateNewWidth(
+                  thumbnail.data.attributes.width,
+                  thumbnail.data.attributes.height,
+                  64
+                )
+              )}
+              height={64}
+            />
+          </LinkWrap>
         </Box>
-      </LinkWrap>
-      <Box p={3}>
-        <LinkWrap href={`/products/${slug}`}>
+      </Grid>
+      <Grid item xs={8}>
+        <LinkWrap href={"/blog/" + slug}>
           <Typography
             fontWeight={500}
-            variant="h6"
-            mb={2}
-            minHeight={64}
-            sx={{ "&:hover": { color: "primary.main" } }}
+            component={"h5"}
+            gutterBottom
+            color={"common.white"}
           >
-            {name}
+            {excerptString(name, 42)}
           </Typography>
         </LinkWrap>
-        <Box mb={1} minHeight={80}>
-          {description.map((item: any, index: number) => (
-            <RichTextBlocks key={index} element={item} />
-          ))}
-        </Box>
-        <LinkWrap href={`/products/${slug}`}>
-          <Button
-            size="large"
-            sx={{
-              p: 0,
-              fontWeight: 400,
-              textTransform: "capitalize",
-              color: "primary.main",
-              "&:hover": { bgcolor: "transparent" },
-            }}
-          >
-            Continue reading
-          </Button>
-        </LinkWrap>
-      </Box>
-    </Box>
+        <Grid container alignItems={"center"}>
+          <AccessTime
+            fontSize="small"
+            sx={{ mr: 1, color: "grey.500", transform: "scale(0.8)" }}
+          />
+          <Typography variant="body2" color={"grey.500"} fontWeight={300}>
+            {formatDate(publishedAt)}
+          </Typography>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 
