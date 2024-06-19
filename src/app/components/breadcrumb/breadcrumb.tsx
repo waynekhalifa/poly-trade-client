@@ -46,7 +46,7 @@ const Breadcrumb: React.FC<Props> = ({ page }) => {
         </Container>
       </Box>
       <Container>
-        <Typography variant="h5" component="h1" fontWeight={700} my={{ xs: 2 }}>
+        <Typography variant="h4" component="h1" fontWeight={700} my={{ xs: 2 }}>
           {name}
         </Typography>
       </Container>

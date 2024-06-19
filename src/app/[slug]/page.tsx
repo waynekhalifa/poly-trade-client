@@ -1,5 +1,3 @@
-import { redirect } from "next/navigation";
-
 import Header from "../components/header";
 import Section from "../components/section";
 import MainSnackbar from "../components/main-snackbar";
@@ -10,7 +8,7 @@ import { list } from "../services/list";
 import { SortOrders } from "../enums/sort-orders";
 import {
   pagesPopulates,
-  propertiesPopulates,
+  postsPopulates,
   sectionsPopulates,
 } from "../constants/populates";
 import Breadcrumb from "../components/breadcrumb";
@@ -20,7 +18,7 @@ const headerSectionsParams: IListingParams = {
   sort: { precedence: SortOrders.ASC },
   filters: { slug: "header" },
   populate: sectionsPopulates,
-  pagination: { start: 0, limit: 100 },
+  pagination: { start: 0, limit: 1 },
   locale: "en",
 };
 const footerSectionsParams: IListingParams = {
@@ -28,23 +26,15 @@ const footerSectionsParams: IListingParams = {
   sort: { precedence: SortOrders.ASC },
   filters: { slug: "footer" },
   populate: sectionsPopulates,
-  pagination: { start: 0, limit: 100 },
+  pagination: { start: 0, limit: 1 },
   locale: "en",
 };
-const propertyTypesParams: IListingParams = {
-  path: "/property-types",
-  sort: { createdAt: "asc" },
+const recentPostsParams: IListingParams = {
+  path: "/posts",
+  sort: { createdAt: SortOrders.DESC },
   filters: {},
-  populate: [],
-  pagination: { start: 0, limit: 100 },
-  locale: "en",
-};
-const propertyLocationsParams: IListingParams = {
-  path: "/property-locations",
-  sort: { createdAt: "asc" },
-  filters: {},
-  populate: [],
-  pagination: { start: 0, limit: 100 },
+  populate: postsPopulates,
+  pagination: { start: 0, limit: 3 },
   locale: "en",
 };
 
@@ -113,97 +103,18 @@ export default async function Page({ params, searchParams }: Props) {
     pagination: { start: 0, limit: 100 },
     locale: "en",
   };
+  const [headerSections, footerSections, sections, posts, pages] =
+    await Promise.all([
+      list(headerSectionsParams),
+      list(footerSectionsParams),
+      list(pageSectionsParams),
+      list(recentPostsParams),
+      list(pagesParams),
+    ]);
 
-  const requests: any[] = [
-    list(pagesParams),
-    list(headerSectionsParams),
-    list(footerSectionsParams),
-    list(pageSectionsParams),
-  ];
-
-  const filters: any = {};
-
-  if (searchParams["agent"])
-    filters["agent"] = { username: searchParams["agent"] };
-  if (searchParams["search"]) filters["location"] = searchParams["search"];
-  if (searchParams["property-type"] && searchParams["property-type"] !== "-1")
-    filters["type"] = searchParams["property-type"];
-  if (searchParams["bedrooms"] && searchParams["bedrooms"] !== "-1")
-    filters["bed"] = searchParams["bedrooms"];
-  if (searchParams["bathrooms"] && searchParams["bathrooms"] !== "-1")
-    filters["bath"] = searchParams["bathrooms"];
-
-  if (slug === "rent" || slug === "buy" || slug === "commercial") {
-    const featuredPropertiesParams: IListingParams = {
-      path: "/properties",
-      sort: { createdAt: SortOrders.DESC },
-      filters: { featured: true, purpose: slug, ...filters },
-      populate: propertiesPopulates,
-      pagination: { start: 0, limit: 2 },
-      locale: "en",
-    };
-    const nonFeaturedPropertiesParams: IListingParams = {
-      path: "/properties",
-      sort: { createdAt: SortOrders.DESC },
-      filters: { featured: false, purpose: slug, ...filters },
-      populate: propertiesPopulates,
-      pagination: { start: 0, limit: 10 },
-      locale: "en",
-    };
-
-    requests.push(
-      list(featuredPropertiesParams),
-      list(nonFeaturedPropertiesParams),
-      list(propertyTypesParams),
-      list(propertyLocationsParams)
-    );
-  }
-
-  if (slug === "terms-and-conditions" && !searchParams["tab"]) {
-    redirect("/terms-and-conditions?tab=for-users");
-  }
-
-  if (slug === "how-it-works" && !searchParams["tab"]) {
-    redirect("/how-it-works?tab=for-users");
-  }
-
-  const [
-    page,
-    headerSections,
-    footerSections,
-    sections,
-    featuredOrFavorite,
-    nonFeaturedOrContacted,
-    propertyTypesOrBrokerProperties,
-    propertyLocationsOrSavedSearches,
-    singleProperty,
-    propertyTypes,
-    propertyLocations,
-  ] = await Promise.all(requests);
+  const listings: IListingItem[] = [{ name: "posts", result: posts }];
 
   const renderContent = (): React.ReactNode => {
-    const listings: IListingItem[] = [
-      { name: "singleProperty", result: singleProperty },
-      { name: "featuredOrFavorite", result: featuredOrFavorite },
-      { name: "nonFeaturedOrContacted", result: nonFeaturedOrContacted },
-      {
-        name: "propertyTypesOrBrokerProperties",
-        result: propertyTypesOrBrokerProperties,
-      },
-      {
-        name: "propertyLocationsOrSavedSearches",
-        result: propertyLocationsOrSavedSearches,
-      },
-      {
-        name: "propertyTypes",
-        result: propertyTypes,
-      },
-      {
-        name: "propertyLocations",
-        result: propertyLocations,
-      },
-    ];
-
     return (
       <main>
         {sections.data.map((item: any) => (
@@ -226,7 +137,7 @@ export default async function Page({ params, searchParams }: Props) {
         <Section
           key={item.id}
           data={item.attributes}
-          listings={[]}
+          listings={listings}
           activePage={slug}
           searchParams={null}
           session={null}
@@ -240,15 +151,17 @@ export default async function Page({ params, searchParams }: Props) {
       {headerSections.data.length > 0 && (
         <Header data={headerSections.data} activePage={slug} />
       )}
-      <Breadcrumb page={page.data[0].attributes} />
+      <Breadcrumb page={pages.data[0].attributes} />
       {renderContent()}
-      <>
-        {footerSections.data.length === 1 ? (
-          renderFooterSections()
-        ) : (
-          <footer>{renderFooterSections()}</footer>
-        )}
-      </>
+      {footerSections.data.length > 0 && (
+        <>
+          {footerSections.data.length === 1 ? (
+            renderFooterSections()
+          ) : (
+            <footer>{renderFooterSections()}</footer>
+          )}
+        </>
+      )}
       <MainSnackbar />
     </>
   );
