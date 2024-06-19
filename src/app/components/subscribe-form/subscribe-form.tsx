@@ -2,7 +2,6 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, Button } from "@mui/material";
-import RichTextBlocks from "../rich-text-blocks";
 import { IFormField } from "@/app/types/formFields";
 import { InputTypes } from "@/app/enums/inputTypes";
 import FormFields from "../FormFields";
@@ -27,7 +26,6 @@ const fields: IFormField[] = [
 ];
 
 const SubscribeForm: React.FC<Props> = ({ data }) => {
-  const { text } = data;
   const DEFAULT_VALUES: any = {};
 
   for (const field of fields) {
@@ -75,37 +73,27 @@ const SubscribeForm: React.FC<Props> = ({ data }) => {
   };
 
   return (
-    <Box>
-      {text.map((item: any, index: number) => (
-        <RichTextBlocks key={index} element={item} />
+    <Box
+      component={"form"}
+      onSubmit={handleSubmit(onSubmit)}
+      mt={{ xs: 1 }}
+      display={"flex"}
+    >
+      {fields.map((item: any) => (
+        <FormFields
+          key={item.id}
+          {...item}
+          control={control}
+          errors={errors}
+          watch={watch}
+          setValue={setValue}
+          register={register}
+          sx={{ flex: "1" }}
+        />
       ))}
-      <Box
-        component={"form"}
-        onSubmit={handleSubmit(onSubmit)}
-        mt={{ xs: 1 }}
-        display={"flex"}
-      >
-        {fields.map((item: any) => (
-          <FormFields
-            key={item.id}
-            {...item}
-            control={control}
-            errors={errors}
-            watch={watch}
-            setValue={setValue}
-            register={register}
-            sx={{ flex: "1" }}
-          />
-        ))}
-        <Button
-          variant="contained"
-          type="submit"
-          color="secondary"
-          sx={{ minWidth: 104 }}
-        >
-          Notify me
-        </Button>
-      </Box>
+      <Button variant="contained" type="submit">
+        Send
+      </Button>
     </Box>
   );
 };

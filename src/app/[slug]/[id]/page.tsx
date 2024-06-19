@@ -1,5 +1,3 @@
-import { cookies } from "next/headers";
-
 import Header from "@/app/components/header";
 import NotFound from "@/app/components/not-found";
 import PropertySections from "@/app/components/property-sections";
@@ -7,7 +5,6 @@ import Section from "@/app/components/section";
 import MainSnackbar from "@/app/components/main-snackbar";
 import { FALLBACK_SEO } from "@/app/utils/constants";
 import { getStrapiURL } from "@/app/utils/api-helpers";
-import { ISessionUser } from "@/app/types/session";
 import { IListingItem, IListingParams } from "@/app/types/api";
 import { SortOrders } from "@/app/enums/sort-orders";
 import {
@@ -87,9 +84,7 @@ export async function generateMetadata({ params }: Props): Promise<any> {
 
 export default async function Page({ params }: Props) {
   const { slug, id } = params;
-  const session: ISessionUser | null = cookies().get("session")?.value
-    ? JSON.parse(cookies().get("session")?.value!)
-    : null;
+
   const requests: any[] = [
     list(headerSectionsParams),
     list(footerSectionsParams),
@@ -153,11 +148,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       {headerSections.data.length > 0 && (
-        <Header
-          activePage={slug}
-          session={session}
-          data={headerSections.data}
-        />
+        <Header activePage={slug} data={headerSections.data} />
       )}
       <main>{renderTemplateContent()}</main>
       <>
@@ -167,7 +158,6 @@ export default async function Page({ params }: Props) {
           <footer>{renderSections(footerSections, [], slug)}</footer>
         )}
       </>
-      {/* <MainModal /> */}
       <MainSnackbar />
     </>
   );

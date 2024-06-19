@@ -10,14 +10,16 @@ export async function generateMetadata(): Promise<any> {
 
   if (!global.data) return FALLBACK_SEO;
 
-  const { favicon } = global.data.attributes;
-  const { url } = favicon.data.attributes;
-
   return {
     manifest: "/manifest.json",
     robots: "noindex,nofollow",
     icons: {
-      icon: [new URL(url, getStrapiURL())],
+      icon: [
+        new URL(
+          global.data.attributes.favicon.data.attributes.url,
+          getStrapiURL()
+        ),
+      ],
     },
   };
 }
@@ -29,13 +31,11 @@ export default async function RootLayout({
 }) {
   const [global] = await Promise.all([getGlobal()]);
 
-  const { palette } = global.data.attributes;
-
   return (
     <html lang="en">
       <body>
         <AppRouterCacheProvider>
-          <Theme paletteData={palette}>{children}</Theme>
+          <Theme paletteData={global.data.attributes.palette}>{children}</Theme>
         </AppRouterCacheProvider>
       </body>
     </html>

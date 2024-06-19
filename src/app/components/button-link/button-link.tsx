@@ -11,7 +11,6 @@ interface Props {
 const ButtonLink: React.FC<Props> = ({ text, url, padding, margin, icon }) => {
   return (
     <Box
-      display={"inline-block"}
       pt={{
         xs: padding && padding.top ? padding.top.xs : 0,
         sm: padding && padding.top ? padding.top.sm : 0,
@@ -68,15 +67,16 @@ const ButtonLink: React.FC<Props> = ({ text, url, padding, margin, icon }) => {
         aria-label={url.ariaLabel}
       >
         <Button
-          // variant="contained"
-          // color="secondary"
-          size="small"
+          variant="contained"
+          color="secondary"
+          size="large"
+          fullWidth
           sx={{
             textTransform: "lowercase",
             borderRadius: "6px",
             color: "grey.100",
-            // bgcolor: "secondary.light",
-            // "&:hover": { bgcolor: "primary.main" },
+            bgcolor: "secondary.light",
+            "&:hover": { bgcolor: "primary.main" },
           }}
           startIcon={icon}
         >

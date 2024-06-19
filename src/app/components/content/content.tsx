@@ -218,7 +218,7 @@ const Content: React.FC<Props> = ({
             url={component.url}
             padding={component.padding}
             margin={component.margin}
-            icon={<PhoneIphone sx={{ color: "primary.main" }} />}
+            icon={<PhoneIphone sx={{ color: "common.white" }} />}
           />
         );
       case "shared.email":
@@ -229,7 +229,7 @@ const Content: React.FC<Props> = ({
             url={component.url}
             padding={component.padding}
             margin={component.margin}
-            icon={<Email sx={{ color: "primary.main" }} />}
+            icon={<Email sx={{ color: "common.white" }} />}
           />
         );
       case "shared.listing":

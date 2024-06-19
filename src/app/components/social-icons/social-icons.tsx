@@ -9,7 +9,11 @@ const SocialIcons: React.FC<Props> = ({ data }) => {
   const { links, text } = data;
 
   return (
-    <Grid container alignItems={"center"}>
+    <Grid
+      container
+      alignItems={"center"}
+      justifyContent={{ xs: "center", md: "flex-end" }}
+    >
       <Typography variant="h5" fontWeight={500} color={"common.white"}>
         {text}
       </Typography>
@@ -28,7 +32,7 @@ const SocialIcons: React.FC<Props> = ({ data }) => {
             component="li"
             key={item.id}
             lineHeight={0}
-            bgcolor={"secondary.main"}
+            bgcolor={"primary.main"}
           >
             <SocialLink data={item} />
           </Grid>

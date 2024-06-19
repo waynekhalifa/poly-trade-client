@@ -74,20 +74,25 @@ const UsefulLinks: React.FC<Props> = ({ data, activePage }) => {
           key={item.id}
           disablePadding
           sx={{
+            py: 1.3,
             span: { width: "100%" },
-            a: {
-              color: isActivePage(item.url) ? "primary.main" : "text.primary",
-              transition: "all .1s ease-in",
-              "&:hover": {
-                color: "primary.main",
-              },
+            a: { width: "100%" },
+            borderBottom: "2px solid",
+            borderColor: isActivePage(item.url)
+              ? "primary.main"
+              : "transparent",
+            "&:hover": {
+              borderColor: "primary.main",
             },
           }}
         >
           <LinkWrap href={item.url} blank={item.newTab}>
             <ListItemText
               primary={item.text}
-              sx={{ color: "text.primary", textTransform: "capitalize" }}
+              sx={{
+                color: "common.white",
+                textTransform: "capitalize",
+              }}
             />
           </LinkWrap>
         </ListItem>

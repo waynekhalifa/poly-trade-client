@@ -1,6 +1,6 @@
 "use client";
 
-import { Montserrat } from "next/font/google";
+import { Roboto } from "next/font/google";
 import {
   PaletteOptions,
   ThemeProvider,
@@ -11,7 +11,7 @@ import { TDirection } from "./models/direction";
 import { CssBaseline, GlobalStyles } from "@mui/material";
 import { Directions } from "./enums/directions";
 
-const font = Montserrat({
+const font = Roboto({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   display: "swap",

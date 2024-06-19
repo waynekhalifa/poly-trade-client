@@ -1,4 +1,3 @@
-import Header from "./components/header";
 import Section from "./components/section";
 import MainSnackbar from "./components/main-snackbar";
 import { getStrapiURL } from "./utils/api-helpers";
@@ -7,20 +6,21 @@ import { IListingParams } from "./types/api";
 import { list } from "./services/list";
 import { SortOrders } from "./enums/sort-orders";
 import { pagesPopulates, sectionsPopulates } from "./constants/populates";
+import Header from "./components/header";
 
 const headerSectionsParams: IListingParams = {
   path: "/sections",
   sort: { precedence: SortOrders.ASC },
   filters: { slug: "header" },
   populate: sectionsPopulates,
-  pagination: { start: 0, limit: 100 },
+  pagination: { start: 0, limit: 1 },
 };
 const footerSectionsParams: IListingParams = {
   path: "/sections",
   sort: { precedence: SortOrders.ASC },
   filters: { slug: "footer" },
   populate: sectionsPopulates,
-  pagination: { start: 0, limit: 100 },
+  pagination: { start: 0, limit: 1 },
 };
 const homeSectionsParams: IListingParams = {
   path: "/sections",
@@ -43,9 +43,9 @@ export async function generateMetadata(): Promise<any> {
 
   if (page.data.length === 0) return FALLBACK_SEO;
 
-  if (!page.data[0].attributes?.seo) return FALLBACK_SEO;
-
   const metadata = page.data[0].attributes.seo;
+
+  if (!metadata) return FALLBACK_SEO;
 
   return {
     title: `${metadata.title} - ${metadata.description}`,
@@ -98,22 +98,28 @@ export default async function Home() {
       {headerSections.data.length > 0 && (
         <Header data={headerSections.data} activePage="home" />
       )}
-      <main>
-        {sections.data.map((item: any) => (
-          <Section
-            key={item.id}
-            data={item.attributes}
-            listings={[]}
-            activePage={"home"}
-            searchParams={null}
-            session={null}
-          />
-        ))}
-      </main>
-      {footerSections.data.length === 1 ? (
-        renderFooterSections()
-      ) : (
-        <footer>{renderFooterSections()}</footer>
+      {sections.data.length > 0 && (
+        <main>
+          {sections.data.map((item: any) => (
+            <Section
+              key={item.id}
+              data={item.attributes}
+              listings={[]}
+              activePage={"home"}
+              searchParams={null}
+              session={null}
+            />
+          ))}
+        </main>
+      )}
+      {footerSections.data.length > 0 && (
+        <>
+          {footerSections.data.length === 1 ? (
+            renderFooterSections()
+          ) : (
+            <footer>{renderFooterSections()}</footer>
+          )}
+        </>
       )}
       <MainSnackbar />
     </>
