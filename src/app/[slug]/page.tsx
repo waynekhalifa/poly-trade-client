@@ -1,14 +1,10 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import Header from "../components/header";
-import PageHeader from "../components/page-header";
 import Section from "../components/section";
-import AuthForm from "../components/auth-form";
 import MainSnackbar from "../components/main-snackbar";
 import { FALLBACK_SEO } from "../utils/constants";
 import { getStrapiURL } from "../utils/api-helpers";
-import { ISessionUser } from "../types/session";
 import { IListingItem, IListingParams } from "../types/api";
 import { list } from "../services/list";
 import { SortOrders } from "../enums/sort-orders";
@@ -95,27 +91,6 @@ export async function generateMetadata({ params }: Props): Promise<any> {
 
 export default async function Page({ params, searchParams }: Props) {
   const { slug } = params;
-  const session: ISessionUser | null = cookies().get("session")?.value
-    ? JSON.parse(cookies().get("session")?.value!)
-    : null;
-
-  const isAuth: boolean =
-    slug === "login" ||
-    slug === "register" ||
-    slug === "forgot-password" ||
-    slug === "email-confirmation" ||
-    slug === "reset-password" ||
-    slug === "company-registration";
-
-  const isPublic: boolean =
-    slug === "about-us" ||
-    slug === "list-with-us" ||
-    slug === "cookies-policy" ||
-    slug === "terms-and-conditions" ||
-    slug === "privacy-policy" ||
-    slug === "sitemap" ||
-    slug === "how-it-works" ||
-    slug === "frequent-asked-questions";
 
   const pagesParams: IListingParams = {
     path: "/pages",
@@ -183,67 +158,6 @@ export default async function Page({ params, searchParams }: Props) {
     redirect("/how-it-works?tab=for-users");
   }
 
-  if (slug === "my-account") {
-    if (!session) redirect("/");
-
-    const favoritePropertiesParams: IListingParams = {
-      path: "/properties",
-      sort: { createdAt: SortOrders.DESC },
-      filters: {
-        ...filters,
-        fav_users: { username: session.username },
-      },
-      populate: propertiesPopulates,
-      pagination: { start: 0, limit: 10 },
-    };
-    const contactedPropertiesParams: IListingParams = {
-      path: "/properties",
-      sort: { createdAt: SortOrders.DESC },
-      filters: {
-        ...filters,
-        contacted_users: { username: session.username },
-      },
-      populate: propertiesPopulates,
-      pagination: { start: 0, limit: 10 },
-    };
-    const brokerPropertiesParams: IListingParams = {
-      path: "/properties",
-      sort: { createdAt: SortOrders.DESC },
-      filters: {
-        ...filters,
-        agent: { username: session.username },
-      },
-      populate: propertiesPopulates,
-      pagination: { start: 0, limit: 10 },
-    };
-
-    const savedSearchesParams: IListingParams = {
-      path: "/searches",
-      sort: { createdAt: SortOrders.DESC },
-      filters: { users: { username: session.username } },
-      populate: ["users"],
-      pagination: { start: 0, limit: 10 },
-    };
-
-    const singlePropertyParams: IListingParams = {
-      path: "/properties/" + searchParams["id"],
-      sort: { createdAt: SortOrders.DESC },
-      filters: {},
-      populate: propertiesPopulates,
-      pagination: { start: 0, limit: 10 },
-    };
-
-    requests.push(
-      list(favoritePropertiesParams),
-      list(contactedPropertiesParams),
-      list(brokerPropertiesParams),
-      list(savedSearchesParams),
-      list(singlePropertyParams),
-      list(propertyTypesParams),
-      list(propertyLocationsParams)
-    );
-  }
-
   const [
     page,
     headerSections,
@@ -259,8 +173,6 @@ export default async function Page({ params, searchParams }: Props) {
   ] = await Promise.all(requests);
 
   const renderContent = (): React.ReactNode => {
-    if (isAuth) return <AuthForm slug={slug} code={searchParams["code"]} />;
-
     const listings: IListingItem[] = [
       { name: "singleProperty", result: singleProperty },
       { name: "featuredOrFavorite", result: featuredOrFavorite },
@@ -292,7 +204,7 @@ export default async function Page({ params, searchParams }: Props) {
             listings={listings}
             activePage={slug}
             searchParams={searchParams}
-            session={session}
+            session={null}
           />
         ))}
       </main>
@@ -316,34 +228,18 @@ export default async function Page({ params, searchParams }: Props) {
 
   return (
     <>
-      {!isAuth && headerSections.data.length > 0 && (
-        <Header
-          data={headerSections.data}
-          session={session}
-          activePage={slug}
-        />
+      {headerSections.data.length > 0 && (
+        <Header data={headerSections.data} activePage={slug} />
       )}
-      {!isAuth && !isPublic && page.data.length > 0 && (
-        <PageHeader
-          page={page.data[0].attributes}
-          searchParams={searchParams}
-          listings={[
-            { name: "propertyTypes", result: propertyTypesOrBrokerProperties },
-          ]}
-        />
-      )}
-      {isPublic && <Breadcrumb page={page.data[0].attributes} />}
+      <Breadcrumb page={page.data[0].attributes} />
       {renderContent()}
-      {!isAuth && (
-        <>
-          {footerSections.data.length === 1 ? (
-            renderFooterSections()
-          ) : (
-            <footer>{renderFooterSections()}</footer>
-          )}
-        </>
-      )}
-      {/* <MainModal /> */}
+      <>
+        {footerSections.data.length === 1 ? (
+          renderFooterSections()
+        ) : (
+          <footer>{renderFooterSections()}</footer>
+        )}
+      </>
       <MainSnackbar />
     </>
   );

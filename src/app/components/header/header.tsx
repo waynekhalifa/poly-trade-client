@@ -35,7 +35,7 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
         elevation={0}
         position="relative"
         color="transparent"
-        sx={{ bgcolor: "common.white", py: 1 }}
+        sx={{ bgcolor: "common.white", py: { xs: 1, md: 0 } }}
       >
         <Container>
           <Grid container alignItems="center">

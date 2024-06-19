@@ -115,7 +115,6 @@ export default async function Home() {
       ) : (
         <footer>{renderFooterSections()}</footer>
       )}
-      {/* <MainModal /> */}
       <MainSnackbar />
     </>
   );
