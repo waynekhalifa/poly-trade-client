@@ -13,6 +13,7 @@ export interface IListingParams {
   filters: any;
   populate: any;
   pagination: IPagination;
+  locale: "en" | "ar";
 }
 
 export interface IListingResult {

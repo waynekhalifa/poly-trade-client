@@ -21,6 +21,7 @@ const headerSectionsParams: IListingParams = {
   filters: { slug: "header" },
   populate: sectionsPopulates,
   pagination: { start: 0, limit: 100 },
+  locale: "en",
 };
 const footerSectionsParams: IListingParams = {
   path: "/sections",
@@ -28,6 +29,7 @@ const footerSectionsParams: IListingParams = {
   filters: { slug: "footer" },
   populate: sectionsPopulates,
   pagination: { start: 0, limit: 100 },
+  locale: "en",
 };
 const propertyTypesParams: IListingParams = {
   path: "/property-types",
@@ -35,6 +37,7 @@ const propertyTypesParams: IListingParams = {
   filters: {},
   populate: [],
   pagination: { start: 0, limit: 100 },
+  locale: "en",
 };
 const propertyLocationsParams: IListingParams = {
   path: "/property-locations",
@@ -42,6 +45,7 @@ const propertyLocationsParams: IListingParams = {
   filters: {},
   populate: [],
   pagination: { start: 0, limit: 100 },
+  locale: "en",
 };
 
 type Props = { params: { slug: string }; searchParams: any };
@@ -55,6 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<any> {
     filters: { slug },
     populate: pagesPopulates,
     pagination: { start: 0, limit: 1 },
+    locale: "en",
   };
 
   const page = await list(pagesParams);
@@ -98,6 +103,7 @@ export default async function Page({ params, searchParams }: Props) {
     filters: { slug },
     populate: pagesPopulates,
     pagination: { start: 0, limit: 1 },
+    locale: "en",
   };
   const pageSectionsParams: IListingParams = {
     path: "/sections",
@@ -105,6 +111,7 @@ export default async function Page({ params, searchParams }: Props) {
     filters: { slug },
     populate: sectionsPopulates,
     pagination: { start: 0, limit: 100 },
+    locale: "en",
   };
 
   const requests: any[] = [
@@ -133,6 +140,7 @@ export default async function Page({ params, searchParams }: Props) {
       filters: { featured: true, purpose: slug, ...filters },
       populate: propertiesPopulates,
       pagination: { start: 0, limit: 2 },
+      locale: "en",
     };
     const nonFeaturedPropertiesParams: IListingParams = {
       path: "/properties",
@@ -140,6 +148,7 @@ export default async function Page({ params, searchParams }: Props) {
       filters: { featured: false, purpose: slug, ...filters },
       populate: propertiesPopulates,
       pagination: { start: 0, limit: 10 },
+      locale: "en",
     };
 
     requests.push(

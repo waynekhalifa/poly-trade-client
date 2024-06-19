@@ -18,6 +18,7 @@ const headerSectionsParams: IListingParams = {
   filters: { slug: "header" },
   populate: sectionsPopulates,
   pagination: { start: 0, limit: 1 },
+  locale: "en",
 };
 const footerSectionsParams: IListingParams = {
   path: "/sections",
@@ -25,6 +26,7 @@ const footerSectionsParams: IListingParams = {
   filters: { slug: "footer" },
   populate: sectionsPopulates,
   pagination: { start: 0, limit: 1 },
+  locale: "en",
 };
 const homeSectionsParams: IListingParams = {
   path: "/sections",
@@ -32,6 +34,7 @@ const homeSectionsParams: IListingParams = {
   filters: { slug: "home" },
   populate: sectionsPopulates,
   pagination: { start: 0, limit: 100 },
+  locale: "en",
 };
 const recentPostsParams: IListingParams = {
   path: "/posts",
@@ -39,6 +42,7 @@ const recentPostsParams: IListingParams = {
   filters: {},
   populate: postsPopulates,
   pagination: { start: 0, limit: 3 },
+  locale: "en",
 };
 
 export async function generateMetadata(): Promise<any> {
@@ -48,6 +52,7 @@ export async function generateMetadata(): Promise<any> {
     filters: { slug: "home" },
     populate: pagesPopulates,
     pagination: { start: 0, limit: 1 },
+    locale: "en",
   };
 
   const page = await list(pagesParams);

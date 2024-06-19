@@ -20,6 +20,7 @@ const headerSectionsParams: IListingParams = {
   filters: { slug: "header" },
   populate: sectionsPopulates,
   pagination: { start: 0, limit: 100 },
+  locale: "en",
 };
 const footerSectionsParams: IListingParams = {
   path: "/sections",
@@ -27,6 +28,7 @@ const footerSectionsParams: IListingParams = {
   filters: { slug: "footer" },
   populate: sectionsPopulates,
   pagination: { start: 0, limit: 100 },
+  locale: "en",
 };
 
 type Props = { params: { slug: string; id: string } };
@@ -41,6 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<any> {
     filters: { slug: id },
     populate: singlePropertyPopulates,
     pagination: { start: 0, limit: 1 },
+    locale: "en",
   };
 
   if (slug === "rent" || slug === "buy" || slug === "commercial")
@@ -97,6 +100,7 @@ export default async function Page({ params }: Props) {
       filters: { slug: id },
       populate: singlePropertyPopulates,
       pagination: { start: 0, limit: 1 },
+      locale: "en",
     };
     const morePropertiesParams: IListingParams = {
       path: "/properties",
@@ -104,6 +108,7 @@ export default async function Page({ params }: Props) {
       filters: { purpose: slug },
       populate: propertiesPopulates,
       pagination: { start: 0, limit: 4 },
+      locale: "en",
     };
 
     requests.push(list(singlePropertiesParams), list(morePropertiesParams));
