@@ -98,4 +98,17 @@ export const PASSWORD_UPDATE = yup.object().shape({
     .oneOf([yup.ref("password"), null as any], "Passwords must match"),
 });
 
+export const CONTACT_FORM = yup.object().shape({
+  name: yup
+    .string()
+    .required("You need to enter a Full name. This is a mandatory field."),
+  email: yup
+    .string()
+    .required("You need to enter an email. This is a mandatory field.")
+    .email("Please enter a valid email address."),
+  message: yup
+    .string()
+    .required("You need to enter a Phone Number. This is a mandatory field."),
+});
+
 export const DEFAULT_VALIDATION = yup.object();

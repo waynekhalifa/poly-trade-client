@@ -8,18 +8,13 @@ import FormFields from "../FormFields";
 import useSnackbarStore from "@/app/store/snackbar";
 import { IFormField } from "@/app/types/formFields";
 import { InputTypes } from "@/app/enums/inputTypes";
-import { createSnackbarResponse } from "@/app/utils/snackbar";
-import { IPostParams } from "@/app/types/api";
-import { post } from "@/app/services/post";
-import LinkWrap from "../link-wrap";
-import { COMPANY_REGISTRATION } from "@/app/validations/auth";
+import { CONTACT_FORM } from "@/app/validations/auth";
 
 const email: IFormField = {
   id: 1,
   name: "email",
   type: "email",
-  label: "Email Address",
-  placeholder: "",
+  placeholder: "Email *",
   disabled: false,
   autoFocus: false,
   multiple: false,
@@ -29,8 +24,7 @@ const name: IFormField = {
   id: 4,
   name: "name",
   type: "text",
-  label: "Full Name",
-  placeholder: "",
+  placeholder: "Name *",
   disabled: false,
   autoFocus: false,
   multiple: false,
@@ -40,62 +34,31 @@ const phone: IFormField = {
   id: 5,
   name: "phone",
   type: "text",
-  label: "Phone Number",
-  placeholder: "",
+  placeholder: "Telephone",
   disabled: false,
   autoFocus: false,
   multiple: false,
   options: [],
 };
-const terms: IFormField = {
+const company: IFormField = {
   id: 6,
-  name: "terms",
-  type: "checkbox",
-  label: (
-    <>
-      I accept the{" "}
-      <LinkWrap
-        href={"/terms-and-conditions?tab=for-users"}
-        sx={{
-          display: "inline",
-          textDecoration: "underline",
-          color: "#0000EE",
-          "&:visited": { color: "#551A8B" },
-        }}
-      >
-        Terms & Conditions
-      </LinkWrap>
-      {", "}
-      <LinkWrap
-        href={"/privacy-policy"}
-        sx={{
-          display: "inline",
-          textDecoration: "underline",
-          color: "#0000EE",
-          "&:visited": { color: "#551A8B" },
-        }}
-      >
-        Privacy Policy
-      </LinkWrap>
-      {", and "}
-      <LinkWrap
-        href={"/cookies-policy"}
-        sx={{
-          display: "inline",
-          textDecoration: "underline",
-          color: "#0000EE",
-          "&:visited": { color: "#551A8B" },
-        }}
-      >
-        Cookies Policy
-      </LinkWrap>
-      .
-    </>
-  ),
-  placeholder: "",
+  name: "company",
+  type: "text",
+  placeholder: "Company",
   disabled: false,
   autoFocus: false,
   multiple: false,
+  options: [],
+};
+const message: IFormField = {
+  id: 7,
+  name: "message",
+  type: "textarea",
+  placeholder: "Message *",
+  disabled: false,
+  autoFocus: false,
+  multiple: true,
+  rows: 5,
   options: [],
 };
 
@@ -104,7 +67,7 @@ const ContactForm: React.FC = () => {
   const fields: IFormField[] = [];
   const DEFAULT_VALUES: any = {};
 
-  fields.push(name, email, phone, terms);
+  fields.push(name, phone, email, company, message);
 
   for (const field of fields) {
     if (field.type === InputTypes.CHECKBOX) {
@@ -125,49 +88,45 @@ const ContactForm: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm<any>({
-    resolver: yupResolver(COMPANY_REGISTRATION),
+    resolver: yupResolver(CONTACT_FORM),
     mode: "onChange",
     defaultValues: DEFAULT_VALUES,
   });
 
-  const renderButtonText = (): string => "Submit";
+  const renderButtonText = (): string => "Send";
 
   const onSubmit: SubmitHandler<any> = async (formData: any) => {
-    const newCompanySubmissionParams: IPostParams = {
-      path: "/api/company-submissions",
-      input: { data: formData },
-    };
+    // const newCompanySubmissionParams: IPostParams = {
+    //   path: "/api/company-submissions",
+    //   input: { data: formData },
+    // };
 
-    try {
-      await post(newCompanySubmissionParams);
+    // try {
+    //   await post(newCompanySubmissionParams);
 
-      reset();
+    //   reset();
 
-      setSnackbar(
-        createSnackbarResponse(
-          <>Your registration request has been sent successfully!</>,
-          "success"
-        )
-      );
-    } catch (err: Error | any) {
-      setSnackbar(
-        createSnackbarResponse(
-          <>{err.message ? err.message : JSON.stringify(err)}</>,
-          "error"
-        )
-      );
-    }
+    //   setSnackbar(
+    //     createSnackbarResponse(
+    //       <>Your registration request has been sent successfully!</>,
+    //       "success"
+    //     )
+    //   );
+    // } catch (err: Error | any) {
+    //   setSnackbar(
+    //     createSnackbarResponse(
+    //       <>{err.message ? err.message : JSON.stringify(err)}</>,
+    //       "error"
+    //     )
+    //   );
+    // }
+
+    console.log(formData);
   };
 
   return (
     <>
-      <Box
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}
-        border={"1px solid"}
-        borderColor={"divider"}
-        p={3}
-      >
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         {fields.map((item: any) => (
           <FormFields
             key={item.id}
@@ -183,7 +142,6 @@ const ContactForm: React.FC = () => {
         <Button
           variant="contained"
           type="submit"
-          fullWidth
           sx={{ textTransform: "capitalize" }}
         >
           {renderButtonText()}

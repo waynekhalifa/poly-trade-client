@@ -1,5 +1,5 @@
 import { Control, Controller } from "react-hook-form";
-import { FormControl, InputLabel } from "@mui/material";
+import { InputLabel } from "@mui/material";
 import FormInput from "../FormInput/FormInput";
 import { IFormField } from "@/app/types/formFields";
 
@@ -18,10 +18,16 @@ const RHTextAreaField: React.FC<Props> = ({
   autoFocus,
   control,
   errors,
+  rows,
+  sx,
 }) => {
   return (
-    <FormControl>
-      {label && <InputLabel htmlFor={`${name}`}>{label}</InputLabel>}
+    <>
+      {label && (
+        <InputLabel sx={{ mb: 1 }} htmlFor={`${name}`}>
+          {label}
+        </InputLabel>
+      )}
       <Controller
         control={control}
         name={name}
@@ -34,15 +40,18 @@ const RHTextAreaField: React.FC<Props> = ({
             onChange={field.onChange}
             onBlur={field.onBlur}
             type={type}
+            multiline={!!rows}
+            rows={rows}
             disabled={disabled}
             autoFocus={autoFocus}
             placeholder={placeholder}
             error={!!errors[name]}
             helperText={errors[name] && `${errors[name].message}`}
+            sx={{ flex: name === "search" ? 1 : 0, ...sx }}
           />
         )}
       />
-    </FormControl>
+    </>
   );
 };
 

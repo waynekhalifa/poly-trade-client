@@ -29,6 +29,7 @@ const FormFields: React.FC<Props> = (props) => {
       type === InputTypes.TEXT ||
       type === InputTypes.HIDDEN ||
       type === InputTypes.EMAIL ||
+      type === InputTypes.TEXTAREA ||
       type === InputTypes.NUMBER
     )
       return <RHTextField {...props} />;
