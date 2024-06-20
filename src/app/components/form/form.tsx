@@ -1,6 +1,7 @@
 import { IListingItem } from "@/app/types/api";
 import PropertySearch from "../property-search";
 import RegisterCompanyForm from "../register-company-form";
+import ContactForm from "../contact-form";
 
 interface Props {
   data: any;
@@ -15,6 +16,7 @@ const Form: React.FC<Props> = ({ data, listings }) => {
       return <PropertySearch listings={listings} />;
 
     if (name === "register-company") return <RegisterCompanyForm />;
+    if (name === "contact") return <ContactForm />;
 
     return <>generic form</>;
   };
