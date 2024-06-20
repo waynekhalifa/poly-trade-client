@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { Email, PhoneIphone } from "@mui/icons-material";
-// import Form from "../form";
+
 import { ISessionUser } from "@/app/types/session";
 
 const Button = dynamic(() => import("../button"), { suspense: false });
@@ -11,6 +11,9 @@ const ExploreProperties = dynamic(() => import("../explore-properties"), {
   suspense: false,
 });
 const ButtonLink = dynamic(() => import("../button-link"), { suspense: false });
+const ContactInfoList = dynamic(() => import("../contact-info-list"), {
+  suspense: false,
+});
 const Listing = dynamic(() => import("../listing"), { suspense: false });
 const Media = dynamic(() => import("../media"), { suspense: false });
 const NewLogo = dynamic(() => import("../new-logo"), { suspense: false });
@@ -35,9 +38,6 @@ const HeroTitle = dynamic(() => import("../hero-title"), {
   suspense: false,
 });
 const WidgetTitle = dynamic(() => import("../widget-title"), {
-  suspense: false,
-});
-const ContactForm = dynamic(() => import("../contact-form"), {
   suspense: false,
 });
 const EmbeddedMap = dynamic(() => import("../embedded-map"), {
@@ -138,12 +138,12 @@ const Content: React.FC<Props> = ({
         return <WidgetTitle key={component._id} data={component} />;
       case "shared.embedded-map":
         return <EmbeddedMap key={component._id} data={component} />;
-      case "shared.contact-form":
-        return <ContactForm key={component._id} data={component} />;
       case "shared.message-form":
         return <MessageForm key={component._id} data={component} />;
       case "shared.contac-information":
         return <ContactInformation key={component._id} data={component} />;
+      case "shared.contact-info-list":
+        return <ContactInfoList key={component._id} data={component} />;
       case "shared.search-form":
         return <SearchForm key={component._id} data={component} />;
       case "shared.gallery":
