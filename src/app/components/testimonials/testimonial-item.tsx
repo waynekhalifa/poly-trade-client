@@ -54,11 +54,7 @@ const TestimonialItem: React.FC<Props> = ({ text, image, name, title }) => {
           <Typography fontWeight={700} textAlign={"center"}>
             {`${name},`}
           </Typography>
-          <Typography
-            variant="body2"
-            color={"text.secondary"}
-            textAlign={"center"}
-          >
+          <Typography color={"text.secondary"} textAlign={"center"}>
             {title}
           </Typography>
         </Grid>
