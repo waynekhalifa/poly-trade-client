@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { Email, PhoneIphone } from "@mui/icons-material";
 
 import { ISessionUser } from "@/app/types/session";
+import LightBox from "../light-box";
 
 const Button = dynamic(() => import("../button"), { suspense: false });
 const Form = dynamic(() => import("../form"), { suspense: false });
@@ -146,8 +147,10 @@ const Content: React.FC<Props> = ({
         return <ContactInfoList key={component._id} data={component} />;
       case "shared.search-form":
         return <SearchForm key={component._id} data={component} />;
+      // case "shared.gallery":
+      //   return <Gallery key={component._id} data={component} />;
       case "shared.gallery":
-        return <Gallery key={component._id} data={component} />;
+        return <LightBox key={component._id} data={component} />;
       case "shared.testimonials":
         return <Testimonials key={component._id} data={component} />;
       case "shared.text-image-list":

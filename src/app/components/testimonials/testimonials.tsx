@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Box, Divider, Grid, Typography } from "@mui/material";
+import { Box, Divider, Grid } from "@mui/material";
 
 import "swiper/css";
 import TestimonialItem from "./testimonial-item";
@@ -38,13 +38,6 @@ const Testimonials: React.FC<Props> = ({ data }) => {
         mb={3}
       >
         <Divider sx={{ width: 120 }} />
-        <FormatQuote
-          fontSize="large"
-          sx={{ color: "primary.main", transform: "rotate(180deg) scale(1.6)" }}
-        />
-        <Typography variant="h4" component="h2" fontWeight={500}>
-          Testimonials & Reviews
-        </Typography>
         <FormatQuote
           fontSize="large"
           sx={{ color: "primary.main", transform: "scale(1.6)" }}
