@@ -1,5 +1,4 @@
 import { getStrapiURL } from "@/app/utils/api-helpers";
-import calculateNewWidth from "@/app/utils/calculateNewWidth";
 import { Grid } from "@mui/material";
 import Image from "next/image";
 
@@ -8,15 +7,21 @@ interface Props {
 }
 
 const GalleryItem: React.FC<Props> = ({ data }) => {
-  const { url, alternativeText, width, height } = data;
+  const { url, alternativeText, width, height } = data.attributes;
 
   return (
-    <Grid container justifyContent={"center"} alignItems={"center"}>
+    <Grid
+      container
+      justifyContent={"center"}
+      alignItems={"center"}
+      maxHeight={180}
+      overflow={"hidden"}
+    >
       <Image
         src={getStrapiURL(url)}
-        alt={alternativeText}
-        width={Math.floor(calculateNewWidth(width, height, 160))}
-        height={160}
+        alt={alternativeText ? alternativeText : "gallery-item-" + data.id}
+        width={400}
+        height={300}
       />
     </Grid>
   );

@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Box, Divider, Grid } from "@mui/material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 
 import "swiper/css";
 import TestimonialItem from "./testimonial-item";
@@ -17,7 +17,12 @@ const Testimonials: React.FC<Props> = ({ data }) => {
     <>
       {list.map((item: any) => (
         <SwiperSlide key={item.id}>
-          <TestimonialItem image={item.image} text={item.text} />
+          <TestimonialItem
+            image={item.image}
+            text={item.text}
+            name={item.name}
+            title={item.title}
+          />
         </SwiperSlide>
       ))}
     </>
@@ -35,6 +40,13 @@ const Testimonials: React.FC<Props> = ({ data }) => {
         <Divider sx={{ width: 120 }} />
         <FormatQuote
           fontSize="large"
+          sx={{ color: "primary.main", transform: "rotate(180deg) scale(1.6)" }}
+        />
+        <Typography variant="h4" component="h2" fontWeight={500}>
+          Testimonials & Reviews
+        </Typography>
+        <FormatQuote
+          fontSize="large"
           sx={{ color: "primary.main", transform: "scale(1.6)" }}
         />
         <Divider sx={{ width: 120 }} />
@@ -46,7 +58,7 @@ const Testimonials: React.FC<Props> = ({ data }) => {
       </Box>
       <Box position="relative" display={{ xs: "none", md: "block" }}>
         <Swiper
-          slidesPerView={3}
+          slidesPerView={1}
           spaceBetween={24}
           autoplay={{
             delay: 2000,

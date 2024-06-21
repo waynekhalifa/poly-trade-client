@@ -13,12 +13,12 @@ const Gallery: React.FC<Props> = ({ data }) => {
       container
       justifyContent={"center"}
       alignItems={"center"}
-      spacing={4}
+      spacing={3}
       component={List}
     >
       {files.data.map((item: any) => (
         <Grid key={item.id} item xs={12} md={3} component={ListItem}>
-          <GalleryItem data={item.attributes} />
+          <GalleryItem data={item} />
         </Grid>
       ))}
     </Grid>
