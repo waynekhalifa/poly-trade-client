@@ -58,7 +58,7 @@ const Grid: React.FC<Props> = ({
         <Fragment key={rowIndex}>
           <MuiGrid
             container
-            columnSpacing={row.spacing}
+            spacing={row.spacing}
             pt={{
               xs: row.padding && row.padding.top ? row.padding.top.xs : 0,
               sm: row.padding && row.padding.top ? row.padding.top.sm : 0,

@@ -8,8 +8,8 @@ interface Props {
 }
 
 const Media: React.FC<Props> = ({ data }) => {
-  const { file, objectFit, padding, margin } = data;
-  const { url, alternativeText, width, height } = file.data.attributes;
+  const { file, objectFit, height, padding, margin, alignment, shape } = data;
+  const { url, alternativeText, width } = file.data.attributes;
 
   return (
     <Box
@@ -62,32 +62,56 @@ const Media: React.FC<Props> = ({ data }) => {
         lg: margin && margin.right ? margin.right.lg : "auto",
       }}
       overflow={"hidden"}
+      sx={{
+        img: {
+          ml: alignment === "center" ? "auto" : 0,
+          mr: alignment === "center" ? "auto" : 0,
+        },
+      }}
     >
       {objectFit === "cover" && (
         <>
-          <Box
-            position="relative"
-            sx={{
-              display: { xs: "block", md: "none" },
-            }}
-          >
-            <Image
-              src={getStrapiURL(url)}
-              alt={alternativeText}
-              width={width}
-              height={height}
-            />
-          </Box>
-          <Box
-            position="relative"
-            height={data.height}
-            sx={{
-              display: { xs: "none", md: "block" },
-              img: { maxWidth: "100%", height: "auto" },
-            }}
-          >
-            <Image src={getStrapiURL(url)} alt={alternativeText} fill />
-          </Box>
+          {shape && shape === "circle" ? (
+            <Box
+              position="relative"
+              height={data.height}
+              width={data.height}
+              overflow={"hidden"}
+              borderRadius={"50%"}
+              sx={{
+                ml: alignment === "center" ? "auto" : 0,
+                mr: alignment === "center" ? "auto" : 0,
+              }}
+            >
+              <Image src={getStrapiURL(url)} alt={alternativeText} fill />
+            </Box>
+          ) : (
+            <>
+              <Box
+                position="relative"
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                <Image
+                  src={getStrapiURL(url)}
+                  alt={alternativeText}
+                  width={width}
+                  height={file.data.attributes.height}
+                />
+              </Box>
+              <Box
+                position="relative"
+                height={data.height}
+                sx={{
+                  display: { xs: "none", md: "block" },
+                  img: { maxWidth: "100%", height: "auto" },
+                }}
+              >
+                <Image src={getStrapiURL(url)} alt={alternativeText} fill />
+              </Box>
+            </>
+          )}
         </>
       )}
       {objectFit !== "cover" && (
@@ -95,7 +119,7 @@ const Media: React.FC<Props> = ({ data }) => {
           src={getStrapiURL(url)}
           alt={alternativeText}
           width={width}
-          height={height}
+          height={file.data.attributes.height}
         />
       )}
     </Box>
