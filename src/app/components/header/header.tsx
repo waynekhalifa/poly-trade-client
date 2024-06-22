@@ -46,6 +46,7 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
                 md={2}
                 display={"flex"}
                 justifyContent={"space-between"}
+                alignItems={"center"}
               >
                 <NewLogo data={logo} imgHeight={88} />
                 <MenuIcon handleDrawerOpen={handleDrawerOpen} />
@@ -75,11 +76,11 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
             container
             justifyContent={"center"}
             alignItems={"center"}
-            height={72}
+            height={86}
             borderBottom={"thin solid"}
             borderColor={"divider"}
           >
-            <NewLogo data={logo} imgHeight={120} />
+            <NewLogo data={logo} imgHeight={82} />
           </Grid>
         </Box>
         <Navigation
