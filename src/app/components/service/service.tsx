@@ -9,7 +9,7 @@ interface Props {
 
 const Service: React.FC<Props> = ({ data }) => {
   const { label, icon } = data;
-  // console.log(data);
+
   return (
     <Grid
       container

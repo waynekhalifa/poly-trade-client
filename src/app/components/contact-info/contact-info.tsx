@@ -8,7 +8,6 @@ interface Props {
 }
 
 const ContactInfo: React.FC<Props> = ({ data }) => {
-  console.log(data);
   return (
     <Box
       color={data.color}
