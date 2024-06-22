@@ -10,7 +10,7 @@ const ContactInfoList: React.FC<Props> = ({ data }) => {
   const { gap, list, margin, padding } = data;
 
   const renderContent = (): React.ReactNode => (
-    <Grid container columnSpacing={gap}>
+    <Grid container spacing={gap}>
       {list.map((item: any) => (
         <Grid item key={item.id} xs={12} md={6}>
           <ContactInfo data={item} />

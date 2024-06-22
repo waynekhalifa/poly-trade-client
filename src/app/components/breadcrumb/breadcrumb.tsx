@@ -4,6 +4,7 @@ import { ArrowForwardIos } from "@mui/icons-material";
 import { Box, Container, List, Typography } from "@mui/material";
 
 import LinkWrap from "../link-wrap";
+import { getStrapiURL } from "@/app/utils/api-helpers";
 
 interface Props {
   page: any;
@@ -13,8 +14,38 @@ const Breadcrumb: React.FC<Props> = ({ page }) => {
   const { name } = page;
 
   return (
-    <>
-      <Box py={2} borderTop={"1px solid"} borderColor={"divider"}>
+    <Box
+      py={{ xs: 4, md: 8 }}
+      sx={{
+        position: "relative",
+        width: "100%",
+        overflow: "hidden",
+        "&:before": {
+          content: '""',
+          position: "absolute",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100%",
+          backgroundImage: `url("${getStrapiURL()}/uploads/bg_ea9751d92e.png")`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          zIndex: "-1",
+        },
+        "&:after": {
+          content: '""',
+          position: "absolute",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100%",
+          background:
+            "linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8))",
+          zIndex: "-1",
+        },
+      }}
+    >
+      <Box mb={{ xs: 6 }} borderTop={"1px solid"} borderColor={"divider"}>
         <Container>
           <List
             disablePadding
@@ -22,9 +53,8 @@ const Breadcrumb: React.FC<Props> = ({ page }) => {
           >
             <LinkWrap href={"/"}>
               <Typography
-                variant="body2"
                 textTransform={"capitalize"}
-                color={"text.secondary"}
+                color={"common.white"}
                 sx={{
                   transition: "all .s3 ease-in",
                   "&:hover": {
@@ -37,20 +67,23 @@ const Breadcrumb: React.FC<Props> = ({ page }) => {
             </LinkWrap>
             <ArrowForwardIos
               fontSize="small"
-              sx={{ color: "text.primary", transform: "scale(.5)" }}
+              sx={{ color: "primary.main", transform: "scale(.5)" }}
             />
-            <Typography variant="body2" color={"text.secondary"}>
-              {name}
-            </Typography>
+            <Typography color={"primary.main"}>{name}</Typography>
           </List>
         </Container>
       </Box>
       <Container>
-        <Typography variant="h4" component="h1" fontWeight={700} my={{ xs: 2 }}>
+        <Typography
+          variant="h3"
+          component="h1"
+          fontWeight={700}
+          color={"common.white"}
+        >
           {name}
         </Typography>
       </Container>
-    </>
+    </Box>
   );
 };
 
