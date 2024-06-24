@@ -43,7 +43,7 @@ const PostCard: React.FC<Props> = ({ post }) => {
       }}
     >
       <LinkWrap
-        href={"/blog/" + slug}
+        href={"/ews/" + slug}
         sx={{ position: "relative", display: "block", height: 200 }}
       >
         <Image
@@ -62,9 +62,9 @@ const PostCard: React.FC<Props> = ({ post }) => {
             />
           ))}
         </List>
-        <LinkWrap href={"/blog/" + slug}>
+        <LinkWrap href={"/ews/" + slug}>
           <Typography
-            paragraph
+            gutterBottom
             variant="h6"
             component={"h3"}
             fontWeight={700}
@@ -126,9 +126,9 @@ const PostCard: React.FC<Props> = ({ post }) => {
         >
           {formatDate(publishedAt)}
         </Typography> */}
-        <LinkWrap href={"/blog/" + slug}>
+        <LinkWrap href={"/ews/" + slug}>
           <Button variant="contained" size="small">
-            read more
+            Read more
           </Button>
         </LinkWrap>
       </Box>

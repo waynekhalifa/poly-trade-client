@@ -3,7 +3,6 @@ import { Box, Grid, Typography } from "@mui/material";
 import { formatDate, getStrapiURL } from "@/app/utils/api-helpers";
 import { excerptString } from "@/app/utils/excerpt-string";
 import { AccessTime } from "@mui/icons-material";
-import calculateNewWidth from "@/app/utils/calculateNewWidth";
 import LinkWrap from "../link-wrap";
 
 interface Props {
@@ -14,32 +13,29 @@ const PostItem: React.FC<Props> = ({ data }) => {
   const { name, slug, thumbnail, publishedAt } = data;
 
   return (
-    <Grid container mb={3} columnSpacing={3}>
+    <Grid container mb={3} columnSpacing={2}>
       <Grid item xs={4}>
         <Box overflow={"hidden"}>
-          <LinkWrap href={"/blog/" + slug}>
+          <LinkWrap
+            href={"/news/" + slug}
+            sx={{ position: "relative", height: 72 }}
+          >
             <Image
               src={getStrapiURL(thumbnail.data.attributes.url)}
               alt={name}
-              width={Math.floor(
-                calculateNewWidth(
-                  thumbnail.data.attributes.width,
-                  thumbnail.data.attributes.height,
-                  64
-                )
-              )}
-              height={64}
+              fill
             />
           </LinkWrap>
         </Box>
       </Grid>
       <Grid item xs={8}>
-        <LinkWrap href={"/blog/" + slug}>
+        <LinkWrap href={"/news/" + slug}>
           <Typography
             fontWeight={500}
             component={"h5"}
             gutterBottom
             color={"common.white"}
+            minHeight={48}
           >
             {excerptString(name, 42)}
           </Typography>

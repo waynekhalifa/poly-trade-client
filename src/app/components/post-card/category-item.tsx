@@ -10,8 +10,8 @@ const CategoryItem: React.FC<Props> = ({ item, isLast }) => {
   return (
     <>
       <Typography
+        gutterBottom
         variant="body2"
-        paragraph
         color={"text.secondary"}
         textAlign={"center"}
         textTransform={"uppercase"}
