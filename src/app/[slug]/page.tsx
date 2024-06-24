@@ -37,14 +37,6 @@ const recentPostsParams: IListingParams = {
   pagination: { start: 0, limit: 4 },
   locale: "en",
 };
-const blogPostsParams: IListingParams = {
-  path: "/posts",
-  sort: { createdAt: SortOrders.DESC },
-  filters: {},
-  populate: postsPopulates,
-  pagination: { start: 0, limit: 9 },
-  locale: "en",
-};
 const categoriesParams: IListingParams = {
   path: "/categories",
   sort: { createdAt: SortOrders.DESC },
@@ -117,6 +109,20 @@ export default async function Page({ params, searchParams }: Props) {
     filters: { slug },
     populate: sectionsPopulates,
     pagination: { start: 0, limit: 100 },
+    locale: "en",
+  };
+
+  const blogPostsParams: IListingParams = {
+    path: "/posts",
+    sort: { createdAt: SortOrders.DESC },
+    filters: {},
+    populate: postsPopulates,
+    pagination: {
+      start: searchParams["page"]
+        ? (parseInt(searchParams["page"]) - 1) * 9
+        : 0,
+      limit: 9,
+    },
     locale: "en",
   };
 

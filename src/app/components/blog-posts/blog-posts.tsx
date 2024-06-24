@@ -5,12 +5,14 @@ import { IListingItem } from "@/app/types/api";
 import BlogSearchForm from "../blog-search-form";
 import LinkWrap from "../link-wrap";
 import { calculatePages } from "@/app/utils/calculate-pages";
+import { navigateInternal } from "@/app/utils/navigate";
 
 interface Props {
   listings: IListingItem[];
+  searchParams: any;
 }
 
-const BlogPosts: React.FC<Props> = ({ listings }) => {
+const BlogPosts: React.FC<Props> = ({ listings, searchParams }) => {
   const blogPosts: IListingItem | undefined = listings.find(
     (item: any) => item.name === "blogPosts"
   );
@@ -20,8 +22,13 @@ const BlogPosts: React.FC<Props> = ({ listings }) => {
 
   const total: number = blogPosts?.result.meta.pagination.total;
   const limit: number = blogPosts?.result.meta.pagination.limit;
+  let hasPrev: boolean = false;
+  let hasNext: boolean = true;
 
-  console.log(Array.from({ length: 2 }, (_, index) => index));
+  if (searchParams["page"]) {
+    hasPrev = parseInt(searchParams["page"]) * limit >= total;
+    hasNext = parseInt(searchParams["page"]) * limit <= total;
+  }
 
   return (
     <Grid container spacing={3}>
@@ -41,22 +48,59 @@ const BlogPosts: React.FC<Props> = ({ listings }) => {
             aria-label="blog pagination"
             sx={{ mt: 4 }}
           >
+            {hasPrev && (
+              <Button
+                sx={{ maxWidth: 32 }}
+                onClick={() =>
+                  navigateInternal(
+                    `/news?page=${(parseInt(searchParams["page"]) || 1) - 1}`
+                  )
+                }
+              >
+                <ArrowForwardIos
+                  fontSize="small"
+                  sx={{ transform: "rotate(180deg) scale(.6)" }}
+                />
+              </Button>
+            )}
             {Array.from({ length: 2 }, (_, index) => index).map(
               (item: number) => (
-                <LinkWrap
+                <Button
                   key={item}
-                  href={item + 1 > 1 ? `/news?page=${item + 1}` : "/news"}
+                  disabled={(parseInt(searchParams["page"]) || 1) === item + 1}
+                  sx={{
+                    "&.Mui-disabled": {
+                      borderColor: "primary.main",
+                      cursor: "not-allowed",
+                      pointerEvents: "initial",
+                      color: "primary.main",
+                    },
+                  }}
+                  onClick={() =>
+                    navigateInternal(
+                      item + 1 > 1 ? `/news?page=${item + 1}` : "/news"
+                    )
+                  }
                 >
-                  <Button>{item + 1}</Button>
-                </LinkWrap>
+                  {item + 1}
+                </Button>
               )
             )}
-            <Button sx={{ maxWidth: 32 }}>
-              <ArrowForwardIos
-                fontSize="small"
-                sx={{ transform: "scale(.6)" }}
-              />
-            </Button>
+            {hasNext && (
+              <Button
+                sx={{ maxWidth: 32 }}
+                onClick={() =>
+                  navigateInternal(
+                    `/news?page=${(parseInt(searchParams["page"]) || 1) + 1}`
+                  )
+                }
+              >
+                <ArrowForwardIos
+                  fontSize="small"
+                  sx={{ transform: "scale(.6)" }}
+                />
+              </Button>
+            )}
           </ButtonGroup>
         )}
       </Grid>

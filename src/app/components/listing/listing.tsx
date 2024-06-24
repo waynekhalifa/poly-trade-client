@@ -36,7 +36,7 @@ const Listing: React.FC<Props> = ({
     return <LatestPosts listings={listings} />;
   }
   if (sectionName === "blog-listing") {
-    return <BlogPosts listings={listings} />;
+    return <BlogPosts listings={listings} searchParams={searchParams} />;
   }
 
   return <>Should render listing</>;

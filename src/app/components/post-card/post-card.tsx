@@ -11,12 +11,6 @@ interface Props {
   post: any;
 }
 
-const options: any = {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-};
-
 const PostCard: React.FC<Props> = ({ post }) => {
   const {
     name,
@@ -28,6 +22,7 @@ const PostCard: React.FC<Props> = ({ post }) => {
     author,
   } = post.attributes;
   const { url, alternativeText } = thumbnail.data.attributes;
+
   return (
     <Box
       id={`post-${post.id}`}
@@ -43,7 +38,7 @@ const PostCard: React.FC<Props> = ({ post }) => {
       }}
     >
       <LinkWrap
-        href={"/ews/" + slug}
+        href={"/news/" + slug}
         sx={{ position: "relative", display: "block", height: 200 }}
       >
         <Image
@@ -62,7 +57,7 @@ const PostCard: React.FC<Props> = ({ post }) => {
             />
           ))}
         </List>
-        <LinkWrap href={"/ews/" + slug}>
+        <LinkWrap href={"/news/" + slug}>
           <Typography
             gutterBottom
             variant="h6"
@@ -126,7 +121,7 @@ const PostCard: React.FC<Props> = ({ post }) => {
         >
           {formatDate(publishedAt)}
         </Typography> */}
-        <LinkWrap href={"/ews/" + slug}>
+        <LinkWrap href={"/news/" + slug}>
           <Button variant="contained" size="small">
             Read more
           </Button>
