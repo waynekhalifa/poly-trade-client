@@ -112,10 +112,15 @@ export default async function Page({ params, searchParams }: Props) {
     locale: "en",
   };
 
+  const filters: any = {};
+
+  if (searchParams["category"])
+    filters["categories"] = { slug: searchParams["category"] };
+
   const blogPostsParams: IListingParams = {
     path: "/posts",
     sort: { createdAt: SortOrders.DESC },
-    filters: {},
+    filters,
     populate: postsPopulates,
     pagination: {
       start: searchParams["page"]
