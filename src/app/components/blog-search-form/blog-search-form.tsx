@@ -5,6 +5,7 @@ import { Box, Button } from "@mui/material";
 import { IFormField } from "@/app/types/formFields";
 import { InputTypes } from "@/app/enums/inputTypes";
 import FormFields from "../FormFields";
+import { navigateInternal } from "@/app/utils/navigate";
 
 const fields: IFormField[] = [
   {
@@ -47,9 +48,12 @@ const BlogSearchForm: React.FC = () => {
     defaultValues: DEFAULT_VALUES,
   });
 
-  const onSubmit: SubmitHandler<any> = async (formData: any) => {
-    console.log(formData);
-  };
+  const onSubmit: SubmitHandler<any> = async (formData: any) =>
+    navigateInternal(
+      formData["search"] !== ""
+        ? `/news/?search=${formData["search"]}`.replaceAll(" ", "+")
+        : "/news"
+    );
 
   return (
     <Box component={"form"} onSubmit={handleSubmit(onSubmit)} display={"flex"}>

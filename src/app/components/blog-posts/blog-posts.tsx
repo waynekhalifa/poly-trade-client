@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, Grid, List, Typography } from "@mui/material";
 import PostCard from "../post-card";
-import { ArrowForwardIos, Launch } from "@mui/icons-material";
+import { ArrowForwardIos, Close, Launch } from "@mui/icons-material";
 import { IListingItem } from "@/app/types/api";
 import BlogSearchForm from "../blog-search-form";
 import LinkWrap from "../link-wrap";
@@ -33,6 +33,23 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams }) => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={9}>
+        {searchParams["search"] && (
+          <Grid container alignItems={"center"} gap={1} mb={{ xs: 2, md: 3 }}>
+            <Typography variant="h4" component="span" fontWeight={700}>
+              Search result for:
+            </Typography>
+            <Typography
+              component="span"
+              variant="h4"
+              sx={{ textDecoration: "underline" }}
+            >
+              {searchParams["search"]}
+            </Typography>
+            <LinkWrap href="/news">
+              <Close sx={{ color: "primary.main" }} />
+            </LinkWrap>
+          </Grid>
+        )}
         <Grid container spacing={2}>
           {blogPosts &&
             blogPosts.result.data.length > 0 &&

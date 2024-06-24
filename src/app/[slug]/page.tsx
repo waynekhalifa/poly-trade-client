@@ -114,6 +114,16 @@ export default async function Page({ params, searchParams }: Props) {
 
   const filters: any = {};
 
+  if (searchParams["search"])
+    filters["$or"] = [
+      { name: { $containsi: searchParams["search"].replaceAll("+", " ") } },
+      {
+        description: {
+          $containsi: searchParams["search"].replaceAll("+", " "),
+        },
+      },
+    ];
+
   if (searchParams["category"])
     filters["categories"] = { slug: searchParams["category"] };
 
