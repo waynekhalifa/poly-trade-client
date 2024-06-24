@@ -34,7 +34,23 @@ const recentPostsParams: IListingParams = {
   sort: { createdAt: SortOrders.DESC },
   filters: {},
   populate: postsPopulates,
-  pagination: { start: 0, limit: 3 },
+  pagination: { start: 0, limit: 4 },
+  locale: "en",
+};
+const blogPostsParams: IListingParams = {
+  path: "/posts",
+  sort: { createdAt: SortOrders.DESC },
+  filters: {},
+  populate: postsPopulates,
+  pagination: { start: 0, limit: 9 },
+  locale: "en",
+};
+const categoriesParams: IListingParams = {
+  path: "/categories",
+  sort: { createdAt: SortOrders.DESC },
+  filters: {},
+  populate: {},
+  pagination: { start: 0, limit: 100 },
   locale: "en",
 };
 
@@ -103,16 +119,33 @@ export default async function Page({ params, searchParams }: Props) {
     pagination: { start: 0, limit: 100 },
     locale: "en",
   };
-  const [headerSections, footerSections, sections, posts, pages] =
-    await Promise.all([
-      list(headerSectionsParams),
-      list(footerSectionsParams),
-      list(pageSectionsParams),
-      list(recentPostsParams),
-      list(pagesParams),
-    ]);
 
-  const listings: IListingItem[] = [{ name: "posts", result: posts }];
+  const requests: any[] = [
+    list(headerSectionsParams),
+    list(footerSectionsParams),
+    list(pageSectionsParams),
+    list(recentPostsParams),
+    list(pagesParams),
+  ];
+
+  if (slug === "news")
+    requests.push(list(blogPostsParams), list(categoriesParams));
+
+  const [
+    headerSections,
+    footerSections,
+    sections,
+    posts,
+    pages,
+    blogPosts,
+    categories,
+  ] = await Promise.all(requests);
+
+  const listings: IListingItem[] = [
+    { name: "posts", result: posts },
+    { name: "blogPosts", result: blogPosts },
+    { name: "categories", result: categories },
+  ];
 
   const renderContent = (): React.ReactNode => {
     return (

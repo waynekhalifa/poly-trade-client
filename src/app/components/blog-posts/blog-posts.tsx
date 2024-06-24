@@ -1,35 +1,94 @@
-import { Button, ButtonGroup, Grid } from "@mui/material";
+import { Button, ButtonGroup, Grid, List, Typography } from "@mui/material";
 import PostCard from "../post-card";
-import { ArrowForwardIos } from "@mui/icons-material";
+import { ArrowForwardIos, Launch } from "@mui/icons-material";
+import { IListingItem } from "@/app/types/api";
+import BlogSearchForm from "../blog-search-form";
+import LinkWrap from "../link-wrap";
 
 interface Props {
-  listing: any;
+  listings: IListingItem[];
 }
 
-const LatestPosts: React.FC<Props> = ({ listing }) => {
+const BlogPosts: React.FC<Props> = ({ listings }) => {
+  const blogPosts: IListingItem | undefined = listings.find(
+    (item: any) => item.name === "blogPosts"
+  );
+  const categories: IListingItem | undefined = listings.find(
+    (item: any) => item.name === "categories"
+  );
+
   return (
-    <>
-      <Grid container spacing={3}>
-        {listing.data.map((item: any) => (
-          <Grid item key={item.id} xs={12} md={4}>
-            <PostCard post={item} />
-          </Grid>
-        ))}
+    <Grid container spacing={3}>
+      <Grid item xs={12} md={9}>
+        <Grid container spacing={2}>
+          {blogPosts &&
+            blogPosts.result.data.length > 0 &&
+            blogPosts.result.data.map((item: any) => (
+              <Grid item key={item.id} xs={12} md={4}>
+                <PostCard post={item} />
+              </Grid>
+            ))}
+        </Grid>
+        {blogPosts?.result.meta.pagination.total! > 10 && (
+          <ButtonGroup
+            variant="outlined"
+            aria-label="blog pagination"
+            sx={{ mt: 4 }}
+          >
+            <Button>1</Button>
+            <Button>2</Button>
+            <Button>3</Button>
+            <Button>
+              <ArrowForwardIos
+                fontSize="small"
+                sx={{ transform: "scale(.7)" }}
+              />
+            </Button>
+          </ButtonGroup>
+        )}
       </Grid>
-      <ButtonGroup
-        variant="outlined"
-        aria-label="blog pagination"
-        sx={{ mt: 4 }}
-      >
-        <Button>1</Button>
-        <Button>2</Button>
-        <Button>3</Button>
-        <Button>
-          <ArrowForwardIos fontSize="small" sx={{ transform: "scale(.7)" }} />
-        </Button>
-      </ButtonGroup>
-    </>
+      <Grid item xs={12} md={3}>
+        <BlogSearchForm />
+        {categories && categories.result.data.length > 0 && (
+          <>
+            <Typography
+              fontWeight={500}
+              variant="h5"
+              mt={{ x: 2, md: 3 }}
+              mb={{ x: 1, md: 2 }}
+            >
+              Categories
+            </Typography>
+            <List
+              disablePadding
+              sx={{ borderTop: "1px dashed", borderColor: "divider" }}
+            >
+              {categories.result.data.map((item: any) => (
+                <LinkWrap
+                  key={item.id}
+                  href={`/news?category=${item.attributes.slug}`}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    py: 2,
+                    borderBottom: "1px dashed",
+                    borderColor: "divider",
+                    "&:hover": {
+                      color: "primary.main",
+                    },
+                  }}
+                >
+                  <Launch fontSize="small" />
+                  <Typography>{item.attributes.name}</Typography>
+                </LinkWrap>
+              ))}
+            </List>
+          </>
+        )}
+      </Grid>
+    </Grid>
   );
 };
 
-export default LatestPosts;
+export default BlogPosts;

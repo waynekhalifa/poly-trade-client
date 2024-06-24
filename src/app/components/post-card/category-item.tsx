@@ -10,6 +10,7 @@ const CategoryItem: React.FC<Props> = ({ item, isLast }) => {
   return (
     <>
       <Typography
+        variant="body2"
         paragraph
         color={"text.secondary"}
         textAlign={"center"}

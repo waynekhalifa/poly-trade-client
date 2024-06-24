@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, List, Typography } from "@mui/material";
 import { formatDate, getStrapiURL } from "@/app/utils/api-helpers";
-import calculateNewHeight from "@/app/utils/calculateNewHeight";
 import { excerptString } from "@/app/utils/excerpt-string";
 import { CalendarMonth, Person } from "@mui/icons-material";
 import LinkWrap from "../link-wrap";
+import CategoryItem from "./category-item";
 
 interface Props {
   post: any;
@@ -27,7 +27,7 @@ const PostCard: React.FC<Props> = ({ post }) => {
     thumbnail,
     author,
   } = post.attributes;
-  const { url, alternativeText, width, height } = thumbnail.data.attributes;
+  const { url, alternativeText } = thumbnail.data.attributes;
   return (
     <Box
       id={`post-${post.id}`}
@@ -42,16 +42,18 @@ const PostCard: React.FC<Props> = ({ post }) => {
         "&:hover": { borderColor: "primary.light" },
       }}
     >
-      <LinkWrap href={"/blog/" + slug}>
+      <LinkWrap
+        href={"/blog/" + slug}
+        sx={{ position: "relative", display: "block", height: 200 }}
+      >
         <Image
           src={getStrapiURL(url)}
           alt={alternativeText ? alternativeText : name}
-          height={Math.floor(calculateNewHeight(width, height, 372))}
-          width={372}
+          fill
         />
       </LinkWrap>
-      <Box p={3}>
-        {/* <List disablePadding sx={{ display: "inline-flex", mt: 2 }}>
+      <Box p={2}>
+        <List disablePadding sx={{ display: "inline-flex" }}>
           {categories.data.map((item: any, index: Number) => (
             <CategoryItem
               key={item.id}
@@ -59,7 +61,7 @@ const PostCard: React.FC<Props> = ({ post }) => {
               isLast={index === categories.data.length - 1}
             />
           ))}
-        </List> */}
+        </List>
         <LinkWrap href={"/blog/" + slug}>
           <Typography
             paragraph
@@ -67,8 +69,9 @@ const PostCard: React.FC<Props> = ({ post }) => {
             component={"h3"}
             fontWeight={700}
             textTransform={"capitalize"}
+            minHeight={64}
           >
-            {excerptString(name, 60)}
+            {excerptString(name, 40)}
           </Typography>
         </LinkWrap>
         <Button
@@ -106,7 +109,13 @@ const PostCard: React.FC<Props> = ({ post }) => {
           {formatDate(publishedAt)}
         </Button>
 
-        <Typography mt={2} mb={3} color="text.secondary" variant="body2">
+        <Typography
+          mt={2}
+          mb={3}
+          color="text.secondary"
+          variant="body2"
+          minHeight={60}
+        >
           {excerptString(description[0].children[0].text, 160)}
         </Typography>
         {/* <Typography

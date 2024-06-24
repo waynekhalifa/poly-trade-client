@@ -2,6 +2,7 @@ import { IListingItem } from "@/app/types/api";
 import { ISessionUser } from "@/app/types/session";
 import PropertyListing from "../property-listing";
 import LatestPosts from "../latest-posts";
+import BlogPosts from "../blog-posts";
 
 interface Props {
   data: any;
@@ -33,6 +34,9 @@ const Listing: React.FC<Props> = ({
 
   if (sectionName === "latest-posts") {
     return <LatestPosts listings={listings} />;
+  }
+  if (sectionName === "blog-listing") {
+    return <BlogPosts listings={listings} />;
   }
 
   return <>Should render listing</>;
