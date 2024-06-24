@@ -21,6 +21,8 @@ const BlogPosts: React.FC<Props> = ({ listings }) => {
   const total: number = blogPosts?.result.meta.pagination.total;
   const limit: number = blogPosts?.result.meta.pagination.limit;
 
+  console.log(Array.from({ length: 2 }, (_, index) => index));
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={9}>
@@ -39,10 +41,17 @@ const BlogPosts: React.FC<Props> = ({ listings }) => {
             aria-label="blog pagination"
             sx={{ mt: 4 }}
           >
-            <Button>1</Button>
-            <Button>2</Button>
-            <Button>3</Button>
-            <Button sx={{ minWidth: 32 }}>
+            {Array.from({ length: 2 }, (_, index) => index).map(
+              (item: number) => (
+                <LinkWrap
+                  key={item}
+                  href={item + 1 > 1 ? `/news?page=${item + 1}` : "/news"}
+                >
+                  <Button>{item + 1}</Button>
+                </LinkWrap>
+              )
+            )}
+            <Button sx={{ maxWidth: 32 }}>
               <ArrowForwardIos
                 fontSize="small"
                 sx={{ transform: "scale(.6)" }}
