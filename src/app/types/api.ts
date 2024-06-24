@@ -27,7 +27,7 @@ export interface Model {
 }
 
 export interface Meta {
-  pagination: Pagination;
+  pagination: any;
 }
 
 export interface Pagination {

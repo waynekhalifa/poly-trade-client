@@ -4,6 +4,7 @@ import { ArrowForwardIos, Launch } from "@mui/icons-material";
 import { IListingItem } from "@/app/types/api";
 import BlogSearchForm from "../blog-search-form";
 import LinkWrap from "../link-wrap";
+import { calculatePages } from "@/app/utils/calculate-pages";
 
 interface Props {
   listings: IListingItem[];
@@ -17,6 +18,9 @@ const BlogPosts: React.FC<Props> = ({ listings }) => {
     (item: any) => item.name === "categories"
   );
 
+  const total: number = blogPosts?.result.meta.pagination.total;
+  const limit: number = blogPosts?.result.meta.pagination.limit;
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={9}>
@@ -29,7 +33,7 @@ const BlogPosts: React.FC<Props> = ({ listings }) => {
               </Grid>
             ))}
         </Grid>
-        {blogPosts?.result.meta.pagination.total! > 10 && (
+        {calculatePages(total, limit) > 1 && (
           <ButtonGroup
             variant="outlined"
             aria-label="blog pagination"
@@ -38,10 +42,10 @@ const BlogPosts: React.FC<Props> = ({ listings }) => {
             <Button>1</Button>
             <Button>2</Button>
             <Button>3</Button>
-            <Button>
+            <Button sx={{ minWidth: 32 }}>
               <ArrowForwardIos
                 fontSize="small"
-                sx={{ transform: "scale(.7)" }}
+                sx={{ transform: "scale(.6)" }}
               />
             </Button>
           </ButtonGroup>
