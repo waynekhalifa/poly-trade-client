@@ -18,29 +18,36 @@ const PostSections: React.FC<Props> = ({ data, relatedPosts }) => {
   return (
     <Box pt={{ xs: 4, md: 8 }} pb={{ xs: 8, md: 12 }}>
       <Container>
-        <Image
-          src={getStrapiURL(thumbnail.data.attributes.url)}
-          alt={
-            thumbnail.data.attributes.alternativeText
-              ? thumbnail.data.attributes.alternativeText
-              : name
-          }
-          width={thumbnail.data.attributes.width}
-          height={thumbnail.data.attributes.height}
-        />
-        <Typography
-          component="h2"
-          variant="h5"
-          fontWeight={700}
-          mt={{ xs: 3, md: 4 }}
-          mb={{ xs: 2, md: 3 }}
+        <Box
+          sx={{
+            mb: { xs: 3, md: 4 },
+            position: "relative",
+            width: "100%",
+            paddingBottom: `${
+              (thumbnail.data.attributes.height /
+                thumbnail.data.attributes.width) *
+              100
+            }%`,
+          }}
         >
-          {name}
-        </Typography>
+          <Image
+            src={getStrapiURL(thumbnail.data.attributes.url)}
+            alt={
+              thumbnail.data.attributes.alternativeText
+                ? thumbnail.data.attributes.alternativeText
+                : name
+            }
+            fill
+            objectFit="contain"
+          />
+        </Box>
         {description.map((item: any, index: number) => (
           <RichTextBlocks key={index} element={item} />
         ))}
         <Box mt={{ xs: 4, md: 8 }}>
+          <Typography variant="h4" fontWeight={500} mb={{ xs: 2, md: 3 }}>
+            Related Posts
+          </Typography>
           <Grid container spacing={2}>
             {relatedPosts &&
               relatedPosts.data.length > 0 &&
