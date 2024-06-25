@@ -95,6 +95,9 @@ const HowItWorks = dynamic(() => import("../how-it-works"), {
 const Editor = dynamic(() => import("../editor"), {
   suspense: false,
 });
+const EditorList = dynamic(() => import("../editor-list"), {
+  suspense: false,
+});
 
 interface Props {
   component: any;
@@ -194,6 +197,8 @@ const Content: React.FC<Props> = ({
         );
       case "shared.editor":
         return <Editor key={component._id} data={component} />;
+      case "shared.editor-list":
+        return <EditorList key={component._id} data={component} />;
       case "shared.my-account":
         return (
           <MyAccount
