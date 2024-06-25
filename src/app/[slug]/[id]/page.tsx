@@ -1,6 +1,5 @@
 import Header from "@/app/components/header";
 import NotFound from "@/app/components/not-found";
-import PropertySections from "@/app/components/property-sections";
 import Section from "@/app/components/section";
 import MainSnackbar from "@/app/components/main-snackbar";
 import { FALLBACK_SEO } from "@/app/utils/constants";
@@ -8,11 +7,13 @@ import { getStrapiURL } from "@/app/utils/api-helpers";
 import { IListingItem, IListingParams } from "@/app/types/api";
 import { SortOrders } from "@/app/enums/sort-orders";
 import {
-  propertiesPopulates,
+  postsPopulates,
+  productsPopulates,
   sectionsPopulates,
-  singlePropertyPopulates,
 } from "@/app/constants/populates";
 import { list } from "@/app/services/list";
+import Breadcrumb from "@/app/components/breadcrumb";
+import ProductSections from "@/app/components/product-sections";
 
 const headerSectionsParams: IListingParams = {
   path: "/sections",
@@ -30,6 +31,14 @@ const footerSectionsParams: IListingParams = {
   pagination: { start: 0, limit: 100 },
   locale: "en",
 };
+const recentPostsParams: IListingParams = {
+  path: "/posts",
+  sort: { createdAt: SortOrders.DESC },
+  filters: {},
+  populate: postsPopulates,
+  pagination: { start: 0, limit: 4 },
+  locale: "en",
+};
 
 type Props = { params: { slug: string; id: string } };
 
@@ -37,17 +46,16 @@ export async function generateMetadata({ params }: Props): Promise<any> {
   const { slug, id } = params;
   const requests: any[] = [];
 
-  const singlePropertiesParams: IListingParams = {
-    path: "/properties",
+  const singleProductParams: IListingParams = {
+    path: "/products",
     sort: { createdAt: SortOrders.DESC },
     filters: { slug: id },
-    populate: singlePropertyPopulates,
+    populate: productsPopulates,
     pagination: { start: 0, limit: 1 },
     locale: "en",
   };
 
-  if (slug === "rent" || slug === "buy" || slug === "commercial")
-    requests.push(list(singlePropertiesParams));
+  if (slug === "products") requests.push(list(singleProductParams));
 
   const [singleData] = await Promise.all(requests);
 
@@ -91,44 +99,44 @@ export default async function Page({ params }: Props) {
   const requests: any[] = [
     list(headerSectionsParams),
     list(footerSectionsParams),
+    list(recentPostsParams),
   ];
 
-  if (slug === "rent" || slug === "buy" || slug === "commercial") {
-    const singlePropertiesParams: IListingParams = {
-      path: "/properties",
+  if (slug === "products") {
+    const singleProductParams: IListingParams = {
+      path: "/products",
       sort: { createdAt: SortOrders.DESC },
       filters: { slug: id },
-      populate: singlePropertyPopulates,
+      populate: productsPopulates,
       pagination: { start: 0, limit: 1 },
       locale: "en",
     };
-    const morePropertiesParams: IListingParams = {
-      path: "/properties",
+
+    const relatedProductsParams: IListingParams = {
+      path: "/products",
       sort: { createdAt: SortOrders.DESC },
-      filters: { purpose: slug },
-      populate: propertiesPopulates,
-      pagination: { start: 0, limit: 4 },
+      filters: { slug: { $ne: id } },
+      populate: productsPopulates,
+      pagination: { start: 0, limit: 3 },
       locale: "en",
     };
 
-    requests.push(list(singlePropertiesParams), list(morePropertiesParams));
+    requests.push(list(singleProductParams), list(relatedProductsParams));
   }
 
-  const [headerSections, footerSections, singleData, moreProperties] =
+  const [headerSections, footerSections, posts, singleData, relatedProducts] =
     await Promise.all(requests);
 
-  const renderSections = (
-    sections: any,
-    listings: IListingItem[],
-    activePage: string
-  ) => (
+  const listings: IListingItem[] = [{ name: "posts", result: posts }];
+
+  const renderFooterSections = () => (
     <>
-      {sections.data.map((item: any) => (
+      {footerSections.data.map((item: any) => (
         <Section
           key={item.id}
           data={item.attributes}
           listings={listings}
-          activePage={activePage}
+          activePage={slug}
           searchParams={null}
           session={null}
         />
@@ -139,11 +147,11 @@ export default async function Page({ params }: Props) {
   const renderTemplateContent = (): React.ReactNode => {
     if (!singleData || (singleData && !singleData.data)) return <NotFound />;
 
-    if (slug === "rent" || slug === "buy" || slug === "commercial")
+    if (slug === "products")
       return (
-        <PropertySections
+        <ProductSections
           data={singleData.data[0]}
-          moreProperties={moreProperties}
+          relatedProducts={relatedProducts}
         />
       );
 
@@ -155,14 +163,28 @@ export default async function Page({ params }: Props) {
       {headerSections.data.length > 0 && (
         <Header activePage={slug} data={headerSections.data} />
       )}
+      {slug === "products" && (
+        <Breadcrumb
+          page={singleData.data[0].attributes}
+          archive={{ name: "Products", slug: "products" }}
+        />
+      )}
+      {slug === "news" && (
+        <Breadcrumb
+          page={singleData.data[0].attributes}
+          archive={{ name: "New", slug: "news" }}
+        />
+      )}
       <main>{renderTemplateContent()}</main>
-      <>
-        {footerSections.data.length === 1 ? (
-          renderSections(footerSections, [], slug)
-        ) : (
-          <footer>{renderSections(footerSections, [], slug)}</footer>
-        )}
-      </>
+      {footerSections.data.length > 0 && (
+        <>
+          {footerSections.data.length === 1 ? (
+            renderFooterSections()
+          ) : (
+            <footer>{renderFooterSections()}</footer>
+          )}
+        </>
+      )}
       <MainSnackbar />
     </>
   );

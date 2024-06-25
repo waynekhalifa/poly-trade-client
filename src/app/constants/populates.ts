@@ -11,6 +11,7 @@ export const postsPopulates: any = {
 
 export const productsPopulates: any = {
   thumbnail: { populate: "*" },
+  seo: { populate: "*" },
 };
 
 export const sectionsPopulates: string[] = [

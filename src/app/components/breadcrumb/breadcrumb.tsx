@@ -8,9 +8,10 @@ import { getStrapiURL } from "@/app/utils/api-helpers";
 
 interface Props {
   page: any;
+  archive?: any;
 }
 
-const Breadcrumb: React.FC<Props> = ({ page }) => {
+const Breadcrumb: React.FC<Props> = ({ page, archive }) => {
   const { name } = page;
 
   return (
@@ -69,6 +70,28 @@ const Breadcrumb: React.FC<Props> = ({ page }) => {
               fontSize="small"
               sx={{ color: "primary.main", transform: "scale(.5)" }}
             />
+            {archive && (
+              <>
+                <LinkWrap href={"/" + archive.slug}>
+                  <Typography
+                    textTransform={"capitalize"}
+                    color={"common.white"}
+                    sx={{
+                      transition: "all .s3 ease-in",
+                      "&:hover": {
+                        color: "primary.main",
+                      },
+                    }}
+                  >
+                    {archive.name}
+                  </Typography>
+                </LinkWrap>
+                <ArrowForwardIos
+                  fontSize="small"
+                  sx={{ color: "primary.main", transform: "scale(.5)" }}
+                />
+              </>
+            )}
             <Typography color={"primary.main"}>{name}</Typography>
           </List>
         </Container>
