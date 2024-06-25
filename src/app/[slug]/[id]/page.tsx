@@ -14,6 +14,7 @@ import {
 import { list } from "@/app/services/list";
 import Breadcrumb from "@/app/components/breadcrumb";
 import ProductSections from "@/app/components/product-sections";
+import PostSections from "@/app/components/post-sections";
 
 const headerSectionsParams: IListingParams = {
   path: "/sections",
@@ -54,7 +55,16 @@ export async function generateMetadata({ params }: Props): Promise<any> {
     pagination: { start: 0, limit: 1 },
     locale: "en",
   };
+  const singlePostParams: IListingParams = {
+    path: "/posts",
+    sort: { createdAt: SortOrders.DESC },
+    filters: { slug: id },
+    populate: postsPopulates,
+    pagination: { start: 0, limit: 1 },
+    locale: "en",
+  };
 
+  if (slug === "news") requests.push(list(singlePostParams));
   if (slug === "products") requests.push(list(singleProductParams));
 
   const [singleData] = await Promise.all(requests);
@@ -102,6 +112,28 @@ export default async function Page({ params }: Props) {
     list(recentPostsParams),
   ];
 
+  if (slug === "news") {
+    const singlePostParams: IListingParams = {
+      path: "/posts",
+      sort: { createdAt: SortOrders.DESC },
+      filters: { slug: id },
+      populate: postsPopulates,
+      pagination: { start: 0, limit: 1 },
+      locale: "en",
+    };
+
+    const relatedPostsParams: IListingParams = {
+      path: "/posts",
+      sort: { createdAt: SortOrders.DESC },
+      filters: { slug: { $ne: id } },
+      populate: postsPopulates,
+      pagination: { start: 0, limit: 4 },
+      locale: "en",
+    };
+
+    requests.push(list(singlePostParams), list(relatedPostsParams));
+  }
+
   if (slug === "products") {
     const singleProductParams: IListingParams = {
       path: "/products",
@@ -146,6 +178,14 @@ export default async function Page({ params }: Props) {
 
   const renderTemplateContent = (): React.ReactNode => {
     if (!singleData || (singleData && !singleData.data)) return <NotFound />;
+
+    if (slug === "news")
+      return (
+        <PostSections
+          data={singleData.data[0]}
+          relatedPosts={relatedProducts}
+        />
+      );
 
     if (slug === "products")
       return (

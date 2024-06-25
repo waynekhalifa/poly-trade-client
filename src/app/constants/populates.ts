@@ -7,6 +7,7 @@ export const postsPopulates: any = {
   thumbnail: { populate: "*" },
   categories: { populate: "*" },
   author: { populate: "*" },
+  seo: { populate: "*" },
 };
 
 export const productsPopulates: any = {
