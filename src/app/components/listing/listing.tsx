@@ -3,6 +3,7 @@ import { ISessionUser } from "@/app/types/session";
 import PropertyListing from "../property-listing";
 import LatestPosts from "../latest-posts";
 import BlogPosts from "../blog-posts";
+import Products from "../products";
 
 interface Props {
   data: any;
@@ -21,7 +22,7 @@ const Listing: React.FC<Props> = ({
 }) => {
   const { sectionName } = data;
 
-  if (sectionName === "property-listing") {
+  if (sectionName === "property-listing")
     return (
       <PropertyListing
         listings={listings}
@@ -30,14 +31,15 @@ const Listing: React.FC<Props> = ({
         session={session}
       />
     );
-  }
 
-  if (sectionName === "latest-posts") {
+  if (sectionName === "latest-posts")
     return <LatestPosts listings={listings} />;
-  }
-  if (sectionName === "blog-listing") {
+
+  if (sectionName === "blog-listing")
     return <BlogPosts listings={listings} searchParams={searchParams} />;
-  }
+
+  if (sectionName === "product-listing")
+    return <Products listings={listings} searchParams={searchParams} />;
 
   return <>Should render listing</>;
 };

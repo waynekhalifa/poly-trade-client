@@ -9,6 +9,7 @@ import { SortOrders } from "../enums/sort-orders";
 import {
   pagesPopulates,
   postsPopulates,
+  productsPopulates,
   sectionsPopulates,
 } from "../constants/populates";
 import Breadcrumb from "../components/breadcrumb";
@@ -140,6 +141,14 @@ export default async function Page({ params, searchParams }: Props) {
     },
     locale: "en",
   };
+  const productsParams: IListingParams = {
+    path: "/products",
+    sort: { createdAt: SortOrders.DESC },
+    filters: {},
+    populate: productsPopulates,
+    pagination: { start: 0, limit: 9 },
+    locale: "en",
+  };
 
   const requests: any[] = [
     list(headerSectionsParams),
@@ -149,6 +158,7 @@ export default async function Page({ params, searchParams }: Props) {
     list(pagesParams),
   ];
 
+  if (slug === "products") requests.push(list(productsParams));
   if (slug === "news")
     requests.push(list(blogPostsParams), list(categoriesParams));
 

@@ -6,11 +6,13 @@ interface Props {
   blank?: boolean;
   ariaLabel?: string;
   sx?: any;
+  className?: string;
 }
 
 const LinkWrap: React.FC<Props> = (props: Props) => {
   return (
     <Box
+      className={props.className}
       component="a"
       href={props.href}
       target={props.blank ? "_blank" : undefined}

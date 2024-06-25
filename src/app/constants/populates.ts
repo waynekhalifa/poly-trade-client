@@ -9,6 +9,10 @@ export const postsPopulates: any = {
   author: { populate: "*" },
 };
 
+export const productsPopulates: any = {
+  thumbnail: { populate: "*" },
+};
+
 export const sectionsPopulates: string[] = [
   "container",
   "container.background",
