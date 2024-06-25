@@ -41,7 +41,7 @@ const recentPostsParams: IListingParams = {
   sort: { createdAt: SortOrders.DESC },
   filters: {},
   populate: postsPopulates,
-  pagination: { start: 0, limit: 3 },
+  pagination: { start: 0, limit: 4 },
   locale: "en",
 };
 
@@ -123,7 +123,7 @@ export default async function Home() {
             <Section
               key={item.id}
               data={item.attributes}
-              listings={[]}
+              listings={listings}
               activePage={"home"}
               searchParams={null}
               session={null}

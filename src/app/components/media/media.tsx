@@ -2,14 +2,15 @@ import Image from "next/image";
 import { Box } from "@mui/material";
 
 import { getStrapiURL } from "@/app/utils/api-helpers";
+import calculateNewHeight from "@/app/utils/calculateNewHeight";
 
 interface Props {
   data: any;
 }
 
 const Media: React.FC<Props> = ({ data }) => {
-  const { file, objectFit, height, padding, margin, alignment, shape } = data;
-  const { url, alternativeText, width } = file.data.attributes;
+  const { file, objectFit, padding, margin, alignment, shape } = data;
+  const { url, alternativeText, width, height } = file.data.attributes;
 
   return (
     <Box
@@ -97,7 +98,7 @@ const Media: React.FC<Props> = ({ data }) => {
                   src={getStrapiURL(url)}
                   alt={alternativeText}
                   width={width}
-                  height={file.data.attributes.height}
+                  height={height}
                 />
               </Box>
               <Box
@@ -118,8 +119,12 @@ const Media: React.FC<Props> = ({ data }) => {
         <Image
           src={getStrapiURL(url)}
           alt={alternativeText}
-          width={width}
-          height={file.data.attributes.height}
+          width={data.height ? data.height : width}
+          height={
+            data.height
+              ? calculateNewHeight(width, height, data.height)
+              : height
+          }
         />
       )}
     </Box>

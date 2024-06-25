@@ -11,7 +11,7 @@ import { TDirection } from "./models/direction";
 import { CssBaseline, GlobalStyles } from "@mui/material";
 import { Directions } from "./enums/directions";
 
-const font = Roboto({
+export const font = Roboto({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   display: "swap",

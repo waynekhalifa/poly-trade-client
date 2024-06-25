@@ -2,9 +2,9 @@ import dynamic from "next/dynamic";
 import { Email, PhoneIphone } from "@mui/icons-material";
 
 import { ISessionUser } from "@/app/types/session";
-import LightBox from "../light-box";
 
 const Button = dynamic(() => import("../button"), { suspense: false });
+const LightBox = dynamic(() => import("../light-box"), { suspense: false });
 const Form = dynamic(() => import("../form"), { suspense: false });
 const Faqs = dynamic(() => import("../faqs"), { suspense: false });
 const ButtonList = dynamic(() => import("../button-list"), { suspense: false });
@@ -90,6 +90,9 @@ const TermsAndConditions = dynamic(() => import("../terms-and-conditions"), {
   suspense: false,
 });
 const HowItWorks = dynamic(() => import("../how-it-works"), {
+  suspense: false,
+});
+const Editor = dynamic(() => import("../editor"), {
   suspense: false,
 });
 
@@ -189,6 +192,8 @@ const Content: React.FC<Props> = ({
         return (
           <Form key={component._id} data={component} listings={listings} />
         );
+      case "shared.editor":
+        return <Editor key={component._id} data={component} />;
       case "shared.my-account":
         return (
           <MyAccount
@@ -241,9 +246,7 @@ const Content: React.FC<Props> = ({
             key={component._id}
             data={component}
             listings={listings}
-            activePage={activePage}
             searchParams={searchParams}
-            session={session}
           />
         );
       default:
