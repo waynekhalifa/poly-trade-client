@@ -11,6 +11,7 @@ import {
   sectionsPopulates,
 } from "./constants/populates";
 import Header from "./components/header";
+import ScrollTop from "./components/scroll-top";
 
 const headerSectionsParams: IListingParams = {
   path: "/sections",
@@ -140,6 +141,7 @@ export default async function Home() {
           )}
         </>
       )}
+      <ScrollTop />
       <MainSnackbar />
     </>
   );

@@ -13,6 +13,7 @@ import Navigation from "./partials/navigation";
 import MenuIcon from "./partials/menu-icon";
 import NewLogo from "../new-logo";
 import LinkWrap from "../link-wrap";
+import useSticky from "@/app/hooks/useSticky";
 
 interface Props {
   data: any;
@@ -23,11 +24,12 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const { id, attributes } = data[0];
   const { content } = attributes;
+  useSticky(`header-${id}`, 160);
+  useSticky("scroll-top", 600);
 
   const logo: any = content.find(
     (item: any) => item.__component === "shared.logo"
   );
-
   const navbar: any = content.find(
     (item: any) => item.__component === "shared.navbar"
   );

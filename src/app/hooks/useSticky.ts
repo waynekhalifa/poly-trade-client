@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const useSticky = (containerID: string) => {
+const useSticky = (containerID: string, position: number) => {
   useEffect(() => {
     window.addEventListener("scroll", isSticky);
 
@@ -14,7 +14,7 @@ const useSticky = (containerID: string) => {
     const scrollTop = window.scrollY;
 
     if (header) {
-      if (scrollTop >= 160) {
+      if (scrollTop >= position) {
         document.querySelectorAll("body")[0].style.marginTop =
           header.offsetHeight + "px";
         header.classList.add("is-sticky");
