@@ -38,8 +38,6 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
     (item: any) => item.__component === "shared.contact"
   );
 
-  console.log(email, contact);
-
   const handleDrawerOpen = () => setDrawerOpen(() => true);
 
   const handleDrawerClose = () => setDrawerOpen(() => false);
