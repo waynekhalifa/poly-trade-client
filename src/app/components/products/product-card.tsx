@@ -42,7 +42,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
           position: "absolute",
           inset: "0",
           zIndex: "1",
-          bgcolor: "primary.main",
+          bgcolor: "rgba(206,37,39,0.9)",
           color: "common.white",
           fontWeight: 400,
           transform: "translateY(-100%)",
