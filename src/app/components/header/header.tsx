@@ -1,10 +1,18 @@
 "use client";
 import { useState } from "react";
-import { AppBar, Box, Container, Drawer, Grid } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Container,
+  Drawer,
+  Grid,
+  Typography,
+} from "@mui/material";
 
 import Navigation from "./partials/navigation";
 import MenuIcon from "./partials/menu-icon";
 import NewLogo from "../new-logo";
+import LinkWrap from "../link-wrap";
 
 interface Props {
   data: any;
@@ -23,6 +31,14 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
   const navbar: any = content.find(
     (item: any) => item.__component === "shared.navbar"
   );
+  const email: any = content.find(
+    (item: any) => item.__component === "shared.email"
+  );
+  const contact: any = content.find(
+    (item: any) => item.__component === "shared.contact"
+  );
+
+  console.log(email, contact);
 
   const handleDrawerOpen = () => setDrawerOpen(() => true);
 
@@ -30,6 +46,25 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
 
   return (
     <>
+      <Box
+        display={{ xs: "none", md: "block" }}
+        bgcolor={"primary.main"}
+        py={1}
+        color="common.white"
+      >
+        <Container>
+          <Grid container alignItems={"center"} gap={"4px"}>
+            <Typography variant="body2">Call Us Today!</Typography>
+            <LinkWrap href={contact.url.href}>
+              <Typography variant="body2">{contact.contact}</Typography>
+            </LinkWrap>
+            <Typography variant="body2">|</Typography>
+            <LinkWrap href={email.url.href}>
+              <Typography variant="body2">{email.email}</Typography>
+            </LinkWrap>
+          </Grid>
+        </Container>
+      </Box>
       <AppBar
         id={`header-${id}`}
         elevation={0}
@@ -48,7 +83,7 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
                 justifyContent={"space-between"}
                 alignItems={"center"}
               >
-                <NewLogo data={logo} imgHeight={88} />
+                <NewLogo data={logo} imgHeight={80} />
                 <MenuIcon handleDrawerOpen={handleDrawerOpen} />
               </Grid>
             )}

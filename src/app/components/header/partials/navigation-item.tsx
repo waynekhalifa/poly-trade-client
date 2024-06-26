@@ -32,10 +32,14 @@ const NavigationItem: React.FC<Props> = ({ item, subItems, activePage }) => {
     >
       <LinkWrap href={item.url}>
         <Grid
-          height={64}
+          height={80}
           container
           alignItems={"center"}
-          sx={{ cursor: "pointer" }}
+          sx={{
+            cursor: "pointer",
+            borderTop: "3px solid",
+            borderColor: isActive() ? "primary.main" : "transparent",
+          }}
         >
           <Typography
             component={"span"}
