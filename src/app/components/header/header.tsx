@@ -24,7 +24,7 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const { id, attributes } = data[0];
   const { content } = attributes;
-  useSticky(`header-${id}`, 160);
+  useSticky(`header-${id}`, 160, true);
   useSticky("scroll-top", 600);
 
   const logo: any = content.find(
@@ -70,7 +70,18 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
         elevation={0}
         position="relative"
         color="transparent"
-        sx={{ bgcolor: "common.white", py: { xs: 1, md: 0 } }}
+        sx={{
+          bgcolor: "common.white",
+          py: { xs: 1, md: 0 },
+          "&.is-sticky": {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            zIndex: 999,
+            boxShadow: "rgba(0,0,0,.117647) 0 1px 3px",
+            bgcolor: "rgba(255,255,255,.9)",
+          },
+        }}
       >
         <Container>
           <Grid container alignItems="center">

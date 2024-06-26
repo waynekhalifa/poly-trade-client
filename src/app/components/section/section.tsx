@@ -23,7 +23,7 @@ const Section: React.FC<Props> = ({
   searchParams,
   session,
 }) => {
-  const { name, pageSlug, container, content } = data;
+  const { name, slug, container, content } = data;
   const {
     maxWidth,
     minHeight,
@@ -36,7 +36,7 @@ const Section: React.FC<Props> = ({
 
   return (
     <Box
-      id={`${pageSlug}-${name}`}
+      id={`${slug}-${name}`}
       position={"relative"}
       component={component}
       color={color ? color : "text.primary"}
@@ -45,7 +45,7 @@ const Section: React.FC<Props> = ({
         <Box position={"absolute"} sx={{ inset: 0 }}>
           <Image
             src={getStrapiURL(background.image.data.attributes.url)}
-            alt={`${pageSlug}-${name}-bg-image`}
+            alt={`${slug}-${name}-bg-image`}
             fill
           />
         </Box>

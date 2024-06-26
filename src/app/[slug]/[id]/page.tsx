@@ -15,6 +15,8 @@ import { list } from "@/app/services/list";
 import Breadcrumb from "@/app/components/breadcrumb";
 import ProductSections from "@/app/components/product-sections";
 import PostSections from "@/app/components/post-sections";
+import ScrollTop from "@/app/components/scroll-top";
+import WhatsAppChat from "@/app/components/whatsapp-chat";
 
 const headerSectionsParams: IListingParams = {
   path: "/sections",
@@ -225,6 +227,8 @@ export default async function Page({ params }: Props) {
           )}
         </>
       )}
+      <ScrollTop />
+      <WhatsAppChat />
       <MainSnackbar />
     </>
   );
