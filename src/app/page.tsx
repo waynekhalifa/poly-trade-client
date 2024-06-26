@@ -12,6 +12,7 @@ import {
 } from "./constants/populates";
 import Header from "./components/header";
 import ScrollTop from "./components/scroll-top";
+import WhatsAppChat from "./components/whatsapp-chat";
 
 const headerSectionsParams: IListingParams = {
   path: "/sections",
@@ -142,6 +143,7 @@ export default async function Home() {
         </>
       )}
       <ScrollTop />
+      <WhatsAppChat />
       <MainSnackbar />
     </>
   );
