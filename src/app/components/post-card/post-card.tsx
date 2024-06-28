@@ -82,6 +82,7 @@ const PostCard: React.FC<Props> = ({ post }) => {
             color: "text.secondary",
             textTransform: "capitalize",
             "&:hover": { bgcolor: "transparent" },
+            "& .MuiButton-startIcon": { mr: "4px" },
           }}
         >
           {author.data.attributes.name}
@@ -91,7 +92,11 @@ const PostCard: React.FC<Props> = ({ post }) => {
           startIcon={
             <CalendarMonth
               fontSize="small"
-              sx={{ color: "primary.main", transform: "scale(.9)", ml: 2 }}
+              sx={{
+                color: "primary.main",
+                transform: "scale(.9)",
+                ml: 2,
+              }}
             />
           }
           sx={{
@@ -99,11 +104,11 @@ const PostCard: React.FC<Props> = ({ post }) => {
             color: "text.secondary",
             textTransform: "capitalize",
             "&:hover": { bgcolor: "transparent" },
+            "& .MuiButton-startIcon": { mr: "4px" },
           }}
         >
           {formatDate(publishedAt)}
         </Button>
-
         <Typography
           mt={2}
           mb={3}
