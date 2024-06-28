@@ -17,12 +17,12 @@ const nextConfig = {
       {
         protocol: "http",
         hostname: "localhost",
-        port: "1339",
+        port: "1337",
         pathname: "/uploads/**",
       },
       {
         protocol: "https",
-        hostname: "fetishu-bait-admin.onrender.com",
+        hostname: "poly-trade-admin.onrender.com",
       },
     ],
   },
