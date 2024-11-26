@@ -1,73 +1,38 @@
 import Header from "@/components/header";
 import NotFound from "@/components/not-found";
-import Section from "@/components/section";
 import MainSnackbar from "@/components/main-snackbar";
-import { FALLBACK_SEO } from "@/utils/constants";
-import { getStrapiURL } from "@/utils/api-helpers";
-import { IListingItem, IListingParams } from "@/types/api";
-import { SortOrders } from "@/enums/sort-orders";
-import {
-  postsPopulates,
-  productsPopulates,
-  sectionsPopulates,
-} from "@/constants/populates";
-import { list } from "@/services/list";
 import Breadcrumb from "@/components/breadcrumb";
 import ProductSections from "@/components/product-sections";
 import PostSections from "@/components/post-sections";
 import ScrollTop from "@/components/scroll-top";
+import SectionsRenderer from "@/components/sections-renderer";
 import WhatsAppChat from "@/components/whatsapp-chat";
+import { FALLBACK_SEO } from "@/utils/constants";
+import { getStrapiURL } from "@/utils/api-helpers";
+import { IListingItem } from "@/types/api";
+import { list } from "@/services/list";
+import { Locale } from "@/types/locale";
+import { Slugs } from "@/enums/slugs";
+import {
+  getPostsParams,
+  getProductsParams,
+  getSectionsParamsBySlug,
+} from "@/utils/resources-params";
 
-const headerSectionsParams: IListingParams = {
-  path: "/sections",
-  sort: { precedence: SortOrders.ASC },
-  filters: { slug: "header" },
-  populate: sectionsPopulates,
-  pagination: { start: 0, limit: 100 },
-  locale: "en",
-};
-const footerSectionsParams: IListingParams = {
-  path: "/sections",
-  sort: { precedence: SortOrders.ASC },
-  filters: { slug: "footer" },
-  populate: sectionsPopulates,
-  pagination: { start: 0, limit: 100 },
-  locale: "en",
-};
-const recentPostsParams: IListingParams = {
-  path: "/posts",
-  sort: { createdAt: SortOrders.DESC },
-  filters: {},
-  populate: postsPopulates,
-  pagination: { start: 0, limit: 4 },
-  locale: "en",
-};
-
-type Props = { params: { slug: string; id: string } };
+type Props = { params: { lang: Locale; slug: string; id: string } };
 
 export async function generateMetadata({ params }: Props): Promise<any> {
-  const { slug, id } = params;
+  const { lang, slug, id } = params;
   const requests: any[] = [];
 
-  const singleProductParams: IListingParams = {
-    path: "/products",
-    sort: { createdAt: SortOrders.DESC },
-    filters: { slug: id },
-    populate: productsPopulates,
-    pagination: { start: 0, limit: 1 },
-    locale: "en",
-  };
-  const singlePostParams: IListingParams = {
-    path: "/posts",
-    sort: { createdAt: SortOrders.DESC },
-    filters: { slug: id },
-    populate: postsPopulates,
-    pagination: { start: 0, limit: 1 },
-    locale: "en",
-  };
-
-  if (slug === "news") requests.push(list(singlePostParams));
-  if (slug === "products") requests.push(list(singleProductParams));
+  if (slug === "news")
+    requests.push(
+      list(getPostsParams({ slug: id }, { start: 0, limit: 1 }, lang))
+    );
+  if (slug === "products")
+    requests.push(
+      list(getProductsParams({ slug: id }, { start: 0, limit: 1 }, lang))
+    );
 
   const [singleData] = await Promise.all(requests);
 
@@ -106,77 +71,34 @@ export async function generateMetadata({ params }: Props): Promise<any> {
 }
 
 export default async function Page({ params }: Props) {
-  const { slug, id } = params;
+  const { lang, slug, id } = params;
 
   const requests: any[] = [
-    list(headerSectionsParams),
-    list(footerSectionsParams),
-    list(recentPostsParams),
+    list(getSectionsParamsBySlug(Slugs.HEADER, 1, lang)),
+    list(getSectionsParamsBySlug(Slugs.FOOTER, 1, lang)),
+    list(getPostsParams({}, { start: 0, limit: 4 }, lang)),
   ];
 
   if (slug === "news") {
-    const singlePostParams: IListingParams = {
-      path: "/posts",
-      sort: { createdAt: SortOrders.DESC },
-      filters: { slug: id },
-      populate: postsPopulates,
-      pagination: { start: 0, limit: 1 },
-      locale: "en",
-    };
-
-    const relatedPostsParams: IListingParams = {
-      path: "/posts",
-      sort: { createdAt: SortOrders.DESC },
-      filters: { slug: { $ne: id } },
-      populate: postsPopulates,
-      pagination: { start: 0, limit: 4 },
-      locale: "en",
-    };
-
-    requests.push(list(singlePostParams), list(relatedPostsParams));
+    requests.push(
+      list(getPostsParams({ slug: id }, { start: 0, limit: 1 }, lang)),
+      list(getPostsParams({ slug: { $ne: id } }, { start: 0, limit: 4 }, lang))
+    );
   }
 
   if (slug === "products") {
-    const singleProductParams: IListingParams = {
-      path: "/products",
-      sort: { createdAt: SortOrders.DESC },
-      filters: { slug: id },
-      populate: productsPopulates,
-      pagination: { start: 0, limit: 1 },
-      locale: "en",
-    };
-
-    const relatedProductsParams: IListingParams = {
-      path: "/products",
-      sort: { createdAt: SortOrders.DESC },
-      filters: { slug: { $ne: id } },
-      populate: productsPopulates,
-      pagination: { start: 0, limit: 3 },
-      locale: "en",
-    };
-
-    requests.push(list(singleProductParams), list(relatedProductsParams));
+    requests.push(
+      list(getProductsParams({ slug: id }, { start: 0, limit: 1 }, lang)),
+      list(
+        getProductsParams({ slug: { $ne: id } }, { start: 0, limit: 3 }, lang)
+      )
+    );
   }
 
   const [headerSections, footerSections, posts, singleData, relatedProducts] =
     await Promise.all(requests);
 
   const listings: IListingItem[] = [{ name: "posts", result: posts }];
-
-  const renderFooterSections = () => (
-    <>
-      {footerSections.data.map((item: any) => (
-        <Section
-          key={item.id}
-          data={item.attributes}
-          listings={listings}
-          activePage={slug}
-          searchParams={null}
-          session={null}
-        />
-      ))}
-    </>
-  );
 
   const renderTemplateContent = (): React.ReactNode => {
     if (!singleData || (singleData && !singleData.data)) return <NotFound />;
@@ -218,15 +140,11 @@ export default async function Page({ params }: Props) {
         />
       )}
       <main>{renderTemplateContent()}</main>
-      {footerSections.data.length > 0 && (
-        <>
-          {footerSections.data.length === 1 ? (
-            renderFooterSections()
-          ) : (
-            <footer>{renderFooterSections()}</footer>
-          )}
-        </>
-      )}
+      <SectionsRenderer
+        sections={footerSections}
+        listings={listings}
+        activePage={slug}
+      />
       <ScrollTop />
       <WhatsAppChat />
       <MainSnackbar />

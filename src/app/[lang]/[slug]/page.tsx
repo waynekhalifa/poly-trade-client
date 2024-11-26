@@ -2,68 +2,29 @@ import Breadcrumb from "@/components/breadcrumb";
 import Header from "@/components/header";
 import MainSnackbar from "@/components/main-snackbar";
 import ScrollTop from "@/components/scroll-top";
-import Section from "@/components/section";
+import SectionsRenderer from "@/components/sections-renderer";
 import WhatsAppChat from "@/components/whatsapp-chat";
-import {
-  pagesPopulates,
-  postsPopulates,
-  productsPopulates,
-  sectionsPopulates,
-} from "@/constants/populates";
-import { SortOrders } from "@/enums/sort-orders";
+import { Resources } from "@/enums/resources";
+import { Slugs } from "@/enums/slugs";
 import { list } from "@/services/list";
-import { IListingItem, IListingParams } from "@/types/api";
+import { IListingItem } from "@/types/api";
+import { Locale } from "@/types/locale";
 import { getStrapiURL } from "@/utils/api-helpers";
 import { FALLBACK_SEO } from "@/utils/constants";
+import {
+  getCategoriesTagsParams,
+  getPagesParamsBySlug,
+  getPostsParams,
+  getProductsParams,
+  getSectionsParamsBySlug,
+} from "@/utils/resources-params";
 
-const headerSectionsParams: IListingParams = {
-  path: "/sections",
-  sort: { precedence: SortOrders.ASC },
-  filters: { slug: "header" },
-  populate: sectionsPopulates,
-  pagination: { start: 0, limit: 1 },
-  locale: "en",
-};
-const footerSectionsParams: IListingParams = {
-  path: "/sections",
-  sort: { precedence: SortOrders.ASC },
-  filters: { slug: "footer" },
-  populate: sectionsPopulates,
-  pagination: { start: 0, limit: 1 },
-  locale: "en",
-};
-const recentPostsParams: IListingParams = {
-  path: "/posts",
-  sort: { createdAt: SortOrders.DESC },
-  filters: {},
-  populate: postsPopulates,
-  pagination: { start: 0, limit: 4 },
-  locale: "en",
-};
-const categoriesParams: IListingParams = {
-  path: "/categories",
-  sort: { createdAt: SortOrders.DESC },
-  filters: {},
-  populate: {},
-  pagination: { start: 0, limit: 100 },
-  locale: "en",
-};
-
-type Props = { params: { slug: string }; searchParams: any };
+type Props = { params: { lang: Locale; slug: string }; searchParams: any };
 
 export async function generateMetadata({ params }: Props): Promise<any> {
-  const { slug } = params;
+  const { slug, lang } = params;
 
-  const pagesParams: IListingParams = {
-    path: "/pages",
-    sort: { createdAt: SortOrders.ASC },
-    filters: { slug },
-    populate: pagesPopulates,
-    pagination: { start: 0, limit: 1 },
-    locale: "en",
-  };
-
-  const page = await list(pagesParams);
+  const page = await list(getPagesParamsBySlug(slug, lang));
 
   if (page.data.length === 0) return FALLBACK_SEO;
 
@@ -96,24 +57,7 @@ export async function generateMetadata({ params }: Props): Promise<any> {
 }
 
 export default async function Page({ params, searchParams }: Props) {
-  const { slug } = params;
-
-  const pagesParams: IListingParams = {
-    path: "/pages",
-    sort: { createdAt: SortOrders.ASC },
-    filters: { slug },
-    populate: pagesPopulates,
-    pagination: { start: 0, limit: 1 },
-    locale: "en",
-  };
-  const pageSectionsParams: IListingParams = {
-    path: "/sections",
-    sort: { precedence: SortOrders.ASC },
-    filters: { slug },
-    populate: sectionsPopulates,
-    pagination: { start: 0, limit: 100 },
-    locale: "en",
-  };
+  const { slug, lang } = params;
 
   const filters: any = {};
 
@@ -130,39 +74,32 @@ export default async function Page({ params, searchParams }: Props) {
   if (searchParams["category"])
     filters["categories"] = { slug: searchParams["category"] };
 
-  const blogPostsParams: IListingParams = {
-    path: "/posts",
-    sort: { createdAt: SortOrders.DESC },
-    filters,
-    populate: postsPopulates,
-    pagination: {
-      start: searchParams["page"]
-        ? (parseInt(searchParams["page"]) - 1) * 9
-        : 0,
-      limit: 9,
-    },
-    locale: "en",
-  };
-  const productsParams: IListingParams = {
-    path: "/products",
-    sort: { createdAt: SortOrders.DESC },
-    filters: {},
-    populate: productsPopulates,
-    pagination: { start: 0, limit: 9 },
-    locale: "en",
-  };
-
   const requests: any[] = [
-    list(headerSectionsParams),
-    list(footerSectionsParams),
-    list(pageSectionsParams),
-    list(recentPostsParams),
-    list(pagesParams),
+    list(getSectionsParamsBySlug(Slugs.HEADER, 1, lang)),
+    list(getSectionsParamsBySlug(Slugs.FOOTER, 1, lang)),
+    list(getSectionsParamsBySlug(slug, 100, lang)),
+    list(getPostsParams({}, { start: 0, limit: 4 }, lang)),
+    list(getPagesParamsBySlug(slug, lang)),
   ];
 
-  if (slug === "products") requests.push(list(productsParams));
+  if (slug === "products")
+    requests.push(list(getProductsParams({}, { start: 0, limit: 9 }, lang)));
   if (slug === "news")
-    requests.push(list(blogPostsParams), list(categoriesParams));
+    requests.push(
+      list(
+        getPostsParams(
+          filters,
+          {
+            start: searchParams["page"]
+              ? (parseInt(searchParams["page"]) - 1) * 9
+              : 0,
+            limit: 9,
+          },
+          lang
+        )
+      ),
+      list(getCategoriesTagsParams(Resources.CATEGORIES, lang))
+    );
 
   const [
     headerSections,
@@ -180,54 +117,25 @@ export default async function Page({ params, searchParams }: Props) {
     { name: "categories", result: categories },
   ];
 
-  const renderContent = (): React.ReactNode => {
-    return (
-      <main>
-        {sections.data.map((item: any) => (
-          <Section
-            key={item.id}
-            data={item.attributes}
-            listings={listings}
-            activePage={slug}
-            searchParams={searchParams}
-            session={null}
-          />
-        ))}
-      </main>
-    );
-  };
-
-  const renderFooterSections = () => (
-    <>
-      {footerSections.data.map((item: any) => (
-        <Section
-          key={item.id}
-          data={item.attributes}
-          listings={listings}
-          activePage={slug}
-          searchParams={null}
-          session={null}
-        />
-      ))}
-    </>
-  );
-
   return (
     <>
       {headerSections.data.length > 0 && (
         <Header data={headerSections.data} activePage={slug} />
       )}
       <Breadcrumb page={pages.data[0].attributes} />
-      {renderContent()}
-      {footerSections.data.length > 0 && (
-        <>
-          {footerSections.data.length === 1 ? (
-            renderFooterSections()
-          ) : (
-            <footer>{renderFooterSections()}</footer>
-          )}
-        </>
-      )}
+      <main>
+        <SectionsRenderer
+          sections={sections}
+          listings={listings}
+          activePage={slug}
+          searchParams={searchParams}
+        />
+      </main>
+      <SectionsRenderer
+        sections={footerSections}
+        listings={listings}
+        activePage={slug}
+      />
       <ScrollTop />
       <WhatsAppChat />
       <MainSnackbar />

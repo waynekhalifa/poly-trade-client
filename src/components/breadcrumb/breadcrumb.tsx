@@ -46,7 +46,7 @@ const Breadcrumb: React.FC<Props> = ({ page, archive }) => {
         // },
       }}
     >
-      <Box mb={{ xs: 6 }} borderTop={"1px solid"} borderColor={"divider"}>
+      <Box mb={{ xs: 6 }}>
         <Container>
           <List
             disablePadding

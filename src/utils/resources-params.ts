@@ -15,7 +15,8 @@ import { IListingParams, IPagination } from "../types/api";
 
 export const getSectionsParamsBySlug = (
   slug: string,
-  limit: number
+  limit: number,
+  lang: "en" | "ar" = Locales.ENGLISH
 ): IListingParams => {
   const params: IListingParams = {
     path: Routes.ROOT + Resources.SECTIONS,
@@ -23,20 +24,23 @@ export const getSectionsParamsBySlug = (
     filters: { slug },
     populate: sectionsPopulates,
     pagination: { start: 0, limit },
-    locale: Locales.ENGLISH,
+    locale: lang,
   };
 
   return params;
 };
 
-export const getPagesParamsBySlug = (slug: string): IListingParams => {
+export const getPagesParamsBySlug = (
+  slug: string,
+  lang: "en" | "ar" = Locales.ENGLISH
+): IListingParams => {
   const params: IListingParams = {
     path: Routes.ROOT + Resources.PAGES,
     sort: { createdAt: SortOrders.ASC },
     filters: { slug },
     populate: pagesPopulates,
     pagination: { start: 0, limit: 1 },
-    locale: Locales.ENGLISH,
+    locale: lang,
   };
 
   return params;
@@ -44,13 +48,14 @@ export const getPagesParamsBySlug = (slug: string): IListingParams => {
 
 export const getProductsParams = (
   filters: any,
-  pagination: IPagination
+  pagination: IPagination,
+  lang: "en" | "ar" = Locales.ENGLISH
 ): IListingParams => {
   const params: IListingParams = {
     path: Routes.ROOT + Resources.PRODUCTS,
     sort: { createdAt: SortOrders.DESC },
     populate: productsPopulates,
-    locale: Locales.ENGLISH,
+    locale: lang,
     filters,
     pagination,
   };
@@ -60,13 +65,14 @@ export const getProductsParams = (
 
 export const getProjectsParams = (
   filters: any,
-  pagination: IPagination
+  pagination: IPagination,
+  lang: "en" | "ar" = Locales.ENGLISH
 ): IListingParams => {
   const params: IListingParams = {
     path: Routes.ROOT + Resources.PROJECTS,
     sort: { createdAt: SortOrders.DESC },
     populate: projectsPopulates,
-    locale: Locales.ENGLISH,
+    locale: lang,
     filters,
     pagination,
   };
@@ -76,13 +82,14 @@ export const getProjectsParams = (
 
 export const getServicesParams = (
   filters: any,
-  pagination: IPagination
+  pagination: IPagination,
+  lang: "en" | "ar" = Locales.ENGLISH
 ): IListingParams => {
   const params: IListingParams = {
     path: Routes.ROOT + Resources.SERVICES,
     sort: { createdAt: SortOrders.ASC },
     populate: servicesPopulates,
-    locale: Locales.ENGLISH,
+    locale: lang,
     filters,
     pagination,
   };
@@ -92,12 +99,13 @@ export const getServicesParams = (
 
 export const getPostsParams = (
   filters: any,
-  pagination: IPagination
+  pagination: IPagination,
+  lang: "en" | "ar" = Locales.ENGLISH
 ): IListingParams => {
   const params: IListingParams = {
     path: Routes.ROOT + Resources.POSTS,
     sort: { createdAt: SortOrders.ASC },
-    locale: Locales.ENGLISH,
+    locale: lang,
     populate: postsPopulates,
     filters,
     pagination,
@@ -106,14 +114,17 @@ export const getPostsParams = (
   return params;
 };
 
-export const getCategoriesTagsParams = (resource: string): IListingParams => {
+export const getCategoriesTagsParams = (
+  resource: string,
+  lang: "en" | "ar" = Locales.ENGLISH
+): IListingParams => {
   const params: IListingParams = {
     path: Routes.ROOT + resource,
     sort: { createdAt: SortOrders.DESC },
     filters: {},
     populate: {},
     pagination: { start: 0, limit: 100 },
-    locale: Locales.ENGLISH,
+    locale: lang,
   };
 
   return params;

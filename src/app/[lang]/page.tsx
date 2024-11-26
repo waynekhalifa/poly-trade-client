@@ -8,6 +8,7 @@ import { Resources } from "@/enums/resources";
 import { Slugs } from "@/enums/slugs";
 import { list } from "@/services/list";
 import { IListingItem } from "@/types/api";
+import { Locale } from "@/types/locale";
 import { FALLBACK_SEO } from "@/utils/constants";
 import {
   getPagesParamsBySlug,
@@ -15,8 +16,12 @@ import {
   getSectionsParamsBySlug,
 } from "@/utils/resources-params";
 
-export async function generateMetadata(): Promise<any> {
-  const page = await list(getPagesParamsBySlug(Slugs.HOME));
+type Props = { params: { lang: Locale } };
+
+export async function generateMetadata({ params }: Props): Promise<any> {
+  const { lang } = params;
+
+  const page = await list(getPagesParamsBySlug(Slugs.HOME, lang));
 
   if (page.data.length === 0) return FALLBACK_SEO;
 
@@ -47,12 +52,13 @@ export async function generateMetadata(): Promise<any> {
   };
 }
 
-export default async function Home() {
+export default async function Home({ params }: Props) {
+  const { lang } = params;
   const [headerSections, footerSections, sections, posts] = await Promise.all([
-    list(getSectionsParamsBySlug(Slugs.HEADER, 1)),
-    list(getSectionsParamsBySlug(Slugs.FOOTER, 1)),
-    list(getSectionsParamsBySlug(Slugs.HOME, 100)),
-    list(getPostsParams({}, { start: 0, limit: 4 })),
+    list(getSectionsParamsBySlug(Slugs.HEADER, 1, lang)),
+    list(getSectionsParamsBySlug(Slugs.FOOTER, 1, lang)),
+    list(getSectionsParamsBySlug(Slugs.HOME, 100, lang)),
+    list(getPostsParams({}, { start: 0, limit: 4 }, lang)),
   ]);
 
   const listings: IListingItem[] = [{ name: Resources.POSTS, result: posts }];
