@@ -33,17 +33,17 @@ const Breadcrumb: React.FC<Props> = ({ page, archive }) => {
           backgroundPosition: "center",
           zIndex: "-1",
         },
-        "&:after": {
-          content: '""',
-          position: "absolute",
-          top: "0",
-          left: "0",
-          width: "100%",
-          height: "100%",
-          background:
-            "linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8))",
-          zIndex: "-1",
-        },
+        // "&:after": {
+        //   content: '""',
+        //   position: "absolute",
+        //   top: "0",
+        //   left: "0",
+        //   width: "100%",
+        //   height: "100%",
+        //   background:
+        //     "linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8))",
+        //   zIndex: "-1",
+        // },
       }}
     >
       <Box mb={{ xs: 6 }} borderTop={"1px solid"} borderColor={"divider"}>
