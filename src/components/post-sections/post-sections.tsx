@@ -2,9 +2,9 @@
 import Image from "next/image";
 import { Box, Container, Grid, Typography } from "@mui/material";
 
-import { getStrapiURL } from "@/app/utils/api-helpers";
+import { getStrapiURL } from "@/utils/api-helpers";
 import RichTextBlocks from "../rich-text-blocks";
-import { IListingResult } from "@/app/types/api";
+import { IListingResult } from "@/types/api";
 import PostCard from "../post-card";
 
 interface Props {
