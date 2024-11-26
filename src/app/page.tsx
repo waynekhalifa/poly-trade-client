@@ -1,6 +1,7 @@
-import MainSnackbar from "./components/main-snackbar";
 import Header from "./components/header";
+import MainSnackbar from "./components/main-snackbar";
 import ScrollTop from "./components/scroll-top";
+import SectionsRenderer from "./components/sections-renderer";
 import WhatsAppChat from "./components/whatsapp-chat";
 import { FALLBACK_SEO } from "./utils/constants";
 import { IListingItem } from "./types/api";
@@ -11,7 +12,6 @@ import {
   getPostsParams,
   getSectionsParamsBySlug,
 } from "./utils/resources-params";
-import SectionsRenderer from "./components/sections-renderer";
 import { Pages } from "./enums/pages";
 import { Resources } from "./enums/resources";
 
