@@ -6,13 +6,28 @@ export const pagesPopulates: any = {
 export const postsPopulates: any = {
   thumbnail: { populate: "*" },
   categories: { populate: "*" },
+  tags: { populate: "*" },
   author: { populate: "*" },
+  seo: { populate: "*" },
+};
+
+export const servicesPopulates: any = {
+  thumbnail: { populate: "*" },
+  gallery: { populate: "*" },
   seo: { populate: "*" },
 };
 
 export const productsPopulates: any = {
   thumbnail: { populate: "*" },
+  categories: { populate: "*" },
+  tags: { populate: "*" },
+  variants: { populate: "*" },
   seo: { populate: "*" },
+};
+
+export const projectsPopulates: any = {
+  gallery: { populate: "*" },
+  description: { populate: "*" },
 };
 
 export const sectionsPopulates: string[] = [
@@ -32,6 +47,10 @@ export const sectionsPopulates: string[] = [
   "container.grid.rows.padding.bottom",
   "container.grid.rows.padding.left",
   "container.grid.rows.padding.right",
+  "container.grid.rows.margin.top",
+  "container.grid.rows.margin.bottom",
+  "container.grid.rows.margin.left",
+  "container.grid.rows.margin.right",
   "container.grid.rows.columns",
   "container.grid.rows.columns.height",
   "container.grid.rows.columns.innerHeight",
@@ -94,6 +113,11 @@ export const sectionsPopulates: string[] = [
   "content.list.background.image",
   "content.list.background.video",
   "content.list.background.gradient",
+  "content.columns",
+  "content.firstColumnRows",
+  "content.secondColumnRows",
+  "content.thirdColumnRows",
+  "content.fourthColumnRows",
   "form",
   "form.section",
   "form.fields",

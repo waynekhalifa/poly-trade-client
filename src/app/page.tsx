@@ -1,63 +1,22 @@
-import Section from "./components/section";
 import MainSnackbar from "./components/main-snackbar";
-import { getStrapiURL } from "./utils/api-helpers";
-import { FALLBACK_SEO } from "./utils/constants";
-import { IListingItem, IListingParams } from "./types/api";
-import { list } from "./services/list";
-import { SortOrders } from "./enums/sort-orders";
-import {
-  pagesPopulates,
-  postsPopulates,
-  sectionsPopulates,
-} from "./constants/populates";
 import Header from "./components/header";
 import ScrollTop from "./components/scroll-top";
 import WhatsAppChat from "./components/whatsapp-chat";
-
-const headerSectionsParams: IListingParams = {
-  path: "/sections",
-  sort: { precedence: SortOrders.ASC },
-  filters: { slug: "header" },
-  populate: sectionsPopulates,
-  pagination: { start: 0, limit: 1 },
-  locale: "en",
-};
-const footerSectionsParams: IListingParams = {
-  path: "/sections",
-  sort: { precedence: SortOrders.ASC },
-  filters: { slug: "footer" },
-  populate: sectionsPopulates,
-  pagination: { start: 0, limit: 1 },
-  locale: "en",
-};
-const homeSectionsParams: IListingParams = {
-  path: "/sections",
-  sort: { precedence: SortOrders.ASC },
-  filters: { slug: "home" },
-  populate: sectionsPopulates,
-  pagination: { start: 0, limit: 100 },
-  locale: "en",
-};
-const recentPostsParams: IListingParams = {
-  path: "/posts",
-  sort: { createdAt: SortOrders.DESC },
-  filters: {},
-  populate: postsPopulates,
-  pagination: { start: 0, limit: 4 },
-  locale: "en",
-};
+import { FALLBACK_SEO } from "./utils/constants";
+import { IListingItem } from "./types/api";
+import { list } from "./services/list";
+import { Slugs } from "./enums/slugs";
+import {
+  getPagesParamsBySlug,
+  getPostsParams,
+  getSectionsParamsBySlug,
+} from "./utils/resources-params";
+import SectionsRenderer from "./components/sections-renderer";
+import { Pages } from "./enums/pages";
+import { Resources } from "./enums/resources";
 
 export async function generateMetadata(): Promise<any> {
-  const pagesParams: IListingParams = {
-    path: "/pages",
-    sort: { createdAt: SortOrders.ASC },
-    filters: { slug: "home" },
-    populate: pagesPopulates,
-    pagination: { start: 0, limit: 1 },
-    locale: "en",
-  };
-
-  const page = await list(pagesParams);
+  const page = await list(getPagesParamsBySlug(Slugs.HOME));
 
   if (page.data.length === 0) return FALLBACK_SEO;
 
@@ -68,80 +27,53 @@ export async function generateMetadata(): Promise<any> {
   return {
     title: `${metadata.title} - ${metadata.description}`,
     description: metadata.description,
+    alternates: {
+      canonical: process.env.NEXT_PUBLIC_URL,
+    },
     openGraph: {
+      url: process.env.NEXT_PUBLIC_URL,
+      siteName: metadata.title,
       title: `${metadata.title} - ${metadata.description}`,
       description: metadata.description,
-      images: [
-        {
-          url: getStrapiURL(metadata.icon.data.attributes.url),
-        },
-      ],
+      site_name: metadata.title,
+      images: [{ url: metadata.icon.data.attributes.url }],
     },
     twitter: {
       title: `${metadata.title} - ${metadata.description}`,
       description: metadata.description,
-      images: [
-        {
-          url: getStrapiURL(metadata.icon.data.attributes.url),
-        },
-      ],
+      site_name: metadata.title,
+      images: [{ url: metadata.icon.data.attributes.url }],
     },
   };
 }
 
 export default async function Home() {
   const [headerSections, footerSections, sections, posts] = await Promise.all([
-    list(headerSectionsParams),
-    list(footerSectionsParams),
-    list(homeSectionsParams),
-    list(recentPostsParams),
+    list(getSectionsParamsBySlug(Slugs.HEADER, 1)),
+    list(getSectionsParamsBySlug(Slugs.FOOTER, 1)),
+    list(getSectionsParamsBySlug(Slugs.HOME, 100)),
+    list(getPostsParams({}, { start: 0, limit: 4 })),
   ]);
 
-  const listings: IListingItem[] = [{ name: "posts", result: posts }];
-
-  const renderFooterSections = () => (
-    <>
-      {footerSections.data.map((item: any) => (
-        <Section
-          key={item.id}
-          data={item.attributes}
-          listings={listings}
-          activePage={"home"}
-          searchParams={null}
-          session={null}
-        />
-      ))}
-    </>
-  );
+  const listings: IListingItem[] = [{ name: Resources.POSTS, result: posts }];
 
   return (
     <>
       {headerSections.data.length > 0 && (
-        <Header data={headerSections.data} activePage="home" />
+        <Header data={headerSections.data} activePage={Pages.HOME} />
       )}
-      {sections.data.length > 0 && (
-        <main>
-          {sections.data.map((item: any) => (
-            <Section
-              key={item.id}
-              data={item.attributes}
-              listings={listings}
-              activePage={"home"}
-              searchParams={null}
-              session={null}
-            />
-          ))}
-        </main>
-      )}
-      {footerSections.data.length > 0 && (
-        <>
-          {footerSections.data.length === 1 ? (
-            renderFooterSections()
-          ) : (
-            <footer>{renderFooterSections()}</footer>
-          )}
-        </>
-      )}
+      <main>
+        <SectionsRenderer
+          sections={sections}
+          listings={listings}
+          activePage={Pages.HOME}
+        />
+      </main>
+      <SectionsRenderer
+        sections={footerSections}
+        listings={listings}
+        activePage={Pages.HOME}
+      />
       <ScrollTop />
       <WhatsAppChat />
       <MainSnackbar />
