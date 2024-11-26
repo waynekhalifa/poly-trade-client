@@ -1,6 +1,5 @@
 "use client";
-
-import { Roboto } from "next/font/google";
+import { Cairo, Roboto } from "next/font/google";
 import {
   PaletteOptions,
   ThemeProvider,
@@ -9,9 +8,16 @@ import {
 } from "@mui/material/styles";
 import { CssBaseline, GlobalStyles } from "@mui/material";
 import { TDirection } from "./models/direction";
+import { Locale } from "./types/locale";
 import { Directions } from "./enums/directions";
+import { Languages } from "./enums/languages";
 
-export const font = Roboto({
+export const roboto = Roboto({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
+export const cairo = Cairo({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
@@ -22,7 +28,10 @@ export const theme = (palette: PaletteOptions, direction: TDirection) =>
     palette,
     direction,
     typography: {
-      fontFamily: font.style.fontFamily,
+      fontFamily:
+        direction === Directions.LTR
+          ? roboto.style.fontFamily
+          : cairo.style.fontFamily,
     },
     shape: {
       borderRadius: 0,
@@ -52,10 +61,11 @@ export const theme = (palette: PaletteOptions, direction: TDirection) =>
 
 interface Props {
   paletteData: any;
+  locale: Locale;
   children: React.ReactNode;
 }
 
-const Theme: React.FC<Props> = ({ paletteData, children }) => {
+const Theme: React.FC<Props> = ({ paletteData, locale, children }) => {
   const { mode, background, common, secondary, primary } = paletteData;
 
   const palette: PaletteOptions = {
@@ -67,7 +77,14 @@ const Theme: React.FC<Props> = ({ paletteData, children }) => {
   };
 
   return (
-    <ThemeProvider theme={responsiveFontSizes(theme(palette, Directions.LTR))}>
+    <ThemeProvider
+      theme={responsiveFontSizes(
+        theme(
+          palette,
+          locale === Languages.ENGLISH ? Directions.LTR : Directions.RTL
+        )
+      )}
+    >
       <CssBaseline />
       <GlobalStyles
         styles={{

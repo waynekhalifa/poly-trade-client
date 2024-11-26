@@ -39,6 +39,11 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
   const contact: any = content.find(
     (item: any) => item.__component === "shared.contact"
   );
+  const text: any = content.find(
+    (item: any) => item.__component === "shared.text"
+  );
+
+  console.log(text);
 
   const handleDrawerOpen = () => setDrawerOpen(() => true);
 
@@ -54,7 +59,7 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
       >
         <Container>
           <Grid container alignItems={"center"} gap={"4px"}>
-            <Typography variant="body2">Call Us Today!</Typography>
+            <Typography variant="body2">{text.text}</Typography>
             <LinkWrap href={contact.url.href}>
               <Typography variant="body2">{contact.contact}</Typography>
             </LinkWrap>

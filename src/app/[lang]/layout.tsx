@@ -1,8 +1,14 @@
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+
 import Theme from "@/theme";
+import { Locale } from "@/types/locale";
 import { getStrapiURL } from "@/utils/api-helpers";
 import { FALLBACK_SEO } from "@/utils/constants";
 import { getGlobal } from "@/utils/get-global";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import { Languages } from "@/enums/languages";
+import { Directions } from "@/enums/directions";
+
+type Props = { params: { lang: Locale }; children: React.ReactNode };
 
 export async function generateMetadata(): Promise<any> {
   const [global] = await Promise.all([getGlobal()]);
@@ -23,18 +29,20 @@ export async function generateMetadata(): Promise<any> {
   };
 }
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RootLayout({ params, children }: Props) {
+  const { lang } = params;
   const [global] = await Promise.all([getGlobal()]);
 
   return (
-    <html lang="en">
+    <html
+      lang={lang}
+      dir={lang === Languages.ENGLISH ? Directions.LTR : Directions.RTL}
+    >
       <body>
         <AppRouterCacheProvider>
-          <Theme paletteData={global.data.attributes.palette}>{children}</Theme>
+          <Theme paletteData={global.data.attributes.palette} locale={lang}>
+            {children}
+          </Theme>
         </AppRouterCacheProvider>
       </body>
     </html>
