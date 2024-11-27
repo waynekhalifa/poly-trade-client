@@ -4,6 +4,7 @@ import MainSnackbar from "@/components/main-snackbar";
 import ScrollTop from "@/components/scroll-top";
 import SectionsRenderer from "@/components/sections-renderer";
 import WhatsAppChat from "@/components/whatsapp-chat";
+import { Languages } from "@/enums/languages";
 import { Resources } from "@/enums/resources";
 import { Slugs } from "@/enums/slugs";
 import { list } from "@/services/list";
@@ -32,12 +33,17 @@ export async function generateMetadata({ params }: Props): Promise<any> {
 
   const metadata = page.data[0].attributes.seo;
 
+  const title: string =
+    lang === Languages.ENGLISH ? metadata.title : metadata.arTitle;
+  const description: string =
+    lang === Languages.ENGLISH ? metadata.description : metadata.arDescription;
+
   return {
-    title: `${metadata.title} - ${metadata.description}`,
-    description: metadata.description,
+    title: `${title} - ${description}`,
+    description: description,
     openGraph: {
-      title: `${metadata.title} - ${metadata.description}`,
-      description: metadata.description,
+      title: `${title} - ${description}`,
+      description: description,
       images: [
         {
           url: getStrapiURL(metadata.icon.data.attributes.url),
@@ -45,8 +51,8 @@ export async function generateMetadata({ params }: Props): Promise<any> {
       ],
     },
     twitter: {
-      title: `${metadata.title} - ${metadata.description}`,
-      description: metadata.description,
+      title: `${title} - ${description}`,
+      description: description,
       images: [
         {
           url: getStrapiURL(metadata.icon.data.attributes.url),
@@ -122,7 +128,7 @@ export default async function Page({ params, searchParams }: Props) {
       {headerSections.data.length > 0 && (
         <Header data={headerSections.data} locale={lang} activePage={slug} />
       )}
-      <Breadcrumb page={pages.data[0].attributes} />
+      <Breadcrumb page={pages.data[0].attributes} locale={lang} />
       <main>
         <SectionsRenderer
           sections={sections}

@@ -5,14 +5,19 @@ import { Box, Container, List, Typography } from "@mui/material";
 
 import LinkWrap from "../link-wrap";
 import { getStrapiURL } from "@/utils/api-helpers";
+import { Locale } from "@/types/locale";
+import { Languages } from "@/enums/languages";
+import { strings as enStrings } from "@/locales/en/strings";
+import { strings as arStrings } from "@/locales/ar/strings";
 
 interface Props {
   page: any;
+  locale: Locale;
   archive?: any;
 }
 
-const Breadcrumb: React.FC<Props> = ({ page, archive }) => {
-  const { name } = page;
+const Breadcrumb: React.FC<Props> = ({ page, archive, locale }) => {
+  const { name, arName } = page;
 
   return (
     <Box
@@ -63,12 +68,18 @@ const Breadcrumb: React.FC<Props> = ({ page, archive }) => {
                   },
                 }}
               >
-                Home
+                {locale === Languages.ENGLISH ? enStrings.home : arStrings.home}
               </Typography>
             </LinkWrap>
             <ArrowForwardIos
               fontSize="small"
-              sx={{ color: "primary.main", transform: "scale(.5)" }}
+              sx={{
+                color: "primary.main",
+                transform:
+                  locale === Languages.ENGLISH
+                    ? "scale(.5)"
+                    : "scale(.5) rotate(180deg)",
+              }}
             />
             {archive && (
               <>
@@ -83,7 +94,9 @@ const Breadcrumb: React.FC<Props> = ({ page, archive }) => {
                       },
                     }}
                   >
-                    {archive.name}
+                    {locale === Languages.ENGLISH
+                      ? archive.name
+                      : archive.arName}
                   </Typography>
                 </LinkWrap>
                 <ArrowForwardIos
@@ -92,7 +105,9 @@ const Breadcrumb: React.FC<Props> = ({ page, archive }) => {
                 />
               </>
             )}
-            <Typography color={"primary.main"}>{name}</Typography>
+            <Typography color={"primary.main"}>
+              {locale === Languages.ENGLISH ? name : arName}
+            </Typography>
           </List>
         </Container>
       </Box>
@@ -103,7 +118,7 @@ const Breadcrumb: React.FC<Props> = ({ page, archive }) => {
           fontWeight={700}
           color={"common.white"}
         >
-          {name}
+          {locale === Languages.ENGLISH ? name : arName}
         </Typography>
       </Container>
     </Box>

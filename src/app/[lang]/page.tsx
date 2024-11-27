@@ -3,6 +3,7 @@ import MainSnackbar from "@/components/main-snackbar";
 import ScrollTop from "@/components/scroll-top";
 import SectionsRenderer from "@/components/sections-renderer";
 import WhatsAppChat from "@/components/whatsapp-chat";
+import { Languages } from "@/enums/languages";
 import { Pages } from "@/enums/pages";
 import { Resources } from "@/enums/resources";
 import { Slugs } from "@/enums/slugs";
@@ -29,24 +30,29 @@ export async function generateMetadata({ params }: Props): Promise<any> {
 
   if (!metadata) return FALLBACK_SEO;
 
+  const title: string =
+    lang === Languages.ENGLISH ? metadata.title : metadata.arTitle;
+  const description: string =
+    lang === Languages.ENGLISH ? metadata.description : metadata.arDescription;
+
   return {
-    title: `${metadata.title} - ${metadata.description}`,
-    description: metadata.description,
+    title: `${title} - ${description}`,
+    description: description,
     alternates: {
       canonical: process.env.NEXT_PUBLIC_URL,
     },
     openGraph: {
       url: process.env.NEXT_PUBLIC_URL,
-      siteName: metadata.title,
-      title: `${metadata.title} - ${metadata.description}`,
-      description: metadata.description,
-      site_name: metadata.title,
+      siteName: title,
+      title: `${title} - ${description}`,
+      description: description,
+      site_name: title,
       images: [{ url: metadata.icon.data.attributes.url }],
     },
     twitter: {
-      title: `${metadata.title} - ${metadata.description}`,
-      description: metadata.description,
-      site_name: metadata.title,
+      title: `${title} - ${description}`,
+      description: description,
+      site_name: title,
       images: [{ url: metadata.icon.data.attributes.url }],
     },
   };

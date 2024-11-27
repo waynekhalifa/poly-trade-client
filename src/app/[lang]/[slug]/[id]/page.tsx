@@ -18,6 +18,7 @@ import {
   getProductsParams,
   getSectionsParamsBySlug,
 } from "@/utils/resources-params";
+import { Languages } from "@/enums/languages";
 
 type Props = { params: { lang: Locale; slug: string; id: string } };
 
@@ -46,12 +47,17 @@ export async function generateMetadata({ params }: Props): Promise<any> {
   const metadata =
     singleData && singleData.data && singleData.data[0].attributes.seo;
 
+  const title: string =
+    lang === Languages.ENGLISH ? metadata.title : metadata.arTitle;
+  const description: string =
+    lang === Languages.ENGLISH ? metadata.description : metadata.arDescription;
+
   return {
-    title: `${metadata.title} - ${metadata.description}`,
-    description: metadata.description,
+    title: `${title} - ${description}`,
+    description: description,
     openGraph: {
-      title: `${metadata.title} - ${metadata.description}`,
-      description: metadata.description,
+      title: `${title} - ${description}`,
+      description: description,
       images: [
         {
           url: getStrapiURL(metadata.icon.data.attributes.url),
@@ -59,8 +65,8 @@ export async function generateMetadata({ params }: Props): Promise<any> {
       ],
     },
     twitter: {
-      title: `${metadata.title} - ${metadata.description}`,
-      description: metadata.description,
+      title: `${title} - ${description}`,
+      description: description,
       images: [
         {
           url: getStrapiURL(metadata.icon.data.attributes.url),
@@ -130,13 +136,15 @@ export default async function Page({ params }: Props) {
       {slug === "products" && (
         <Breadcrumb
           page={singleData.data[0].attributes}
-          archive={{ name: "Products", slug: "products" }}
+          archive={{ name: "Products", arName: "المنتجات", slug: "products" }}
+          locale={lang}
         />
       )}
       {slug === "news" && (
         <Breadcrumb
           page={singleData.data[0].attributes}
-          archive={{ name: "New", slug: "news" }}
+          archive={{ name: "News", arName: "الأخبار", slug: "news" }}
+          locale={lang}
         />
       )}
       <main>{renderTemplateContent()}</main>
