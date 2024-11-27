@@ -1,8 +1,8 @@
 "use client";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
-import useResponsive from "@/app/hooks/useResponsive";
+import useResponsive from "@/hooks/useResponsive";
 import FormInput from "../FormInput";
-import { MD_UP_PARAMS } from "@/app/constants/media-queries";
+import { MD_UP_PARAMS } from "@/constants/media-queries";
 
 interface Props {
   content: any;

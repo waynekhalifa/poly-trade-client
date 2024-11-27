@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button, Grid } from "@mui/material";
 
-import { ISessionUser } from "@/app/types/session";
+import { ISessionUser } from "@/types/session";
 import DetailsForm from "./details-form";
 import PasswordForm from "./password-form";
 

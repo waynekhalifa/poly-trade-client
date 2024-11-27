@@ -3,14 +3,14 @@
 import * as Yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ArrowForwardIos } from "@mui/icons-material";
-import { IFormField } from "@/app/types/formFields";
+import { IFormField } from "@/types/formFields";
 import { Box, Button, Container, Grid, List, Typography } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import FormFields from "../FormFields";
 import LinkWrap from "../link-wrap";
-import { IListingItem } from "@/app/types/api";
-import { generateOptions } from "@/app/utils/generate-options";
+import { IListingItem } from "@/types/api";
+import { generateOptions } from "@/utils/generate-options";
 
 const search: IFormField = {
   id: 1,

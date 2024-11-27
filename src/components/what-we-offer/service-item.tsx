@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { getStrapiURL } from "@/app/utils/api-helpers";
-import calculateNewHeight from "@/app/utils/calculateNewHeight";
+import { getStrapiURL } from "@/utils/api-helpers";
+import calculateNewHeight from "@/utils/calculateNewHeight";
 import {
   CloudUpload,
   CodeOff,

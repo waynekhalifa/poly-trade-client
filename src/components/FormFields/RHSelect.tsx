@@ -1,5 +1,5 @@
-import { IFormField } from "@/app/types/formFields";
-import { IOption } from "@/app/types/option";
+import { IFormField } from "@/types/formFields";
+import { IOption } from "@/types/option";
 import { InputLabel, MenuItem, Select } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 

@@ -1,5 +1,5 @@
-import { MD_UP_PARAMS } from "@/app/constants/media-queries";
-import useResponsive from "@/app/hooks/useResponsive";
+import { MD_UP_PARAMS } from "@/constants/media-queries";
+import useResponsive from "@/hooks/useResponsive";
 import { Box, Typography } from "@mui/material";
 
 interface Props {

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
-import { getStrapiURL } from "@/app/utils/api-helpers";
+import { getStrapiURL } from "@/utils/api-helpers";
 import {
   BathroomOutlined,
   BedOutlined,

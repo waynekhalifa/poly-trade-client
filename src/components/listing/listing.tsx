@@ -1,4 +1,4 @@
-import { IListingItem } from "@/app/types/api";
+import { IListingItem } from "@/types/api";
 import LatestPosts from "../latest-posts";
 import BlogPosts from "../blog-posts";
 import Products from "../products";

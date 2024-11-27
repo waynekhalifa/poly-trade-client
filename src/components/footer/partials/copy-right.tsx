@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
-import useResponsive from "@/app/hooks/useResponsive";
+import useResponsive from "@/hooks/useResponsive";
 import { Fragment } from "react";
-import { MD_UP_PARAMS } from "@/app/constants/media-queries";
+import { MD_UP_PARAMS } from "@/constants/media-queries";
 import LinkWrap from "../../link-wrap";
 
 interface Props {

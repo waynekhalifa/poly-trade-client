@@ -4,7 +4,7 @@ import { Box, Button, Container, Stack } from "@mui/material";
 
 import HeroTitle from "./hero-title";
 import RichTextBlocks from "../rich-text-blocks";
-import { getStrapiURL } from "@/app/utils/api-helpers";
+import { getStrapiURL } from "@/utils/api-helpers";
 import LinkWrap from "../link-wrap";
 
 interface Props {

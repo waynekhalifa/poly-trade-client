@@ -17,15 +17,15 @@ import {
 } from "@mui/material";
 
 import PropertyCard from "./property-card";
-import useSnackbarStore from "@/app/store/snackbar";
+import useSnackbarStore from "@/store/snackbar";
 import NoneFeaturedCard from "./none-featured-card";
 import TypeItem from "./type-item";
 import LocationItem from "./location-item";
-import { IOption } from "@/app/types/option";
-import { IListingItem, IPostParams, Model } from "@/app/types/api";
-import { ISessionUser } from "@/app/types/session";
-import { createSnackbarResponse } from "@/app/utils/snackbar";
-import { post } from "@/app/services/post";
+import { IOption } from "@/types/option";
+import { IListingItem, IPostParams, Model } from "@/types/api";
+import { ISessionUser } from "@/types/session";
+import { createSnackbarResponse } from "@/utils/snackbar";
+import { post } from "@/services/post";
 
 const options: IOption[] = [
   { id: 1, label: "Featured", value: "featured" },

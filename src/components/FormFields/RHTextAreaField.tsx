@@ -1,7 +1,7 @@
 import { Control, Controller } from "react-hook-form";
 import { InputLabel } from "@mui/material";
 import FormInput from "../FormInput/FormInput";
-import { IFormField } from "@/app/types/formFields";
+import { IFormField } from "@/types/formFields";
 
 interface Props extends IFormField {
   errors: any;

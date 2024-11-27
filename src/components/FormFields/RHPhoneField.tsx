@@ -1,4 +1,4 @@
-import { IFormField } from "@/app/types/formFields";
+import { IFormField } from "@/types/formFields";
 import { FormControl, FormHelperText, InputLabel } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 import PhoneInput from "react-phone-number-input";

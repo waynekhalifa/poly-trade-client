@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import RichTextBlocks from "../rich-text-blocks";
-import { getStrapiURL } from "@/app/utils/api-helpers";
+import { getStrapiURL } from "@/utils/api-helpers";
 
 interface Props {
   services: any;

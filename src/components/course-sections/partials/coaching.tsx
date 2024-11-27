@@ -1,7 +1,7 @@
 import { Box, Container, Typography } from "@mui/material";
 
-import { MD_UP_PARAMS } from "@/app/constants/media-queries";
-import useResponsive from "@/app/hooks/useResponsive";
+import { MD_UP_PARAMS } from "@/constants/media-queries";
+import useResponsive from "@/hooks/useResponsive";
 import RichTextBlocks from "../../rich-text-blocks";
 
 interface Props {

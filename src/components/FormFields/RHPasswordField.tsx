@@ -4,7 +4,7 @@ import { IconButton, InputAdornment, InputLabel } from "@mui/material";
 import { useState } from "react";
 import { Control, Controller } from "react-hook-form";
 import FormInput from "../FormInput/FormInput";
-import { IFormField } from "@/app/types/formFields";
+import { IFormField } from "@/types/formFields";
 
 interface Props extends IFormField {
   errors: any;

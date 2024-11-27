@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
-import { IListingItem } from "@/app/types/api";
+import { IListingItem } from "@/types/api";
 import LinkWrap from "../link-wrap";
 import { useEffect, useState } from "react";
 

@@ -1,9 +1,9 @@
 "use client";
 
-import useResponsive from "@/app/hooks/useResponsive";
+import useResponsive from "@/hooks/useResponsive";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import QualificationItem from "./qualification-item";
-import { MD_UP_PARAMS } from "@/app/constants/media-queries";
+import { MD_UP_PARAMS } from "@/constants/media-queries";
 
 interface Props {
   content: any;

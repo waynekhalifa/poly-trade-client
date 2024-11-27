@@ -5,26 +5,26 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 
-import useSnackbarStore from "@/app/store/snackbar";
+import useSnackbarStore from "@/store/snackbar";
 import FormFields from "../FormFields";
-import { getStrapiURL } from "@/app/utils/api-helpers";
-import { IFormField } from "@/app/types/formFields";
-import { InputTypes } from "@/app/enums/inputTypes";
-import { createSnackbarResponse } from "@/app/utils/snackbar";
-import { setSession } from "@/app/utils/set-session";
+import { getStrapiURL } from "@/utils/api-helpers";
+import { IFormField } from "@/types/formFields";
+import { InputTypes } from "@/enums/inputTypes";
+import { createSnackbarResponse } from "@/utils/snackbar";
+import { setSession } from "@/utils/set-session";
 import {
   IForgotInput,
   ILoginInput,
   ILoginResult,
   IRegisterInput,
   IResetInput,
-} from "@/app/types/auth";
-import { login } from "@/app/services/auth/login";
-import { me } from "@/app/services/users/me";
-import { IUser } from "@/app/types/user";
-import { signUp } from "@/app/services/auth/sign-up";
-import { forgotPassword } from "@/app/services/auth/forgot-password";
-import { resetPassword } from "@/app/services/auth/reset-password";
+} from "@/types/auth";
+import { login } from "@/services/auth/login";
+import { me } from "@/services/users/me";
+import { IUser } from "@/types/user";
+import { signUp } from "@/services/auth/sign-up";
+import { forgotPassword } from "@/services/auth/forgot-password";
+import { resetPassword } from "@/services/auth/reset-password";
 import LinkWrap from "../link-wrap";
 import {
   AUTH_LOGIN,
@@ -33,7 +33,7 @@ import {
   COMPANY_REGISTRATION,
   DEFAULT_VALIDATION,
   EMAIL,
-} from "@/app/validations/auth";
+} from "@/validations/auth";
 
 const email: IFormField = {
   id: 1,

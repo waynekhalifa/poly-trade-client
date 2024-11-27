@@ -1,4 +1,4 @@
-import RichTextBlocks from "@/app/components/rich-text-blocks";
+import RichTextBlocks from "@/components/rich-text-blocks";
 import { Box, Container } from "@mui/material";
 
 interface Props {

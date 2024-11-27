@@ -1,5 +1,5 @@
-import { getStrapiURL } from "@/app/utils/api-helpers";
-import { ILoginResult, IResetInput } from "@/app/types/auth";
+import { getStrapiURL } from "@/utils/api-helpers";
+import { ILoginResult, IResetInput } from "@/types/auth";
 
 export const resetPassword = async (
   input: IResetInput

@@ -1,9 +1,9 @@
 "use client";
 import { Box, Drawer, Grid, IconButton, Typography } from "@mui/material";
 
-import useModalStore from "@/app/store/modal";
-import { Modals } from "@/app/enums/modals";
-import { TModal, emptyModal } from "@/app/types/modal";
+import useModalStore from "@/store/modal";
+import { Modals } from "@/enums/modals";
+import { TModal, emptyModal } from "@/types/modal";
 import { Close } from "@mui/icons-material";
 
 const MainModal: React.FC = () => {

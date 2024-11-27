@@ -11,10 +11,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import useResponsive from "@/app/hooks/useResponsive";
+import useResponsive from "@/hooks/useResponsive";
 import { ArrowForwardIos, Search } from "@mui/icons-material";
 import PostCard from "../../post-card";
-import { MD_UP_PARAMS } from "@/app/constants/media-queries";
+import { MD_UP_PARAMS } from "@/constants/media-queries";
 
 interface Props {
   posts: any;

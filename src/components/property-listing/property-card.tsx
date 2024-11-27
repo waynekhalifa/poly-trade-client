@@ -17,14 +17,14 @@ import {
 import Link from "next/link";
 
 import LinkWrap from "../link-wrap";
-import useSnackbarStore from "@/app/store/snackbar";
-import { getStrapiURL } from "@/app/utils/api-helpers";
-import { formatTimeAgo } from "@/app/utils/format-time-ago";
-import { generateWhatsAppShareLink } from "@/app/utils/generateWhatsAppShareLink";
-import { ISessionUser } from "@/app/types/session";
-import { createSnackbarResponse } from "@/app/utils/snackbar";
-import { IListingItem, IPostParams, Model } from "@/app/types/api";
-import { put } from "@/app/services/put";
+import useSnackbarStore from "@/store/snackbar";
+import { getStrapiURL } from "@/utils/api-helpers";
+import { formatTimeAgo } from "@/utils/format-time-ago";
+import { generateWhatsAppShareLink } from "@/utils/generateWhatsAppShareLink";
+import { ISessionUser } from "@/types/session";
+import { createSnackbarResponse } from "@/utils/snackbar";
+import { IListingItem, IPostParams, Model } from "@/types/api";
+import { put } from "@/services/put";
 
 interface Props {
   id: number;

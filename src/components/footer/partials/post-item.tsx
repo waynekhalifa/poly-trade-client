@@ -2,9 +2,9 @@ import Image from "next/image";
 import { Box, Grid, Typography } from "@mui/material";
 
 import { AccessTime } from "@mui/icons-material";
-import { formatDate, getStrapiURL } from "@/app/utils/api-helpers";
-import { excerptString } from "@/app/utils/excerpt-string";
-import calculateNewWidth from "@/app/utils/calculateNewWidth";
+import { formatDate, getStrapiURL } from "@/utils/api-helpers";
+import { excerptString } from "@/utils/excerpt-string";
+import calculateNewWidth from "@/utils/calculateNewWidth";
 import LinkWrap from "../../link-wrap";
 
 interface Props {

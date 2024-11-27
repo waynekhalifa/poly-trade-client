@@ -27,8 +27,8 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 
-import { getStrapiURL } from "@/app/utils/api-helpers";
-import stripInlineStyles from "@/app/utils/stripInlineStyles";
+import { getStrapiURL } from "@/utils/api-helpers";
+import stripInlineStyles from "@/utils/stripInlineStyles";
 import MoreCard from "../property-listing/more-card";
 import LinkWrap from "../link-wrap";
 

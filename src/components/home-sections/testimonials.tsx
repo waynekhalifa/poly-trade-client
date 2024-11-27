@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import useResponsive from "@/app/hooks/useResponsive";
+import useResponsive from "@/hooks/useResponsive";
 import RichTextBlocks from "../rich-text-blocks";
-import { getStrapiURL } from "@/app/utils/api-helpers";
-import { MD_UP_PARAMS } from "@/app/constants/media-queries";
+import { getStrapiURL } from "@/utils/api-helpers";
+import { MD_UP_PARAMS } from "@/constants/media-queries";
 
 interface Props {
   content: any;

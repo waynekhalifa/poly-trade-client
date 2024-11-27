@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Box, Button, Container, List, Stack, Typography } from "@mui/material";
 import { ArrowForwardIos } from "@mui/icons-material";
-import { getStrapiURL } from "@/app/utils/api-helpers";
+import { getStrapiURL } from "@/utils/api-helpers";
 import LinkWrap from "../link-wrap";
 
 interface Props {

@@ -1,4 +1,4 @@
-import { IListingItem } from "@/app/types/api";
+import { IListingItem } from "@/types/api";
 import PropertySearch from "../property-search";
 import RegisterCompanyForm from "../register-company-form";
 import ContactForm from "../contact-form";

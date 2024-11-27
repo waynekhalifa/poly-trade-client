@@ -1,4 +1,4 @@
-import { IFormField } from "@/app/types/formFields";
+import { IFormField } from "@/types/formFields";
 import { Checkbox, Grid, Typography } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 

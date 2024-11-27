@@ -1,8 +1,8 @@
 "use client";
 import { Box, Container, Typography } from "@mui/material";
-import useResponsive from "@/app/hooks/useResponsive";
+import useResponsive from "@/hooks/useResponsive";
 import RichTextBlocks from "../rich-text-blocks";
-import { MD_UP_PARAMS } from "@/app/constants/media-queries";
+import { MD_UP_PARAMS } from "@/constants/media-queries";
 
 interface Props {
   content: any;

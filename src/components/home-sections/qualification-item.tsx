@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Stack, Typography } from "@mui/material";
-import { getStrapiURL } from "@/app/utils/api-helpers";
+import { getStrapiURL } from "@/utils/api-helpers";
 
 interface Props {
   item: any;

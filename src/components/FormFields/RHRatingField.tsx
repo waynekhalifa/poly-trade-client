@@ -1,6 +1,6 @@
 import { Control, Controller } from "react-hook-form";
 import { Box, Rating } from "@mui/material";
-import { IFormField } from "@/app/types/formFields";
+import { IFormField } from "@/types/formFields";
 
 interface Props extends IFormField {
   errors: any;
@@ -10,7 +10,6 @@ interface Props extends IFormField {
 
 const RHRatingField: React.FC<Props> = ({
   name,
-  placeholder,
   disabled,
   autoFocus,
   control,

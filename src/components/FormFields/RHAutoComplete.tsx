@@ -2,8 +2,8 @@ import { Autocomplete, FormControl, InputLabel } from "@mui/material";
 import { Controller } from "react-hook-form";
 
 import FormInput from "../FormInput";
-import { IFormField } from "@/app/types/formFields";
-import { IOption } from "@/app/types/option";
+import { IFormField } from "@/types/formFields";
+import { IOption } from "@/types/option";
 
 interface Props extends IFormField {
   errors: any;

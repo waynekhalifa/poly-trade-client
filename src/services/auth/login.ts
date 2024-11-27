@@ -1,5 +1,5 @@
-import { getStrapiURL } from "@/app/utils/api-helpers";
-import { ILoginInput, ILoginResult } from "@/app/types/auth";
+import { getStrapiURL } from "@/utils/api-helpers";
+import { ILoginInput, ILoginResult } from "@/types/auth";
 
 export const login = async (input: ILoginInput): Promise<ILoginResult> => {
   try {

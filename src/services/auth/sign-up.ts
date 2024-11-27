@@ -1,5 +1,5 @@
-import { getStrapiURL } from "@/app/utils/api-helpers";
-import { IRegisterInput, IRegisterResult } from "@/app/types/auth";
+import { getStrapiURL } from "@/utils/api-helpers";
+import { IRegisterInput, IRegisterResult } from "@/types/auth";
 
 export const signUp = async (
   input: IRegisterInput

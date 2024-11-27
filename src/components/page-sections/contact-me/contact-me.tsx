@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import useResponsive from "@/app/hooks/useResponsive";
-import { IMediaQuery } from "@/app/types/mediaQuery";
+import useResponsive from "@/hooks/useResponsive";
+import { IMediaQuery } from "@/types/mediaQuery";
 import {
   Box,
   Button,
@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import ContactItem from "./contact-item";
-import { getStrapiURL } from "@/app/utils/api-helpers";
+import { getStrapiURL } from "@/utils/api-helpers";
 
 const params: IMediaQuery = { query: "up", key: "md" };
 

@@ -1,8 +1,8 @@
 import { Box, IconButton, Typography } from "@mui/material";
 import { StickyNote2Outlined } from "@mui/icons-material";
 
-import { MD_UP_PARAMS } from "@/app/constants/media-queries";
-import useResponsive from "@/app/hooks/useResponsive";
+import { MD_UP_PARAMS } from "@/constants/media-queries";
+import useResponsive from "@/hooks/useResponsive";
 
 interface Props {
   data: any;

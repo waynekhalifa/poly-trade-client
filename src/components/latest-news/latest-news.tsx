@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 
 import PostCard from "../post-card";
-import { IListingItem } from "@/app/types/api";
+import { IListingItem } from "@/types/api";
 
 interface Props {
   listings: IListingItem[];

@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { Box, Container, Grid, Typography } from "@mui/material";
 
-import RichTextBlocks from "@/app/components/rich-text-blocks";
-import { MD_UP_PARAMS } from "@/app/constants/media-queries";
-import useResponsive from "@/app/hooks/useResponsive";
-import { getStrapiURL } from "@/app/utils/api-helpers";
+import RichTextBlocks from "@/components/rich-text-blocks";
+import { MD_UP_PARAMS } from "@/constants/media-queries";
+import useResponsive from "@/hooks/useResponsive";
+import { getStrapiURL } from "@/utils/api-helpers";
 
 interface Props {
   data: any;

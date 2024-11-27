@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Box, Button, Typography } from "@mui/material";
 import RichTextBlocks from "../rich-text-blocks";
-import { getStrapiURL } from "@/app/utils/api-helpers";
-import calculateNewWidth from "@/app/utils/calculateNewWidth";
+import { getStrapiURL } from "@/utils/api-helpers";
+import calculateNewWidth from "@/utils/calculateNewWidth";
 import LinkWrap from "../link-wrap";
 
 interface Props {

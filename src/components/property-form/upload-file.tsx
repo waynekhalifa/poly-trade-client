@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import Preview from "./preview";
-import { getStrapiURL } from "@/app/utils/api-helpers";
+import { getStrapiURL } from "@/utils/api-helpers";
 
 export const imageTypes: string[] = [
   "image/apng",

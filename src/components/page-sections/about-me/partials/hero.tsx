@@ -1,5 +1,5 @@
-import LinkWrap from "@/app/components/link-wrap";
-import RichTextBlocks from "@/app/components/rich-text-blocks";
+import LinkWrap from "@/components/link-wrap";
+import RichTextBlocks from "@/components/rich-text-blocks";
 import { Box, Button, Container } from "@mui/material";
 
 interface Props {

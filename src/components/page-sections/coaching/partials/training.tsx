@@ -1,7 +1,7 @@
-import LinkWrap from "@/app/components/link-wrap";
-import RichTextBlocks from "@/app/components/rich-text-blocks";
-import { MD_UP_PARAMS } from "@/app/constants/media-queries";
-import useResponsive from "@/app/hooks/useResponsive";
+import LinkWrap from "@/components/link-wrap";
+import RichTextBlocks from "@/components/rich-text-blocks";
+import { MD_UP_PARAMS } from "@/constants/media-queries";
+import useResponsive from "@/hooks/useResponsive";
 import { Box, Button, Container, Typography } from "@mui/material";
 
 interface Props {

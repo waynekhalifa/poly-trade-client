@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Box, Container, List, Stack, Typography } from "@mui/material";
-import { getStrapiURL } from "@/app/utils/api-helpers";
+import { getStrapiURL } from "@/utils/api-helpers";
 import { ArrowForwardIos } from "@mui/icons-material";
 import LinkWrap from "../link-wrap";
 

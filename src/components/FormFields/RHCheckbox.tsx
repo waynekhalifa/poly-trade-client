@@ -1,6 +1,6 @@
 import { Control, Controller } from "react-hook-form";
 import { Checkbox, FormControlLabel, FormHelperText } from "@mui/material";
-import { IFormField } from "@/app/types/formFields";
+import { IFormField } from "@/types/formFields";
 
 interface Props extends IFormField {
   errors: any;

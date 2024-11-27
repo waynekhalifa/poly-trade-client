@@ -1,5 +1,5 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
-import { getStrapiURL } from "@/app/utils/api-helpers";
+import { getStrapiURL } from "@/utils/api-helpers";
 import LinkWrap from "../../link-wrap";
 
 interface Props {
