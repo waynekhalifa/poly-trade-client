@@ -7,27 +7,34 @@ import FormFields from "../FormFields";
 import { IFormField } from "@/types/formFields";
 import { InputTypes } from "@/enums/inputTypes";
 import { getStrapiURL } from "@/utils/api-helpers";
+import { Locale } from "@/types/locale";
+import { Languages } from "@/enums/languages";
+import { strings as enStrings } from "@/locales/en/strings";
+import { strings as arStrings } from "@/locales/ar/strings";
 
 interface Props {
   data: any;
+  locale: Locale;
 }
 
-const fields: IFormField[] = [
-  {
-    id: 1,
-    name: "email",
-    type: "email",
-    label: undefined,
-    placeholder: "Your E-mail Address",
-    disabled: false,
-    autoFocus: false,
-    multiple: false,
-    options: [],
-  },
-];
-
-const SubscribeForm: React.FC<Props> = ({ data }) => {
+const SubscribeForm: React.FC<Props> = ({ data, locale }) => {
   const DEFAULT_VALUES: any = {};
+  const fields: IFormField[] = [
+    {
+      id: 1,
+      name: "email",
+      type: "email",
+      label: undefined,
+      placeholder:
+        locale === Languages.ENGLISH
+          ? enStrings.yourEmailAddress
+          : arStrings.yourEmailAddress,
+      disabled: false,
+      autoFocus: false,
+      multiple: false,
+      options: [],
+    },
+  ];
 
   for (const field of fields) {
     if (field.type === InputTypes.CHECKBOX) {
@@ -93,7 +100,7 @@ const SubscribeForm: React.FC<Props> = ({ data }) => {
         />
       ))}
       <Button variant="contained" type="submit">
-        Send
+        {locale === Languages.ENGLISH ? enStrings.send : arStrings.send}
       </Button>
     </Box>
   );

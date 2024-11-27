@@ -141,7 +141,9 @@ const Content: React.FC<Props> = ({
       // case "shared.breadcrumb":
       //   return <Breadcrumb key={component._id} data={component} />;
       case "shared.subscribe-form":
-        return <SubscribeForm key={component._id} data={component} />;
+        return (
+          <SubscribeForm key={component._id} data={component} locale={locale} />
+        );
       case "shared.hero-title":
         return <HeroTitle key={component._id} data={component} />;
       case "shared.widget-title":
