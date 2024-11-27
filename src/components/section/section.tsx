@@ -7,11 +7,13 @@ import { linearGradient } from "@/utils/bg-gradient";
 import { getStrapiURL } from "@/utils/api-helpers";
 import { IListingItem } from "@/types/api";
 import { ISessionUser } from "@/types/session";
+import { Locale } from "@/types/locale";
 
 interface Props {
   data: any;
   listings: IListingItem[];
   activePage: string;
+  locale: Locale;
   searchParams: any;
   session: ISessionUser | null;
 }
@@ -20,6 +22,7 @@ const Section: React.FC<Props> = ({
   data,
   listings,
   activePage,
+  locale,
   searchParams,
   session,
 }) => {
@@ -103,6 +106,7 @@ const Section: React.FC<Props> = ({
             grid={grid}
             listings={listings}
             activePage={activePage}
+            locale={locale}
             searchParams={searchParams}
             session={session}
           />

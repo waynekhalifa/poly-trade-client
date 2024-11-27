@@ -1,7 +1,8 @@
 import dynamic from "next/dynamic";
 import { Email, PhoneIphone } from "@mui/icons-material";
 
-import { ISessionUser } from "@/app/types/session";
+import { ISessionUser } from "@/types/session";
+import { Locale } from "@/types/locale";
 
 const Button = dynamic(() => import("../button"), { suspense: false });
 const LightBox = dynamic(() => import("../light-box"), { suspense: false });
@@ -103,6 +104,7 @@ interface Props {
   component: any;
   listings: any[];
   activePage: string;
+  locale: Locale;
   searchParams: any;
   session: ISessionUser | null;
 }
@@ -113,6 +115,7 @@ const Content: React.FC<Props> = ({
   activePage,
   searchParams,
   session,
+  locale,
 }) => {
   // console.log(component);
   const renderComponent = () => {
@@ -134,7 +137,7 @@ const Content: React.FC<Props> = ({
       case "shared.social-icons":
         return <SocialIcons key={component._id} data={component} />;
       case "shared.logo":
-        return <NewLogo key={component._id} data={component} />;
+        return <NewLogo key={component._id} data={component} locale={locale} />;
       // case "shared.breadcrumb":
       //   return <Breadcrumb key={component._id} data={component} />;
       case "shared.subscribe-form":

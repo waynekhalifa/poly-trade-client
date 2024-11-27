@@ -4,13 +4,16 @@ import { Box } from "@mui/material";
 import Logo from "../logo";
 import FooterTextLogo from "../footer-text-logo";
 import { getStrapiURL } from "@/utils/api-helpers";
+import { Routes } from "@/enums/routes";
+import { Locale } from "@/types/locale";
 
 interface Props {
   data: any;
+  locale: Locale;
   imgHeight?: number;
 }
 
-const NewLogo: React.FC<Props> = ({ data, imgHeight }) => {
+const NewLogo: React.FC<Props> = ({ data, locale, imgHeight }) => {
   const { text, placement, file, padding, margin } = data;
 
   return (
@@ -27,7 +30,7 @@ const NewLogo: React.FC<Props> = ({ data, imgHeight }) => {
     >
       <Box
         component={"a"}
-        href={data.url.href}
+        href={Routes.ROOT + locale + data.url.href}
         target={data.url.newTab ? "_blank" : "_self"}
         sx={{
           display: "block",

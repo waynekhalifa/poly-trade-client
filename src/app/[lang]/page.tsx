@@ -77,12 +77,14 @@ export default async function Home({ params }: Props) {
           sections={sections}
           listings={listings}
           activePage={Pages.HOME}
+          locale={lang}
         />
       </main>
       <SectionsRenderer
         sections={footerSections}
         listings={listings}
         activePage={Pages.HOME}
+        locale={lang}
       />
       <ScrollTop />
       <WhatsAppChat />

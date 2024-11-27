@@ -99,7 +99,7 @@ const Header: React.FC<Props> = ({ data, locale, activePage }) => {
                 justifyContent={"space-between"}
                 alignItems={"center"}
               >
-                <NewLogo data={logo} imgHeight={80} />
+                <NewLogo locale={locale} data={logo} imgHeight={80} />
                 <MenuIcon handleDrawerOpen={handleDrawerOpen} />
               </Grid>
             )}
@@ -132,7 +132,7 @@ const Header: React.FC<Props> = ({ data, locale, activePage }) => {
             borderBottom={"thin solid"}
             borderColor={"divider"}
           >
-            <NewLogo data={logo} imgHeight={82} />
+            <NewLogo locale={locale} data={logo} imgHeight={82} />
           </Grid>
         </Box>
         <Navigation

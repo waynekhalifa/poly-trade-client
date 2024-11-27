@@ -1,11 +1,13 @@
 import Section from "../section";
-import { IListingItem, IListingResult } from "@/app/types/api";
-import { ISessionUser } from "@/app/types/session";
+import { IListingItem, IListingResult } from "@/types/api";
+import { ISessionUser } from "@/types/session";
+import { Locale } from "@/types/locale";
 
 interface Props {
   sections: IListingResult;
   listings: IListingItem[];
   activePage: string;
+  locale: Locale;
   session?: ISessionUser | null;
   searchParams?: any;
 }
@@ -16,6 +18,7 @@ const SectionsRenderer: React.FC<Props> = ({
   activePage,
   session,
   searchParams,
+  locale,
 }) => {
   return (
     <>
@@ -25,6 +28,7 @@ const SectionsRenderer: React.FC<Props> = ({
           data={item.attributes}
           listings={listings}
           activePage={activePage}
+          locale={locale}
           session={session ? session : null}
           searchParams={searchParams ? searchParams : null}
         />

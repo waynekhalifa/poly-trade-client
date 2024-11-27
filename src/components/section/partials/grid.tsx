@@ -6,6 +6,7 @@ import Content from "../../content";
 import { linearGradient } from "@/utils/bg-gradient";
 import { getStrapiURL } from "@/utils/api-helpers";
 import { ISessionUser } from "@/types/session";
+import { Locale } from "@/types/locale";
 
 interface Props {
   content: any;
@@ -14,6 +15,7 @@ interface Props {
   activePage: string;
   searchParams: any;
   session: ISessionUser | null;
+  locale: Locale;
 }
 
 const Grid: React.FC<Props> = ({
@@ -23,6 +25,7 @@ const Grid: React.FC<Props> = ({
   activePage,
   searchParams,
   session,
+  locale,
 }) => {
   const { rows } = grid;
 
@@ -44,6 +47,7 @@ const Grid: React.FC<Props> = ({
               key={index}
               listings={listings}
               activePage={activePage}
+              locale={locale}
               searchParams={searchParams}
               session={session}
             />

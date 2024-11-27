@@ -125,7 +125,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       {headerSections.data.length > 0 && (
-        <Header activePage={slug} data={headerSections.data} />
+        <Header activePage={slug} data={headerSections.data} locale={lang} />
       )}
       {slug === "products" && (
         <Breadcrumb
@@ -144,6 +144,7 @@ export default async function Page({ params }: Props) {
         sections={footerSections}
         listings={listings}
         activePage={slug}
+        locale={lang}
       />
       <ScrollTop />
       <WhatsAppChat />

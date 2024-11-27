@@ -120,7 +120,7 @@ export default async function Page({ params, searchParams }: Props) {
   return (
     <>
       {headerSections.data.length > 0 && (
-        <Header data={headerSections.data} activePage={slug} />
+        <Header data={headerSections.data} locale={lang} activePage={slug} />
       )}
       <Breadcrumb page={pages.data[0].attributes} />
       <main>
@@ -129,12 +129,14 @@ export default async function Page({ params, searchParams }: Props) {
           listings={listings}
           activePage={slug}
           searchParams={searchParams}
+          locale={lang}
         />
       </main>
       <SectionsRenderer
         sections={footerSections}
         listings={listings}
         activePage={slug}
+        locale={lang}
       />
       <ScrollTop />
       <WhatsAppChat />
