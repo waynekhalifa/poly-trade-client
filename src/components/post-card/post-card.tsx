@@ -124,7 +124,7 @@ const PostCard: React.FC<Props> = ({ post, locale }) => {
             "& .MuiButton-startIcon": { mr: "4px" },
           }}
         >
-          {formatDate(publishedAt)}
+          {formatDate(publishedAt, locale)}
         </Button>
         <Typography
           mt={2}

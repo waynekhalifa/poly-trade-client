@@ -53,7 +53,7 @@ const PostItem: React.FC<Props> = ({ data, locale }) => {
             sx={{ mr: 1, color: "grey.500", transform: "scale(0.8)" }}
           />
           <Typography variant="body2" color={"grey.500"} fontWeight={300}>
-            {formatDate(publishedAt)}
+            {formatDate(publishedAt, locale)}
           </Typography>
         </Grid>
       </Grid>
