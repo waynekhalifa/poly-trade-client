@@ -129,7 +129,7 @@ const Content: React.FC<Props> = ({
       case "shared.button":
         return <Button key={component._id} data={component} />;
       case "shared.slider":
-        return <Slider key={component._id} data={component} />;
+        return <Slider key={component._id} data={component} locale={locale} />;
       case "shared.media":
         return <Media key={component._id} data={component} />;
       case "shared.service":

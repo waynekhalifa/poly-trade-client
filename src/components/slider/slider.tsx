@@ -4,12 +4,15 @@ import { Box } from "@mui/material";
 
 import "swiper/css";
 import SliderItem from "./slider-item";
+import { Locale } from "@/types/locale";
+import { Languages } from "@/enums/languages";
 
 interface Props {
   data: any;
+  locale: Locale;
 }
 
-const Slider: React.FC<Props> = ({ data }) => {
+const Slider: React.FC<Props> = ({ data, locale }) => {
   const {
     slidesPerView,
     direction,
@@ -46,7 +49,10 @@ const Slider: React.FC<Props> = ({ data }) => {
           width: 32,
           position: "absolute",
           top: "50%",
-          transform: "translateY(-50%)",
+          transform:
+            locale === Languages.ENGLISH
+              ? "translateY(-50%)"
+              : "translateY(-50%) rotate(180deg)",
           zIndex: 1,
           transition: "opacity .3s ease-out-int",
           "&:hover": {
