@@ -1,5 +1,4 @@
 "use client";
-
 import { ArrowForwardIos } from "@mui/icons-material";
 import { Box, Container, List, Typography } from "@mui/material";
 
@@ -7,8 +6,7 @@ import LinkWrap from "../link-wrap";
 import { getStrapiURL } from "@/utils/api-helpers";
 import { Locale } from "@/types/locale";
 import { Languages } from "@/enums/languages";
-import { strings as enStrings } from "@/locales/en/strings";
-import { strings as arStrings } from "@/locales/ar/strings";
+import { translateStaticString } from "@/utils/translateStatic";
 
 interface Props {
   page: any;
@@ -68,7 +66,7 @@ const Breadcrumb: React.FC<Props> = ({ page, archive, locale }) => {
                   },
                 }}
               >
-                {locale === Languages.ENGLISH ? enStrings.home : arStrings.home}
+                {translateStaticString("home", locale)}
               </Typography>
             </LinkWrap>
             <ArrowForwardIos

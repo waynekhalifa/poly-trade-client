@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import { Box, Button, List, Typography } from "@mui/material";
 import { CalendarMonth, Person } from "@mui/icons-material";
@@ -8,10 +7,8 @@ import { formatDate, getStrapiURL } from "@/utils/api-helpers";
 import { excerptString } from "@/utils/excerpt-string";
 import LinkWrap from "../link-wrap";
 import CategoryItem from "./category-item";
-import { Languages } from "@/enums/languages";
-import { strings as enStrings } from "@/locales/en/strings";
-import { strings as arStrings } from "@/locales/ar/strings";
 import { Locale } from "@/types/locale";
+import { translateStaticString } from "@/utils/translateStatic";
 
 interface Props {
   post: any;
@@ -135,9 +132,7 @@ const PostCard: React.FC<Props> = ({ post, locale }) => {
         </Typography> */}
         <LinkWrap href={"/news/" + slug}>
           <Button variant="contained" size="small">
-            {locale === Languages.ENGLISH
-              ? enStrings.readMore
-              : arStrings.readMore}
+            {translateStaticString("readMore", locale)}
           </Button>
         </LinkWrap>
       </Box>

@@ -8,9 +8,7 @@ import { IFormField } from "@/types/formFields";
 import { InputTypes } from "@/enums/inputTypes";
 import { getStrapiURL } from "@/utils/api-helpers";
 import { Locale } from "@/types/locale";
-import { Languages } from "@/enums/languages";
-import { strings as enStrings } from "@/locales/en/strings";
-import { strings as arStrings } from "@/locales/ar/strings";
+import { translateStaticString } from "@/utils/translateStatic";
 
 interface Props {
   data: any;
@@ -25,10 +23,7 @@ const SubscribeForm: React.FC<Props> = ({ data, locale }) => {
       name: "email",
       type: "email",
       label: undefined,
-      placeholder:
-        locale === Languages.ENGLISH
-          ? enStrings.yourEmailAddress
-          : arStrings.yourEmailAddress,
+      placeholder: `${translateStaticString("yourEmailAddress", locale)}`,
       disabled: false,
       autoFocus: false,
       multiple: false,
@@ -100,7 +95,7 @@ const SubscribeForm: React.FC<Props> = ({ data, locale }) => {
         />
       ))}
       <Button variant="contained" type="submit">
-        {locale === Languages.ENGLISH ? enStrings.send : arStrings.send}
+        {translateStaticString("send", locale)}
       </Button>
     </Box>
   );

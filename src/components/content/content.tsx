@@ -198,7 +198,12 @@ const Content: React.FC<Props> = ({
         );
       case "shared.form":
         return (
-          <Form key={component._id} data={component} listings={listings} />
+          <Form
+            key={component._id}
+            data={component}
+            listings={listings}
+            locale={locale}
+          />
         );
       case "shared.editor":
         return <Editor key={component._id} data={component} />;
