@@ -1,18 +1,21 @@
 import { List, ListItem, ListItemText } from "@mui/material";
 import LinkWrap from "../link-wrap";
+import { Locale } from "@/types/locale";
+import { Routes } from "@/enums/routes";
 
 interface Props {
   data: any;
   activePage: string;
+  locale: Locale;
 }
 
-const UsefulLinks: React.FC<Props> = ({ data, activePage }) => {
+const UsefulLinks: React.FC<Props> = ({ data, locale, activePage }) => {
   const { links, padding, margin } = data;
 
   const isActivePage = (url: string): boolean => {
-    if (url === "/" && activePage === "home") return true;
+    if (url === Routes.ROOT && activePage === "home") return true;
 
-    return url === "/" + activePage;
+    return url === Routes.ROOT + activePage;
   };
 
   return (
@@ -86,7 +89,7 @@ const UsefulLinks: React.FC<Props> = ({ data, activePage }) => {
             },
           }}
         >
-          <LinkWrap href={item.url} blank={item.newTab}>
+          <LinkWrap href={Routes.ROOT + locale + item.url} blank={item.newTab}>
             <ListItemText
               primary={item.text}
               sx={{

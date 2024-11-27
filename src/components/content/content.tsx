@@ -218,12 +218,14 @@ const Content: React.FC<Props> = ({
             key={component._id}
             data={component}
             activePage={activePage}
+            locale={locale}
           />
         ) : (
           <SupportLinks
             key={component._id}
             data={component}
             activePage={activePage}
+            locale={locale}
           />
         );
       case "shared.contact":

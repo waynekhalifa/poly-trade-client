@@ -1,4 +1,9 @@
 "use client";
+
+import createCache from "@emotion/cache";
+import rtlPlugin from "stylis-plugin-rtl";
+import { CacheProvider } from "@emotion/react";
+import { prefixer } from "stylis";
 import { Cairo, Roboto } from "next/font/google";
 import {
   PaletteOptions,
@@ -7,6 +12,7 @@ import {
   responsiveFontSizes,
 } from "@mui/material/styles";
 import { CssBaseline, GlobalStyles } from "@mui/material";
+
 import { TDirection } from "./models/direction";
 import { Locale } from "./types/locale";
 import { Directions } from "./enums/directions";
@@ -76,34 +82,44 @@ const Theme: React.FC<Props> = ({ paletteData, locale, children }) => {
     common,
   };
 
+  const cache =
+    locale === Languages.ENGLISH
+      ? createCache({ key: "mui" })
+      : createCache({
+          key: "mui-rtl",
+          stylisPlugins: [prefixer, rtlPlugin],
+        });
+
   return (
-    <ThemeProvider
-      theme={responsiveFontSizes(
-        theme(
-          palette,
-          locale === Languages.ENGLISH ? Directions.LTR : Directions.RTL
-        )
-      )}
-    >
-      <CssBaseline />
-      <GlobalStyles
-        styles={{
-          img: { display: "block", maxWidth: "100%", height: "auto" },
-          video: { display: "block" },
-          ".swiper-wrapper": { maxHeight: "100vh" },
-          // svg: { animation: "spin 4s infinite linear" },
-          "@keyframes spin": {
-            from: {
-              transform: "rotate(0deg)",
+    <CacheProvider value={cache}>
+      <ThemeProvider
+        theme={responsiveFontSizes(
+          theme(
+            palette,
+            locale === Languages.ENGLISH ? Directions.LTR : Directions.RTL
+          )
+        )}
+      >
+        <CssBaseline />
+        <GlobalStyles
+          styles={{
+            img: { display: "block", maxWidth: "100%", height: "auto" },
+            video: { display: "block" },
+            ".swiper-wrapper": { maxHeight: "100vh" },
+            // svg: { animation: "spin 4s infinite linear" },
+            "@keyframes spin": {
+              from: {
+                transform: "rotate(0deg)",
+              },
+              to: {
+                transform: "rotate(360deg)",
+              },
             },
-            to: {
-              transform: "rotate(360deg)",
-            },
-          },
-        }}
-      />
-      {children}
-    </ThemeProvider>
+          }}
+        />
+        {children}
+      </ThemeProvider>
+    </CacheProvider>
   );
 };
 

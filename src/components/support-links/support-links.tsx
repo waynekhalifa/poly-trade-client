@@ -1,12 +1,15 @@
 import { Box, Grid, List, Typography } from "@mui/material";
 import LinkWrap from "../link-wrap";
+import { Locale } from "@/types/locale";
+import { Routes } from "@/enums/routes";
 
 interface Props {
   data: any;
   activePage: string;
+  locale: Locale;
 }
 
-const SupportLinks: React.FC<Props> = ({ data }) => {
+const SupportLinks: React.FC<Props> = ({ data, locale }) => {
   const { links } = data;
 
   return (
@@ -18,7 +21,7 @@ const SupportLinks: React.FC<Props> = ({ data }) => {
     >
       {links.map((item: any) => (
         <Box key={item.id} mr={2}>
-          <LinkWrap href={item.url} blank={item.newTab}>
+          <LinkWrap href={Routes.ROOT + locale + item.url} blank={item.newTab}>
             <Typography
               variant="body2"
               color={"text.primary"}
