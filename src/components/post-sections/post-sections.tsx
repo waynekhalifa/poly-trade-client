@@ -7,6 +7,7 @@ import RichTextBlocks from "../rich-text-blocks";
 import { IListingResult } from "@/types/api";
 import PostCard from "../post-card";
 import { Locale } from "@/types/locale";
+import { translateStaticString } from "@/utils/translateStatic";
 
 interface Props {
   data: any;
@@ -48,7 +49,7 @@ const PostSections: React.FC<Props> = ({ data, relatedPosts, locale }) => {
         ))}
         <Box mt={{ xs: 4, md: 8 }}>
           <Typography variant="h4" fontWeight={500} mb={{ xs: 2, md: 3 }}>
-            Related Posts
+            {translateStaticString("relatedPosts", locale)}
           </Typography>
           <Grid container spacing={2}>
             {relatedPosts &&

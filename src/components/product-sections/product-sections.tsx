@@ -8,6 +8,7 @@ import RichTextBlocks from "../rich-text-blocks";
 import { IListingResult } from "@/types/api";
 import ProductCard from "../products/product-card";
 import { Locale } from "@/types/locale";
+import { Languages } from "@/enums/languages";
 
 interface Props {
   data: any;
@@ -20,7 +21,12 @@ const ProductSections: React.FC<Props> = ({
   relatedProducts,
   locale,
 }) => {
-  const { name, description, thumbnail } = data.attributes;
+  const { name, arName, description, arDescription, thumbnail } =
+    data.attributes;
+
+  const productName: string = locale === Languages.ENGLISH ? name : arName;
+  const productDescription: any =
+    locale === Languages.ENGLISH ? description : arDescription;
 
   return (
     <Box pt={{ xs: 4, md: 8 }} pb={{ xs: 8, md: 12 }}>
@@ -42,9 +48,9 @@ const ProductSections: React.FC<Props> = ({
           mt={{ xs: 3, md: 4 }}
           mb={{ xs: 2, md: 3 }}
         >
-          {name}
+          {productName}
         </Typography>
-        {description.map((item: any, index: number) => (
+        {productDescription.map((item: any, index: number) => (
           <RichTextBlocks key={index} element={item} />
         ))}
         <Box mt={{ xs: 4, md: 8 }}>

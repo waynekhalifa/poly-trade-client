@@ -8,4 +8,5 @@ export const strings: any = {
   telephone: "Telephone",
   company: "Company",
   message: "Message",
+  relatedPosts: "Related Posts",
 };

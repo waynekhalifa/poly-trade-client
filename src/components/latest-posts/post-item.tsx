@@ -7,6 +7,7 @@ import { excerptString } from "@/utils/excerpt-string";
 import LinkWrap from "../link-wrap";
 import { Locale } from "@/types/locale";
 import { Routes } from "@/enums/routes";
+import { Languages } from "@/enums/languages";
 
 interface Props {
   data: any;
@@ -14,7 +15,9 @@ interface Props {
 }
 
 const PostItem: React.FC<Props> = ({ data, locale }) => {
-  const { name, slug, thumbnail, publishedAt } = data;
+  const { name, arName, slug, thumbnail, publishedAt } = data;
+
+  const postName: string = locale === Languages.ENGLISH ? name : arName;
 
   return (
     <Grid container mb={3} columnSpacing={2}>
@@ -26,7 +29,7 @@ const PostItem: React.FC<Props> = ({ data, locale }) => {
           >
             <Image
               src={getStrapiURL(thumbnail.data.attributes.url)}
-              alt={name}
+              alt={postName}
               fill
             />
           </LinkWrap>
@@ -41,7 +44,7 @@ const PostItem: React.FC<Props> = ({ data, locale }) => {
             color={"common.white"}
             minHeight={48}
           >
-            {excerptString(name, 42)}
+            {excerptString(postName, 42)}
           </Typography>
         </LinkWrap>
         <Grid container alignItems={"center"}>

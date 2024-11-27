@@ -6,6 +6,7 @@ import { excerptString } from "@/utils/excerpt-string";
 import LinkWrap from "../link-wrap";
 import { Routes } from "@/enums/routes";
 import { Locale } from "@/types/locale";
+import { Languages } from "@/enums/languages";
 
 interface Props {
   product: any;
@@ -13,8 +14,10 @@ interface Props {
 }
 
 const ProductCard: React.FC<Props> = ({ product, locale }) => {
-  const { name, slug, thumbnail } = product.attributes;
+  const { name, arName, slug, thumbnail } = product.attributes;
   const { url, alternativeText } = thumbnail.data.attributes;
+
+  const productName: string = locale === Languages.ENGLISH ? name : arName;
 
   return (
     <Box
@@ -59,7 +62,7 @@ const ProductCard: React.FC<Props> = ({ product, locale }) => {
           textTransform={"capitalize"}
           textAlign={"center"}
         >
-          {excerptString(name, 40)}
+          {excerptString(productName, 40)}
         </Typography>
       </LinkWrap>
       <LinkWrap
@@ -68,7 +71,7 @@ const ProductCard: React.FC<Props> = ({ product, locale }) => {
       >
         <Image
           src={getStrapiURL(url)}
-          alt={alternativeText ? alternativeText : name}
+          alt={alternativeText ? alternativeText : productName}
           fill
         />
       </LinkWrap>
@@ -89,7 +92,7 @@ const ProductCard: React.FC<Props> = ({ product, locale }) => {
           textTransform={"capitalize"}
           textAlign={"center"}
         >
-          {excerptString(name, 40)}
+          {excerptString(productName, 40)}
         </Typography>
       </LinkWrap>
     </Box>

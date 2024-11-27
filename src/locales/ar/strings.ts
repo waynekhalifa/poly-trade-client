@@ -8,4 +8,5 @@ export const strings: any = {
   telephone: "رقم هاتف",
   company: "شركة",
   message: "رسالة",
+  relatedPosts: "منشورات ذات صلة",
 };

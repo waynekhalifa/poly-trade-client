@@ -10,6 +10,7 @@ import CategoryItem from "./category-item";
 import { Locale } from "@/types/locale";
 import { translateStaticString } from "@/utils/translateStatic";
 import { Routes } from "@/enums/routes";
+import { Languages } from "@/enums/languages";
 
 interface Props {
   post: any;
@@ -19,14 +20,24 @@ interface Props {
 const PostCard: React.FC<Props> = ({ post, locale }) => {
   const {
     name,
+    arName,
     slug,
     description,
+    arDescription,
     categories,
     publishedAt,
     thumbnail,
     author,
   } = post.attributes;
   const { url, alternativeText } = thumbnail.data.attributes;
+
+  const postName: string = locale === Languages.ENGLISH ? name : arName;
+  const postDescription: any =
+    locale === Languages.ENGLISH ? description : arDescription;
+  const authorName: any =
+    locale === Languages.ENGLISH
+      ? author.data.attributes.name
+      : author.data.attributes.arName;
 
   return (
     <Box
@@ -59,6 +70,7 @@ const PostCard: React.FC<Props> = ({ post, locale }) => {
               key={item.id}
               item={item.attributes}
               isLast={index === categories.data.length - 1}
+              locale={locale}
             />
           ))}
         </List>
@@ -71,7 +83,7 @@ const PostCard: React.FC<Props> = ({ post, locale }) => {
             textTransform={"capitalize"}
             minHeight={64}
           >
-            {excerptString(name, 40)}
+            {excerptString(postName, 40)}
           </Typography>
         </LinkWrap>
         <Button
@@ -90,7 +102,7 @@ const PostCard: React.FC<Props> = ({ post, locale }) => {
             "& .MuiButton-startIcon": { mr: "4px" },
           }}
         >
-          {author.data.attributes.name}
+          {authorName}
         </Button>
         <Button
           size="small"
@@ -121,7 +133,7 @@ const PostCard: React.FC<Props> = ({ post, locale }) => {
           variant="body2"
           minHeight={60}
         >
-          {excerptString(description[0].children[0].text, 160)}
+          {excerptString(postDescription[0].children[0].text, 160)}
         </Typography>
         <LinkWrap href={Routes.ROOT + locale + "/news/" + slug}>
           <Button variant="contained" size="small">
