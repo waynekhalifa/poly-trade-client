@@ -7,12 +7,17 @@ import { formatDate, getStrapiURL } from "@/utils/api-helpers";
 import { excerptString } from "@/utils/excerpt-string";
 import LinkWrap from "../link-wrap";
 import CategoryItem from "./category-item";
+import { Languages } from "@/enums/languages";
+import { strings as enStrings } from "@/locales/en/strings";
+import { strings as arStrings } from "@/locales/ar/strings";
+import { Locale } from "@/types/locale";
 
 interface Props {
   post: any;
+  locale: Locale;
 }
 
-const PostCard: React.FC<Props> = ({ post }) => {
+const PostCard: React.FC<Props> = ({ post, locale }) => {
   const {
     name,
     slug,
@@ -129,7 +134,9 @@ const PostCard: React.FC<Props> = ({ post }) => {
         </Typography> */}
         <LinkWrap href={"/news/" + slug}>
           <Button variant="contained" size="small">
-            Read more
+            {locale === Languages.ENGLISH
+              ? enStrings.readMore
+              : arStrings.readMore}
           </Button>
         </LinkWrap>
       </Box>

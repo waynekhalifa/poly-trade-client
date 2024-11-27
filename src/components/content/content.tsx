@@ -259,6 +259,7 @@ const Content: React.FC<Props> = ({
             data={component}
             listings={listings}
             searchParams={searchParams}
+            locale={locale}
           />
         );
       default:
