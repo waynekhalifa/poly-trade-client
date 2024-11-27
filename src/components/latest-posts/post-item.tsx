@@ -5,12 +5,15 @@ import { AccessTime } from "@mui/icons-material";
 import { formatDate, getStrapiURL } from "@/utils/api-helpers";
 import { excerptString } from "@/utils/excerpt-string";
 import LinkWrap from "../link-wrap";
+import { Locale } from "@/types/locale";
+import { Routes } from "@/enums/routes";
 
 interface Props {
   data: any;
+  locale: Locale;
 }
 
-const PostItem: React.FC<Props> = ({ data }) => {
+const PostItem: React.FC<Props> = ({ data, locale }) => {
   const { name, slug, thumbnail, publishedAt } = data;
 
   return (
@@ -18,7 +21,7 @@ const PostItem: React.FC<Props> = ({ data }) => {
       <Grid item xs={4}>
         <Box overflow={"hidden"}>
           <LinkWrap
-            href={"/news/" + slug}
+            href={Routes.ROOT + locale + "/news/" + slug}
             sx={{ position: "relative", height: 72 }}
           >
             <Image
@@ -30,7 +33,7 @@ const PostItem: React.FC<Props> = ({ data }) => {
         </Box>
       </Grid>
       <Grid item xs={8}>
-        <LinkWrap href={"/news/" + slug}>
+        <LinkWrap href={Routes.ROOT + locale + "/news/" + slug}>
           <Typography
             fontWeight={500}
             component={"h5"}

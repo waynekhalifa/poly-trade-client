@@ -123,6 +123,7 @@ export default async function Page({ params }: Props) {
         <ProductSections
           data={singleData.data[0]}
           relatedProducts={relatedProducts}
+          locale={lang}
         />
       );
 

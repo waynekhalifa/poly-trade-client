@@ -4,12 +4,15 @@ import { Box, Typography } from "@mui/material";
 import { getStrapiURL } from "@/utils/api-helpers";
 import { excerptString } from "@/utils/excerpt-string";
 import LinkWrap from "../link-wrap";
+import { Routes } from "@/enums/routes";
+import { Locale } from "@/types/locale";
 
 interface Props {
   product: any;
+  locale: Locale;
 }
 
-const ProductCard: React.FC<Props> = ({ product }) => {
+const ProductCard: React.FC<Props> = ({ product, locale }) => {
   const { name, slug, thumbnail } = product.attributes;
   const { url, alternativeText } = thumbnail.data.attributes;
 
@@ -34,7 +37,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
     >
       <LinkWrap
         className="overly"
-        href={"/products/" + slug}
+        href={Routes.ROOT + locale + "/products/" + slug}
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -60,7 +63,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
         </Typography>
       </LinkWrap>
       <LinkWrap
-        href={"/products/" + slug}
+        href={Routes.ROOT + locale + "/products/" + slug}
         sx={{ position: "relative", display: "block", height: 400 }}
       >
         <Image
@@ -70,7 +73,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
         />
       </LinkWrap>
       <LinkWrap
-        href={"/products/" + slug}
+        href={Routes.ROOT + locale + "/products/" + slug}
         className="product-title"
         sx={{
           transition: "all .3s ease-in-out",

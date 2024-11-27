@@ -7,13 +7,19 @@ import { getStrapiURL } from "@/utils/api-helpers";
 import RichTextBlocks from "../rich-text-blocks";
 import { IListingResult } from "@/types/api";
 import ProductCard from "../products/product-card";
+import { Locale } from "@/types/locale";
 
 interface Props {
   data: any;
+  locale: Locale;
   relatedProducts: IListingResult;
 }
 
-const ProductSections: React.FC<Props> = ({ data, relatedProducts }) => {
+const ProductSections: React.FC<Props> = ({
+  data,
+  relatedProducts,
+  locale,
+}) => {
   const { name, description, thumbnail } = data.attributes;
 
   return (
@@ -47,7 +53,7 @@ const ProductSections: React.FC<Props> = ({ data, relatedProducts }) => {
               relatedProducts.data.length > 0 &&
               relatedProducts.data.map((item: any) => (
                 <Grid item key={item.id} xs={12} md={4}>
-                  <ProductCard product={item} />
+                  <ProductCard product={item} locale={locale} />
                 </Grid>
               ))}
           </Grid>

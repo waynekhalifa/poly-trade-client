@@ -8,6 +8,7 @@ import { IListingItem } from "@/types/api";
 import { calculatePages } from "@/utils/calculate-pages";
 import { navigateInternal } from "@/utils/navigate";
 import { Locale } from "@/types/locale";
+import { Languages } from "@/enums/languages";
 
 interface Props {
   listings: IListingItem[];
@@ -79,7 +80,12 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams, locale }) => {
               >
                 <ArrowForwardIos
                   fontSize="small"
-                  sx={{ transform: "rotate(180deg) scale(.6)" }}
+                  sx={{
+                    transform:
+                      locale === Languages.ENGLISH
+                        ? "rotate(180deg) scale(.6)"
+                        : "rotate(0deg) scale(.6)",
+                  }}
                 />
               </Button>
             )}
@@ -117,7 +123,12 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams, locale }) => {
               >
                 <ArrowForwardIos
                   fontSize="small"
-                  sx={{ transform: "scale(.6)" }}
+                  sx={{
+                    transform:
+                      locale === Languages.ENGLISH
+                        ? "rotate(0deg) scale(.6)"
+                        : "rotate(180deg) scale(.6)",
+                  }}
                 />
               </Button>
             )}

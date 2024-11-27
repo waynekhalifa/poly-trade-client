@@ -16,7 +16,7 @@ const Listing: React.FC<Props> = ({ data, listings, searchParams, locale }) => {
   const { sectionName } = data;
 
   if (sectionName === "latest-posts")
-    return <LatestPosts listings={listings} />;
+    return <LatestPosts listings={listings} locale={locale} />;
 
   if (sectionName === "latest-news")
     return <LatestNews listings={listings} locale={locale} />;
@@ -31,7 +31,13 @@ const Listing: React.FC<Props> = ({ data, listings, searchParams, locale }) => {
     );
 
   if (sectionName === "product-listing")
-    return <Products listings={listings} searchParams={searchParams} />;
+    return (
+      <Products
+        listings={listings}
+        searchParams={searchParams}
+        locale={locale}
+      />
+    );
 
   return <>Should render listing</>;
 };

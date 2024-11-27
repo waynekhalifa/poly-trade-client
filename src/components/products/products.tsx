@@ -5,13 +5,16 @@ import { IListingItem } from "@/types/api";
 import { calculatePages } from "@/utils/calculate-pages";
 import { navigateInternal } from "@/utils/navigate";
 import ProductCard from "./product-card";
+import { Locale } from "@/types/locale";
+import { Languages } from "@/enums/languages";
 
 interface Props {
   listings: IListingItem[];
   searchParams: any;
+  locale: Locale;
 }
 
-const Products: React.FC<Props> = ({ listings, searchParams }) => {
+const Products: React.FC<Props> = ({ listings, searchParams, locale }) => {
   const blogPosts: IListingItem | undefined = listings.find(
     (item: any) => item.name === "blogPosts"
   );
@@ -33,7 +36,7 @@ const Products: React.FC<Props> = ({ listings, searchParams }) => {
           blogPosts.result.data.length > 0 &&
           blogPosts.result.data.map((item: any) => (
             <Grid item key={item.id} xs={12} md={4}>
-              <ProductCard product={item} />
+              <ProductCard product={item} locale={locale} />
             </Grid>
           ))}
       </Grid>
@@ -54,7 +57,12 @@ const Products: React.FC<Props> = ({ listings, searchParams }) => {
             >
               <ArrowForwardIos
                 fontSize="small"
-                sx={{ transform: "rotate(180deg) scale(.6)" }}
+                sx={{
+                  transform:
+                    locale === Languages.ENGLISH
+                      ? "rotate(180deg) scale(.6)"
+                      : "rotate(0deg) scale(.6)",
+                }}
               />
             </Button>
           )}
@@ -92,7 +100,12 @@ const Products: React.FC<Props> = ({ listings, searchParams }) => {
             >
               <ArrowForwardIos
                 fontSize="small"
-                sx={{ transform: "scale(.6)" }}
+                sx={{
+                  transform:
+                    locale === Languages.ENGLISH
+                      ? "rotate(0deg) scale(.6)"
+                      : "rotate(180deg) scale(.6)",
+                }}
               />
             </Button>
           )}
