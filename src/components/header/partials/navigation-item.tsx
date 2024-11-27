@@ -2,23 +2,31 @@ import { useState } from "react";
 import { ExpandMore } from "@mui/icons-material";
 import { Box, Grid, List, Typography } from "@mui/material";
 import LinkWrap from "../../link-wrap";
+import { Locale } from "@/types/locale";
+import { Routes } from "@/enums/routes";
 
 interface Props {
   item: any;
+  locale: Locale;
   subItems: any[];
   activePage: string;
 }
 
-const NavigationItem: React.FC<Props> = ({ item, subItems, activePage }) => {
+const NavigationItem: React.FC<Props> = ({
+  item,
+  locale,
+  subItems,
+  activePage,
+}) => {
   const [display, setDisplay] = useState<"none" | "block">("none");
 
   const handleMouseEnter = () => setDisplay("block");
   const handleMouseLeave = () => setDisplay("none");
 
   const isActive = () => {
-    if (item.url === "/" && activePage === "home") return true;
+    if (item.url === Routes.ROOT && activePage === "home") return true;
 
-    return item.url === "/" + activePage;
+    return item.url === Routes.ROOT + activePage;
   };
 
   return (
@@ -30,7 +38,7 @@ const NavigationItem: React.FC<Props> = ({ item, subItems, activePage }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <LinkWrap href={item.url}>
+      <LinkWrap href={Routes.ROOT + locale + item.url}>
         <Grid
           height={80}
           container

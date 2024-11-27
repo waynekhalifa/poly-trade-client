@@ -66,7 +66,11 @@ export default async function Home({ params }: Props) {
   return (
     <>
       {headerSections.data.length > 0 && (
-        <Header data={headerSections.data} activePage={Pages.HOME} />
+        <Header
+          data={headerSections.data}
+          activePage={Pages.HOME}
+          locale={lang}
+        />
       )}
       <main>
         <SectionsRenderer

@@ -2,14 +2,21 @@ import { List } from "@mui/material";
 import NavigationItem from "./navigation-item";
 import { Fragment } from "react";
 import DrawerItem from "./drawer-item";
+import { Locale } from "@/types/locale";
 
 interface Props {
   placement: string;
+  locale: Locale;
   activePage: string;
   links: Array<any>;
 }
 
-const Navigation: React.FC<Props> = ({ placement, activePage, links }) => {
+const Navigation: React.FC<Props> = ({
+  placement,
+  locale,
+  activePage,
+  links,
+}) => {
   return (
     <List
       disablePadding
@@ -19,10 +26,20 @@ const Navigation: React.FC<Props> = ({ placement, activePage, links }) => {
       {links.map((item: any) => (
         <Fragment key={item.id}>
           {placement === "header" && (
-            <NavigationItem activePage={activePage} item={item} subItems={[]} />
+            <NavigationItem
+              activePage={activePage}
+              locale={locale}
+              item={item}
+              subItems={[]}
+            />
           )}
           {placement === "drawer" && (
-            <DrawerItem activePage={activePage} item={item} subItems={[]} />
+            <DrawerItem
+              activePage={activePage}
+              locale={locale}
+              item={item}
+              subItems={[]}
+            />
           )}
         </Fragment>
       ))}

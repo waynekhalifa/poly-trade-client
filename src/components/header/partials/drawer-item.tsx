@@ -2,23 +2,31 @@ import { ExpandMore } from "@mui/icons-material";
 import { Box, Grid, List, Typography } from "@mui/material";
 import { useState } from "react";
 import LinkWrap from "../../link-wrap";
+import { Locale } from "@/types/locale";
+import { Routes } from "@/enums/routes";
 
 interface Props {
   item: any;
+  locale: Locale;
   subItems: any[];
   activePage: string;
 }
 
-const DrawerItem: React.FC<Props> = ({ item, subItems, activePage }) => {
+const DrawerItem: React.FC<Props> = ({
+  item,
+  locale,
+  subItems,
+  activePage,
+}) => {
   const [display, setDisplay] = useState<"none" | "block">("none");
 
   const toggleDropdown = () =>
     setDisplay((prev) => (prev === "block" ? "none" : "block"));
 
   const isActive = () => {
-    if (item.url === "/" && activePage === "home") return true;
+    if (item.url === Routes.ROOT && activePage === "home") return true;
 
-    return item.url === "/" + activePage;
+    return item.url === Routes.ROOT + activePage;
   };
 
   return (
@@ -29,7 +37,7 @@ const DrawerItem: React.FC<Props> = ({ item, subItems, activePage }) => {
       sx={{ span: { width: "100%" }, a: { width: "100%" } }}
       onClick={toggleDropdown}
     >
-      <LinkWrap href={item.url}>
+      <LinkWrap href={Routes.ROOT + locale + item.url}>
         <Grid
           height={64}
           container

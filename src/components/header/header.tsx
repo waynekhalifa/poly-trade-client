@@ -14,13 +14,15 @@ import MenuIcon from "./partials/menu-icon";
 import NewLogo from "../new-logo";
 import LinkWrap from "../link-wrap";
 import useSticky from "@/hooks/useSticky";
+import { Locale } from "@/types/locale";
 
 interface Props {
   data: any;
+  locale: Locale;
   activePage: string;
 }
 
-const Header: React.FC<Props> = ({ data, activePage }) => {
+const Header: React.FC<Props> = ({ data, locale, activePage }) => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const { id, attributes } = data[0];
   const { content } = attributes;
@@ -42,8 +44,6 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
   const text: any = content.find(
     (item: any) => item.__component === "shared.text"
   );
-
-  console.log(text);
 
   const handleDrawerOpen = () => setDrawerOpen(() => true);
 
@@ -115,6 +115,7 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
                   placement="header"
                   activePage={activePage}
                   links={navbar.links}
+                  locale={locale}
                 />
               )}
             </Grid>
@@ -138,6 +139,7 @@ const Header: React.FC<Props> = ({ data, activePage }) => {
           placement="drawer"
           activePage={activePage}
           links={navbar.links}
+          locale={locale}
         />
       </Drawer>
     </>

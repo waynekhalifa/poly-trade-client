@@ -7,6 +7,7 @@ import { FALLBACK_SEO } from "@/utils/constants";
 import { getGlobal } from "@/utils/get-global";
 import { Languages } from "@/enums/languages";
 import { Directions } from "@/enums/directions";
+import { i18n } from "root/i18n-config";
 
 type Props = { params: { lang: Locale }; children: React.ReactNode };
 
@@ -47,4 +48,15 @@ export default async function RootLayout({ params, children }: Props) {
       </body>
     </html>
   );
+}
+
+/**
+ * generateStaticParams
+ *
+ * should increase performance
+ *
+ * @returns locales static export
+ */
+export async function generateStaticParams() {
+  return i18n.locales.map((locale) => ({ lang: locale }));
 }
