@@ -114,6 +114,7 @@ export default async function Page({ params }: Props) {
         <PostSections
           data={singleData.data[0]}
           relatedPosts={relatedProducts}
+          locale={lang}
         />
       );
 

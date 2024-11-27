@@ -15,12 +15,14 @@ import useResponsive from "@/hooks/useResponsive";
 import { ArrowForwardIos, Search } from "@mui/icons-material";
 import PostCard from "../../post-card";
 import { MD_UP_PARAMS } from "@/constants/media-queries";
+import { Locale } from "@/types/locale";
 
 interface Props {
   posts: any;
+  locale: Locale;
 }
 
-const Blog: React.FC<Props> = ({ posts }) => {
+const Blog: React.FC<Props> = ({ posts, locale }) => {
   const mdUp = useResponsive(MD_UP_PARAMS);
 
   return (
@@ -61,7 +63,7 @@ const Blog: React.FC<Props> = ({ posts }) => {
         <Grid container spacing={3}>
           {posts.data.map((item: any) => (
             <Grid item key={item.id} xs={12} md={4}>
-              <PostCard post={item} />
+              <PostCard post={item} locale={locale} />
             </Grid>
           ))}
         </Grid>

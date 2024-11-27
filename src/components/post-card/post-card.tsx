@@ -9,6 +9,7 @@ import LinkWrap from "../link-wrap";
 import CategoryItem from "./category-item";
 import { Locale } from "@/types/locale";
 import { translateStaticString } from "@/utils/translateStatic";
+import { Routes } from "@/enums/routes";
 
 interface Props {
   post: any;
@@ -42,7 +43,7 @@ const PostCard: React.FC<Props> = ({ post, locale }) => {
       }}
     >
       <LinkWrap
-        href={"/news/" + slug}
+        href={Routes.ROOT + locale + "/news/" + slug}
         sx={{ position: "relative", display: "block", height: 200 }}
       >
         <Image
@@ -61,7 +62,7 @@ const PostCard: React.FC<Props> = ({ post, locale }) => {
             />
           ))}
         </List>
-        <LinkWrap href={"/news/" + slug}>
+        <LinkWrap href={Routes.ROOT + locale + "/news/" + slug}>
           <Typography
             gutterBottom
             variant="h6"
@@ -122,15 +123,7 @@ const PostCard: React.FC<Props> = ({ post, locale }) => {
         >
           {excerptString(description[0].children[0].text, 160)}
         </Typography>
-        {/* <Typography
-          variant="body2"
-          color={"text.secondary"}
-          textAlign={"center"}
-          textTransform={"capitalize"}
-        >
-          {formatDate(publishedAt)}
-        </Typography> */}
-        <LinkWrap href={"/news/" + slug}>
+        <LinkWrap href={Routes.ROOT + locale + "/news/" + slug}>
           <Button variant="contained" size="small">
             {translateStaticString("readMore", locale)}
           </Button>

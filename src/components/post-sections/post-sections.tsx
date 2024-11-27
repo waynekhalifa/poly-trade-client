@@ -6,13 +6,15 @@ import { getStrapiURL } from "@/utils/api-helpers";
 import RichTextBlocks from "../rich-text-blocks";
 import { IListingResult } from "@/types/api";
 import PostCard from "../post-card";
+import { Locale } from "@/types/locale";
 
 interface Props {
   data: any;
+  locale: Locale;
   relatedPosts: IListingResult;
 }
 
-const PostSections: React.FC<Props> = ({ data, relatedPosts }) => {
+const PostSections: React.FC<Props> = ({ data, relatedPosts, locale }) => {
   const { name, description, thumbnail } = data.attributes;
 
   return (
@@ -53,7 +55,7 @@ const PostSections: React.FC<Props> = ({ data, relatedPosts }) => {
               relatedPosts.data.length > 0 &&
               relatedPosts.data.map((item: any) => (
                 <Grid item key={item.id} xs={12} md={3}>
-                  <PostCard post={item} />
+                  <PostCard post={item} locale={locale} />
                 </Grid>
               ))}
           </Grid>

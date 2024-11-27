@@ -22,7 +22,13 @@ const Listing: React.FC<Props> = ({ data, listings, searchParams, locale }) => {
     return <LatestNews listings={listings} locale={locale} />;
 
   if (sectionName === "blog-listing")
-    return <BlogPosts listings={listings} searchParams={searchParams} />;
+    return (
+      <BlogPosts
+        listings={listings}
+        searchParams={searchParams}
+        locale={locale}
+      />
+    );
 
   if (sectionName === "product-listing")
     return <Products listings={listings} searchParams={searchParams} />;

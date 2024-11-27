@@ -7,13 +7,15 @@ import LinkWrap from "../link-wrap";
 import { IListingItem } from "@/types/api";
 import { calculatePages } from "@/utils/calculate-pages";
 import { navigateInternal } from "@/utils/navigate";
+import { Locale } from "@/types/locale";
 
 interface Props {
   listings: IListingItem[];
+  locale: Locale;
   searchParams: any;
 }
 
-const BlogPosts: React.FC<Props> = ({ listings, searchParams }) => {
+const BlogPosts: React.FC<Props> = ({ listings, searchParams, locale }) => {
   const blogPosts: IListingItem | undefined = listings.find(
     (item: any) => item.name === "blogPosts"
   );
@@ -56,7 +58,7 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams }) => {
             blogPosts.result.data.length > 0 &&
             blogPosts.result.data.map((item: any) => (
               <Grid item key={item.id} xs={12} md={4}>
-                <PostCard post={item} />
+                <PostCard post={item} locale={locale} />
               </Grid>
             ))}
         </Grid>

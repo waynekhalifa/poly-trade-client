@@ -7,6 +7,7 @@ import { getStrapiURL } from "@/utils/api-helpers";
 import { Locale } from "@/types/locale";
 import { Languages } from "@/enums/languages";
 import { translateStaticString } from "@/utils/translateStatic";
+import { Routes } from "@/enums/routes";
 
 interface Props {
   page: any;
@@ -55,7 +56,7 @@ const Breadcrumb: React.FC<Props> = ({ page, archive, locale }) => {
             disablePadding
             sx={{ display: "flex", alignItems: "center", columnGap: 1 }}
           >
-            <LinkWrap href={"/"}>
+            <LinkWrap href={Routes.ROOT + locale}>
               <Typography
                 textTransform={"capitalize"}
                 color={"common.white"}
@@ -81,7 +82,9 @@ const Breadcrumb: React.FC<Props> = ({ page, archive, locale }) => {
             />
             {archive && (
               <>
-                <LinkWrap href={"/" + archive.slug}>
+                <LinkWrap
+                  href={Routes.ROOT + locale + Routes.ROOT + archive.slug}
+                >
                   <Typography
                     textTransform={"capitalize"}
                     color={"common.white"}
@@ -99,7 +102,13 @@ const Breadcrumb: React.FC<Props> = ({ page, archive, locale }) => {
                 </LinkWrap>
                 <ArrowForwardIos
                   fontSize="small"
-                  sx={{ color: "primary.main", transform: "scale(.5)" }}
+                  sx={{
+                    color: "primary.main",
+                    transform:
+                      locale === Languages.ENGLISH
+                        ? "scale(.5)"
+                        : "scale(.5) rotate(180deg)",
+                  }}
                 />
               </>
             )}
