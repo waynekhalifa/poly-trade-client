@@ -133,7 +133,12 @@ export default async function Page({ params }: Props) {
   return (
     <>
       {headerSections.data.length > 0 && (
-        <Header activePage={slug} data={headerSections.data} locale={lang} />
+        <Header
+          activePage={slug}
+          single={id}
+          data={headerSections.data}
+          locale={lang}
+        />
       )}
       {slug === "products" && (
         <Breadcrumb

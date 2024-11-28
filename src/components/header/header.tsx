@@ -15,14 +15,16 @@ import NewLogo from "../new-logo";
 import LinkWrap from "../link-wrap";
 import useSticky from "@/hooks/useSticky";
 import { Locale } from "@/types/locale";
+import LangSwitcher from "../lang-switcher";
 
 interface Props {
   data: any;
   locale: Locale;
   activePage: string;
+  single?: string;
 }
 
-const Header: React.FC<Props> = ({ data, locale, activePage }) => {
+const Header: React.FC<Props> = ({ data, locale, activePage, single }) => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const { id, attributes } = data[0];
   const { content } = attributes;
@@ -58,15 +60,28 @@ const Header: React.FC<Props> = ({ data, locale, activePage }) => {
         color="common.white"
       >
         <Container>
-          <Grid container alignItems={"center"} gap={"4px"}>
-            <Typography>{text.text}</Typography>
-            <LinkWrap href={contact.url.href}>
-              <Typography>{contact.contact}</Typography>
-            </LinkWrap>
-            <Typography>|</Typography>
-            <LinkWrap href={email.url.href}>
-              <Typography>{email.email}</Typography>
-            </LinkWrap>
+          <Grid
+            container
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <Box>
+              <Grid container alignItems={"center"} gap={"4px"}>
+                <Typography>{text.text}</Typography>
+                <LinkWrap href={contact.url.href}>
+                  <Typography>{contact.contact}</Typography>
+                </LinkWrap>
+                <Typography>|</Typography>
+                <LinkWrap href={email.url.href}>
+                  <Typography>{email.email}</Typography>
+                </LinkWrap>
+              </Grid>
+            </Box>
+            <LangSwitcher
+              locale={locale}
+              activePage={activePage}
+              single={single}
+            />
           </Grid>
         </Container>
       </Box>
