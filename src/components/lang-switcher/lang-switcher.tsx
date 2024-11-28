@@ -1,10 +1,10 @@
 "use client";
 import { FC, useEffect, useRef, useState } from "react";
 import {
+  Box,
   Button,
   ClickAwayListener,
   Grow,
-  MenuItem,
   MenuList,
   Paper,
   Popper,
@@ -127,11 +127,19 @@ const LangSwitcher: FC<Props> = ({ locale, activePage, single }) => {
                   {locales
                     .filter((item: string) => item !== locale)
                     .map((locale: string) => (
-                      <MenuItem key={locale} onClick={handleClose}>
-                        <LinkWrap href={getCurrentUrl(locale)}>
+                      <Box key={locale} onClick={handleClose} component={"li"}>
+                        <LinkWrap
+                          href={getCurrentUrl(locale)}
+                          sx={{
+                            width: 88,
+                            height: 40,
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
                           {locale === Languages.ENGLISH ? "English" : "عربى"}
                         </LinkWrap>
-                      </MenuItem>
+                      </Box>
                     ))}
                 </MenuList>
               </ClickAwayListener>
