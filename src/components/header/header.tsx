@@ -59,13 +59,13 @@ const Header: React.FC<Props> = ({ data, locale, activePage }) => {
       >
         <Container>
           <Grid container alignItems={"center"} gap={"4px"}>
-            <Typography variant="body2">{text.text}</Typography>
+            <Typography>{text.text}</Typography>
             <LinkWrap href={contact.url.href}>
-              <Typography variant="body2">{contact.contact}</Typography>
+              <Typography>{contact.contact}</Typography>
             </LinkWrap>
-            <Typography variant="body2">|</Typography>
+            <Typography>|</Typography>
             <LinkWrap href={email.url.href}>
-              <Typography variant="body2">{email.email}</Typography>
+              <Typography>{email.email}</Typography>
             </LinkWrap>
           </Grid>
         </Container>
