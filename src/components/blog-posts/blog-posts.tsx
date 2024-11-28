@@ -9,6 +9,9 @@ import { calculatePages } from "@/utils/calculate-pages";
 import { navigateInternal } from "@/utils/navigate";
 import { Locale } from "@/types/locale";
 import { Languages } from "@/enums/languages";
+import { translateStaticString } from "@/utils/translateStatic";
+import { Routes } from "@/enums/routes";
+import { formatNumberToArabic } from "@/utils/format-numbers-to-arabic";
 
 interface Props {
   listings: IListingItem[];
@@ -40,7 +43,7 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams, locale }) => {
         {searchParams["search"] && (
           <Grid container alignItems={"center"} gap={1} mb={{ xs: 2, md: 3 }}>
             <Typography variant="h4" component="span" fontWeight={700}>
-              Search result for:
+              {`${translateStaticString("searchResultFor", locale)}:`}
             </Typography>
             <Typography
               component="span"
@@ -49,7 +52,7 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams, locale }) => {
             >
               {searchParams["search"]}
             </Typography>
-            <LinkWrap href="/news">
+            <LinkWrap href={Routes.ROOT + locale + "/news"}>
               <Close sx={{ color: "primary.main" }} />
             </LinkWrap>
           </Grid>
@@ -74,7 +77,9 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams, locale }) => {
                 sx={{ maxWidth: 32 }}
                 onClick={() =>
                   navigateInternal(
-                    `/news?page=${(parseInt(searchParams["page"]) || 1) - 1}`
+                    Routes.ROOT +
+                      locale +
+                      `/news?page=${(parseInt(searchParams["page"]) || 1) - 1}`
                   )
                 }
               >
@@ -104,11 +109,15 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams, locale }) => {
                   }}
                   onClick={() =>
                     navigateInternal(
-                      item + 1 > 1 ? `/news?page=${item + 1}` : "/news"
+                      item + 1 > 1
+                        ? Routes.ROOT + locale + `/news?page=${item + 1}`
+                        : Routes.ROOT + locale + "/news"
                     )
                   }
                 >
-                  {item + 1}
+                  {locale === Languages.ENGLISH
+                    ? item + 1
+                    : formatNumberToArabic(item + 1)}
                 </Button>
               )
             )}
@@ -117,7 +126,9 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams, locale }) => {
                 sx={{ maxWidth: 32 }}
                 onClick={() =>
                   navigateInternal(
-                    `/news?page=${(parseInt(searchParams["page"]) || 1) + 1}`
+                    Routes.ROOT +
+                      locale +
+                      `/news?page=${(parseInt(searchParams["page"]) || 1) + 1}`
                   )
                 }
               >
@@ -136,7 +147,7 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams, locale }) => {
         )}
       </Grid>
       <Grid item xs={12} md={3}>
-        <BlogSearchForm />
+        <BlogSearchForm locale={locale} />
         {categories && categories.result.data.length > 0 && (
           <>
             <Typography
@@ -145,7 +156,7 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams, locale }) => {
               mt={{ x: 2, md: 3 }}
               mb={{ x: 1, md: 2 }}
             >
-              Categories
+              {translateStaticString("categories", locale)}
             </Typography>
             <List
               disablePadding
@@ -154,7 +165,11 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams, locale }) => {
               {categories.result.data.map((item: any) => (
                 <LinkWrap
                   key={item.id}
-                  href={`/news?category=${item.attributes.slug}`}
+                  href={
+                    Routes.ROOT +
+                    locale +
+                    `/news?category=${item.attributes.slug}`
+                  }
                   sx={{
                     display: "flex",
                     alignItems: "center",
@@ -168,7 +183,11 @@ const BlogPosts: React.FC<Props> = ({ listings, searchParams, locale }) => {
                   }}
                 >
                   <Launch fontSize="small" />
-                  <Typography>{item.attributes.name}</Typography>
+                  <Typography>
+                    {locale === Languages.ENGLISH
+                      ? item.attributes.name
+                      : item.attributes.arName}
+                  </Typography>
                 </LinkWrap>
               ))}
             </List>

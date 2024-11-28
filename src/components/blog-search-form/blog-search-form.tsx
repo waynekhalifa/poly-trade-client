@@ -7,6 +7,9 @@ import FormFields from "../FormFields";
 import { IFormField } from "@/types/formFields";
 import { InputTypes } from "@/enums/inputTypes";
 import { navigateInternal } from "@/utils/navigate";
+import { translateStaticString } from "@/utils/translateStatic";
+import { Locale } from "@/types/locale";
+import { Routes } from "@/enums/routes";
 
 const fields: IFormField[] = [
   {
@@ -22,7 +25,11 @@ const fields: IFormField[] = [
   },
 ];
 
-const BlogSearchForm: React.FC = () => {
+interface Props {
+  locale: Locale;
+}
+
+const BlogSearchForm: React.FC<Props> = ({ locale }) => {
   const DEFAULT_VALUES: any = {};
 
   for (const field of fields) {
@@ -52,8 +59,10 @@ const BlogSearchForm: React.FC = () => {
   const onSubmit: SubmitHandler<any> = async (formData: any) =>
     navigateInternal(
       formData["search"] !== ""
-        ? `/news/?search=${formData["search"]}`.replaceAll(" ", "+")
-        : "/news"
+        ? Routes.ROOT +
+            locale +
+            `/news/?search=${formData["search"]}`.replaceAll(" ", "+")
+        : Routes.ROOT + locale + "/news"
     );
 
   return (
@@ -71,7 +80,7 @@ const BlogSearchForm: React.FC = () => {
         />
       ))}
       <Button variant="contained" type="submit">
-        Search
+        {translateStaticString("search", locale)}
       </Button>
     </Box>
   );

@@ -9,4 +9,7 @@ export const strings: any = {
   company: "شركة",
   message: "رسالة",
   relatedPosts: "منشورات ذات صلة",
+  categories: "الأقسام",
+  search: "بحث",
+  searchResultFor: "نتائج بحث ل",
 };

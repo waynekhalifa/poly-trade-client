@@ -22,9 +22,16 @@ interface Props {
   locale: Locale;
   activePage: string;
   single?: string;
+  searchParams?: any;
 }
 
-const Header: React.FC<Props> = ({ data, locale, activePage, single }) => {
+const Header: React.FC<Props> = ({
+  data,
+  locale,
+  activePage,
+  single,
+  searchParams,
+}) => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const { id, attributes } = data[0];
   const { content } = attributes;
@@ -81,6 +88,7 @@ const Header: React.FC<Props> = ({ data, locale, activePage, single }) => {
               locale={locale}
               activePage={activePage}
               single={single}
+              searchParams={searchParams}
             />
           </Grid>
         </Container>

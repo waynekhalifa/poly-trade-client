@@ -126,7 +126,12 @@ export default async function Page({ params, searchParams }: Props) {
   return (
     <>
       {headerSections.data.length > 0 && (
-        <Header data={headerSections.data} locale={lang} activePage={slug} />
+        <Header
+          data={headerSections.data}
+          locale={lang}
+          activePage={slug}
+          searchParams={searchParams}
+        />
       )}
       <Breadcrumb page={pages.data[0].attributes} locale={lang} />
       <main>

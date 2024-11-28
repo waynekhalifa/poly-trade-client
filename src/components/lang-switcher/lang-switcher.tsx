@@ -1,4 +1,6 @@
 "use client";
+
+import qs from "qs";
 import { FC, useEffect, useRef, useState } from "react";
 import {
   Box,
@@ -11,6 +13,7 @@ import {
 } from "@mui/material";
 import { Languages } from "@/enums/languages";
 import { KeyboardArrowDown } from "@mui/icons-material";
+
 import { Locale } from "@/types/locale";
 import { Routes } from "@/enums/routes";
 import LinkWrap from "../link-wrap";
@@ -21,11 +24,18 @@ interface Props {
   locale: Locale;
   activePage: string;
   single?: string;
+  searchParams?: any;
 }
 
-const LangSwitcher: FC<Props> = ({ locale, activePage, single }) => {
+const LangSwitcher: FC<Props> = ({
+  locale,
+  activePage,
+  single,
+  searchParams,
+}) => {
   const [open, setOpen] = useState<boolean>(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
+  const prevOpen = useRef(open);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -51,8 +61,6 @@ const LangSwitcher: FC<Props> = ({ locale, activePage, single }) => {
     }
   }
 
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = useRef(open);
   useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current!.focus();
@@ -70,6 +78,15 @@ const LangSwitcher: FC<Props> = ({ locale, activePage, single }) => {
           Routes.ROOT + locale + Routes.ROOT + activePage + Routes.ROOT + single
         );
       } else {
+        if (Object.keys(searchParams).length > 0)
+          return (
+            Routes.ROOT +
+            locale +
+            Routes.ROOT +
+            activePage +
+            `?${qs.stringify(searchParams)}`
+          );
+
         return Routes.ROOT + locale + Routes.ROOT + activePage;
       }
     }
