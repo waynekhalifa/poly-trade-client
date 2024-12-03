@@ -24,6 +24,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "poly-trade-admin.onrender.com",
       },
+      {
+        protocol: "https",
+        hostname: "polytrade-admin-jvkg.onrender.com",
+      },
     ],
   },
 };
