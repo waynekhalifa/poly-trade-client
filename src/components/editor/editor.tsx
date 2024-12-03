@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 
 import removeFontFamilyStyles from "@/utils/remove-font-family";
+import { getStrapiURL } from "@/utils/api-helpers";
 
 interface Props {
   data: any;
@@ -60,7 +61,12 @@ const Editor: React.FC<Props> = ({ data }) => {
         lg: margin && margin.right ? margin.right.lg : "auto",
       }}
       sx={{ "& p": { mt: 0 } }}
-      dangerouslySetInnerHTML={{ __html: removeFontFamilyStyles(editor) }}
+      dangerouslySetInnerHTML={{
+        __html: removeFontFamilyStyles(editor).replace(
+          "http://localhost:1337",
+          getStrapiURL()
+        ),
+      }}
     />
   );
 };

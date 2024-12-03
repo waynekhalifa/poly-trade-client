@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 
 import stripInlineStyles from "@/utils/stripInlineStyles";
+import { getStrapiURL } from "@/utils/api-helpers";
 
 interface Props {
   data: any;
@@ -87,7 +88,10 @@ const EditorList: React.FC<Props> = ({ data }) => {
             },
           }}
           dangerouslySetInnerHTML={{
-            __html: stripInlineStyles(item.editor),
+            __html: stripInlineStyles(item.editor).replace(
+              "http://localhost:1337",
+              getStrapiURL()
+            ),
           }}
         />
       ))}
