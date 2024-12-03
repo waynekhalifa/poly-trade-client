@@ -4,7 +4,7 @@ import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import { prefixer } from "stylis";
-import { Cairo, Roboto } from "next/font/google";
+import { Roboto, Tajawal } from "next/font/google";
 import localFont from "next/font/local";
 
 import {
@@ -49,7 +49,7 @@ export const localEnglishFont = localFont({
     },
   ],
 });
-export const arabicFont = Cairo({
+export const arabicFont = Tajawal({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
